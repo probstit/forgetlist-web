@@ -11,10 +11,6 @@ export const LandingContainer = styled.div<LandingProps>`
   min-height: 100%;
   padding-top: 3em;
   background-color: ${props => (props.theme as DefaultTheme).colors.primary};
-
-  link {
-    text-decoration: none;
-  }
 `;
 
 export const StyledLink = styled(Link)`
