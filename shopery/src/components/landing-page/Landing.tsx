@@ -1,10 +1,12 @@
 import React from "react";
+
 import {
   LandingContainer,
   Header,
   ButtonsContainer,
   LoginButton,
   RegisterButton,
+  StyledLink,
   Footer
 } from "./landing-styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,9 +23,13 @@ const LandingPage: React.FC = (): JSX.Element => (
     </Header>
 
     <ButtonsContainer>
-      <LoginButton>Login</LoginButton>
+      <StyledLink to="/login">
+        <LoginButton>Login</LoginButton>
+      </StyledLink>
       <p>OR</p>
-      <RegisterButton>Create a new account</RegisterButton>
+      <StyledLink to="/register">
+        <RegisterButton>Create a new account</RegisterButton>
+      </StyledLink>
     </ButtonsContainer>
 
     <Footer>

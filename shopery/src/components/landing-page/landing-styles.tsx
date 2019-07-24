@@ -1,4 +1,5 @@
 import styled, { DefaultTheme } from "styled-components";
+import { Link } from "react-router-dom";
 import { device } from "../../breakpoints/breakpoints";
 
 interface LandingProps {
@@ -10,6 +11,14 @@ export const LandingContainer = styled.div<LandingProps>`
   min-height: 100%;
   padding-top: 3em;
   background-color: ${props => (props.theme as DefaultTheme).colors.primary};
+
+  link {
+    text-decoration: none;
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 export const Header = styled.header<LandingProps>`
