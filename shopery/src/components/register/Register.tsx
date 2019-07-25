@@ -1,5 +1,7 @@
 import React from "react";
 
-const Register: React.FC = (): JSX.Element => <div>Register Page</div>;
+import { RegisterContainer } from "./register-styles";
+
+const Register: React.FC = (): JSX.Element => <RegisterContainer />;
 
 export default Register;

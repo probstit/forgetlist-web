@@ -1,25 +1,23 @@
 import React from "react";
 
 import {
-  LandingContainer,
-  Header,
-  ButtonsContainer,
-  StyledButton,
+  Container,
   StyledLink,
-  Footer
-} from "./landing-styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+  StyledButton
+} from "../common-styled-components/common";
+import { Description, ButtonsContainer } from "./landing-styles";
+import Logo from "../logo/Logo";
+import Footer from "../footer/Footer";
 
 const LandingPage: React.FC = (): JSX.Element => (
-  <LandingContainer>
-    <Header>
-      <h1>
-        Shopery <FontAwesomeIcon icon="shopping-basket" />
-      </h1>
+  <Container>
+    <Logo />
+
+    <Description>
       <h4>
         <span>Team up</span> with your friends for a better shopping experience.
       </h4>
-    </Header>
+    </Description>
 
     <ButtonsContainer>
       <StyledLink to="/login">
@@ -31,10 +29,8 @@ const LandingPage: React.FC = (): JSX.Element => (
       </StyledLink>
     </ButtonsContainer>
 
-    <Footer>
-      <p>Copyright &copy; Shopery 2019</p>
-    </Footer>
-  </LandingContainer>
+    <Footer />
+  </Container>
 );
 
 export default LandingPage;
