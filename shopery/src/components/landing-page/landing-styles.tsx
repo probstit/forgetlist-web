@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { device } from "../../breakpoints/breakpoints";
 
 interface LandingProps {
+  reversed?: boolean;
   theme?: DefaultTheme;
 }
 
@@ -94,18 +95,27 @@ export const ButtonsContainer = styled.div<LandingProps>`
   }
 `;
 
-export const LoginButton = styled.button<LandingProps>`
+export const StyledButton = styled.button<LandingProps>`
   width: 15em;
   height: 25px;
-  border-style: none;
+  border: ${props =>
+    props.reversed
+      ? `1px solid ${(props.theme as DefaultTheme).colors.secondary}`
+      : "none"};
   border-radius: 20px;
   display: block;
   margin: 0 auto;
   vertical-align: middle;
-  font-weight: 600;
-  background-color: ${props => (props.theme as DefaultTheme).colors.secondary};
+  font-weight: ${props => (props.reversed ? "450" : "600")};
+  background-color: ${props =>
+    props.reversed
+      ? (props.theme as DefaultTheme).colors.primary
+      : (props.theme as DefaultTheme).colors.secondary};
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
-  color: ${props => (props.theme as DefaultTheme).colors.primary};
+  color: ${props =>
+    props.reversed
+      ? (props.theme as DefaultTheme).colors.secondary
+      : (props.theme as DefaultTheme).colors.primary};
 
   &:hover {
     cursor: pointer;
@@ -116,13 +126,6 @@ export const LoginButton = styled.button<LandingProps>`
     height: 30px;
     font-size: 1em;
   }
-`;
-
-export const RegisterButton = styled(LoginButton)<LandingProps>`
-  background-color: ${props => (props.theme as DefaultTheme).colors.primary};
-  color: ${props => (props.theme as DefaultTheme).colors.secondary};
-  border: 1px solid ${props => (props.theme as DefaultTheme).colors.secondary};
-  font-weight: 550;
 `;
 
 export const Footer = styled.footer<LandingProps>`

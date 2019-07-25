@@ -4,8 +4,7 @@ import {
   LandingContainer,
   Header,
   ButtonsContainer,
-  LoginButton,
-  RegisterButton,
+  StyledButton,
   StyledLink,
   Footer
 } from "./landing-styles";
@@ -24,11 +23,11 @@ const LandingPage: React.FC = (): JSX.Element => (
 
     <ButtonsContainer>
       <StyledLink to="/login">
-        <LoginButton>Login</LoginButton>
+        <StyledButton>Login</StyledButton>
       </StyledLink>
       <p>OR</p>
       <StyledLink to="/register">
-        <RegisterButton>Create a new account</RegisterButton>
+        <StyledButton reversed>Create a new account</StyledButton>
       </StyledLink>
     </ButtonsContainer>
 
