@@ -5,7 +5,8 @@ import {
   StyledButton,
   FormContainer,
   StyledForm,
-  StyledInput
+  StyledInput,
+  StyledLink
 } from "../common-styled-components/common";
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
@@ -26,6 +27,9 @@ const Login: React.FC = (): JSX.Element => (
         <StyledInput type="password" placeholder="********" required />
         <StyledButton type="submit">Login</StyledButton>
       </StyledForm>
+      <StyledLink to="/register">
+        <p>Don't have an account? Click here to Sign Up!</p>
+      </StyledLink>
     </FormContainer>
     <Footer />
   </Container>

@@ -1,34 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 
+import useForm from "../../hooks/useForm";
 import {
   Container,
   StyledButton,
   FormContainer,
   StyledForm,
-  StyledInput
+  StyledInput,
+  StyledLink
 } from "../common-styled-components/common";
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
 import BackToLanding from "../back-to-landing/BackToLanding";
-
-// const emailRegex = RegExp(
-//   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-']+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-// );
+import validate from "../../hooks/validateRegister";
 
 const Register: React.FC = (): JSX.Element => {
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
-  };
-
+  const { handleChange, handleSubmit, values, errors } = useForm(validate);
   return (
     <Container>
       <BackToLanding />
@@ -36,60 +23,63 @@ const Register: React.FC = (): JSX.Element => {
       <FormContainer>
         <h2>Register</h2>
         <hr />
-        <StyledForm onSubmit={handleSubmit}>
-          First Name
+        <StyledForm noValidate onSubmit={handleSubmit}>
+          <label>First Name</label>
           <br />
           <StyledInput
             type="text"
             name="firstName"
-            value={firstName}
+            value={values.firstName}
             placeholder="Ex. John"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFirstName(e.target.value)
-            }
             required
+            onChange={handleChange}
           />
+          {errors.firstName && <p>{errors.firstName}</p>}
           <br />
-          Last Name
+
+          <label>Last Name</label>
           <br />
           <StyledInput
             type="text"
             name="lastName"
-            value={lastName}
+            value={values.lastName}
             placeholder="Ex. Doe"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setLastName(e.target.value)
-            }
             required
+            onChange={handleChange}
           />
+          {errors.lastName && <p>{errors.lastName}</p>}
           <br />
-          E-mail
+
+          <label>E-mail</label>
           <br />
           <StyledInput
             type="email"
             name="email"
-            value={email}
+            value={values.email}
             placeholder="example@mail.com"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(e.target.value)
-            }
             required
+            onChange={handleChange}
           />
+          {errors.email && <p>{errors.email}</p>}
           <br />
-          Password
+
+          <label>Password</label>
           <br />
           <StyledInput
             type="password"
             name="password"
-            value={password}
+            value={values.password}
             placeholder="********"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
             required
+            onChange={handleChange}
           />
+          {errors.password && <p>{errors.password}</p>}
+
           <StyledButton type="submit">Create Account</StyledButton>
         </StyledForm>
+        <StyledLink to="/login">
+          <p>Already have an account? Sign up instead!</p>
+        </StyledLink>
       </FormContainer>
       <Footer />
     </Container>

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import LandingPage from "./components/landing-page/landing";
+import LandingPage from "./components/landing-page/Landing";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import NoMatch from "./components/no-match/NoMatch";

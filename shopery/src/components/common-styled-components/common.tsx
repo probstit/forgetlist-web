@@ -4,11 +4,6 @@ import { Link } from "react-router-dom";
 import { device } from "../../breakpoints/breakpoints";
 import ThemeProps from "../../theme/theme-props.interface";
 
-interface CommonProps {
-  reversed?: boolean;
-  theme?: DefaultTheme;
-}
-
 export const Container = styled.div<ThemeProps>`
   position: relative;
   min-height: 100%;
@@ -25,7 +20,7 @@ export const StyledLink = styled(Link)<ThemeProps>`
   }
 `;
 
-export const StyledButton = styled.button<CommonProps>`
+export const StyledButton = styled.button<ThemeProps>`
   width: 15em;
   height: 25px;
   border: ${props =>
@@ -34,7 +29,7 @@ export const StyledButton = styled.button<CommonProps>`
       : "none"};
   border-radius: 20px;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 0.3em auto;
   vertical-align: middle;
   font-weight: ${props => (props.reversed ? "450" : "600")};
   background-color: ${props =>
@@ -61,7 +56,6 @@ export const StyledButton = styled.button<CommonProps>`
 export const FormContainer = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
-  margin-top: 2.5em;
   padding: 1.5em;
 
   h2 {
@@ -84,6 +78,16 @@ export const FormContainer = styled.div<ThemeProps>`
     margin-top: 2em;
     font-weight: 600;
   }
+
+  p {
+    text-align: center;
+    font-size: 0.6em;
+    font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+
+    &: hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export const StyledForm = styled.form<ThemeProps>`
@@ -101,7 +105,7 @@ export const StyledInput = styled.input<ThemeProps>`
   text-align: center;
   vertical-align: middle;
   padding: 2.5px 2px;
-  margin: 0.2em 0 0.5em 0;
+  margin: 0.2em 0 1em 0;
   border-style: none;
   border-radius: ${props => (props.theme as DefaultTheme).borderRadius};
 `;
