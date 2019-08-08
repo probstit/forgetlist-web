@@ -1,4 +1,4 @@
-import { IRegisterState, IErrorState } from "./interfaces";
+import { IRegisterState, IErrorState } from "../interfaces";
 
 export default function validateRegistration(values: IRegisterState) {
   const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;

@@ -1,8 +1,8 @@
 import React from "react";
 // Import custom hook
-import { useFormValidation } from "../../hooks/useFormValidation";
+import { useRegisterValidation } from "../../hooks/registerHooks/useRegisterValidation";
 // Import form validation function
-import validateRegistration from "../../hooks/validateRegistration";
+import validateRegistration from "../../hooks/registerHooks/validateRegistration";
 // Import styled components
 import {
   Container,
@@ -34,7 +34,7 @@ const Register: React.FC = (): JSX.Element => {
     handleBlur,
     errors,
     isSubmitting
-  } = useFormValidation(initialState, validateRegistration);
+  } = useRegisterValidation(initialState, validateRegistration);
 
   return (
     <Container>
@@ -103,7 +103,7 @@ const Register: React.FC = (): JSX.Element => {
           </StyledButton>
         </StyledForm>
         <StyledLink to="/login">
-          <p>Already have an account? Sign up instead!</p>
+          <p>Already have an account? Sign in instead!</p>
         </StyledLink>
       </FormContainer>
       <Footer />

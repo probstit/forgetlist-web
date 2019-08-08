@@ -5,6 +5,11 @@ export interface IRegisterState {
   password: string;
 }
 
+export interface ILoginState {
+  email: string;
+  password: string;
+}
+
 export interface IErrorState {
   firstName?: string;
   lastName?: string;

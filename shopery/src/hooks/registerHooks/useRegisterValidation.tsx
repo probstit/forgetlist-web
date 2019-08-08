@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { IRegisterState, IErrorState } from "./interfaces";
+import { IRegisterState, IErrorState } from "../interfaces";
 
 type FormEvent = React.FormEvent<HTMLFormElement>;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 type FocusEvent = React.FocusEvent<HTMLInputElement>;
 
-export const useFormValidation = (
+export const useRegisterValidation = (
   initialState: IRegisterState,
   validate: Function
 ) => {
