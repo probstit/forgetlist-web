@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 
-import { IRegisterState, IErrorState } from "../interfaces";
-
-type FormEvent = React.FormEvent<HTMLFormElement>;
-type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
-type FocusEvent = React.FocusEvent<HTMLInputElement>;
+import {
+  IRegisterState,
+  IErrorState,
+  FormEvent,
+  ChangeEvent
+} from "../interfaces";
 
 export const useRegisterValidation = (
   initialState: IRegisterState,
-  validate: Function
+  validate: Function,
+  registerUser: Function
 ) => {
   const [values, setValues] = useState<IRegisterState>(initialState);
   const [errors, setErrors] = useState<IErrorState>({});
@@ -19,12 +21,7 @@ export const useRegisterValidation = (
       const noErrors = Object.keys(errors).length === 0;
 
       if (noErrors) {
-        console.log(`Registered: 
-        firstName :  ${values.firstName}
-        lastName : ${values.lastName}
-        email : ${values.email}
-        password : ${values.password}
-      `);
+        registerUser();
         setSubmitting(false);
       } else {
         setSubmitting(false);
@@ -46,7 +43,7 @@ export const useRegisterValidation = (
     setSubmitting(true);
   };
 
-  const handleBlur = (e: FocusEvent): void => {
+  const handleBlur = (): void => {
     const validationErrors = validate(values);
     setErrors(validationErrors);
   };

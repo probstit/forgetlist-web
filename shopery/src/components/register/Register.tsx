@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 // Import custom hook
 import { useRegisterValidation } from "../../hooks/registerHooks/useRegisterValidation";
 // Import form validation function
@@ -34,7 +35,21 @@ const Register: React.FC = (): JSX.Element => {
     handleBlur,
     errors,
     isSubmitting
-  } = useRegisterValidation(initialState, validateRegistration);
+  } = useRegisterValidation(initialState, validateRegistration, registerUser);
+  const [dbError, setDBerror] = useState(null);
+
+  async function registerUser() {
+    const { firstName, lastName, email, password } = values;
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/v1.0/users/register`,
+        { firstName, lastName, email, password }
+      );
+      console.log(response);
+    } catch (err) {
+      setDBerror(err.response.data.payload.message);
+    }
+  }
 
   return (
     <Container>
@@ -97,6 +112,7 @@ const Register: React.FC = (): JSX.Element => {
           {errors.password && (
             <StyledFormError>{errors.password}</StyledFormError>
           )}
+          {dbError && <StyledFormError>{dbError}</StyledFormError>}
 
           <StyledButton disabled={isSubmitting} type="submit">
             Create Account

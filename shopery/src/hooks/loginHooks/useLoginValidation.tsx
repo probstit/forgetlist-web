@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 
-import { ILoginState, IErrorState } from "../interfaces";
-
-type FormEvent = React.FormEvent<HTMLFormElement>;
-type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
-type FocusEvent = React.FocusEvent<HTMLInputElement>;
+import {
+  ILoginState,
+  IErrorState,
+  FormEvent,
+  ChangeEvent
+} from "../interfaces";
 
 export const useLoginValidation = (
   initialState: ILoginState,
-  validate: Function
+  validate: Function,
+  authenthicate: Function
 ) => {
   const [values, setValues] = useState<ILoginState>(initialState);
   const [errors, setErrors] = useState<IErrorState>({});
@@ -19,10 +21,7 @@ export const useLoginValidation = (
       const noErrors = Object.keys(errors).length === 0;
 
       if (noErrors) {
-        console.log(`Authethicated: 
-        email : ${values.email}
-        password : ${values.password}
-      `);
+        authenthicate();
         setSubmitting(false);
       } else {
         setSubmitting(false);
@@ -37,7 +36,7 @@ export const useLoginValidation = (
     setSubmitting(true);
   };
 
-  const handleBlur = (e: FocusEvent): void => {
+  const handleBlur = (): void => {
     const validationErrors = validate(values);
     setErrors(validationErrors);
   };

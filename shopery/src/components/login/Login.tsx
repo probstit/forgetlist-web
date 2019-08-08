@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 // Import styled components
 import {
@@ -33,7 +34,21 @@ const Login: React.FC = (): JSX.Element => {
     values,
     isSubmitting,
     errors
-  } = useLoginValidation(initialState, validateLogin);
+  } = useLoginValidation(initialState, validateLogin, authenthicateUser);
+  const [dbError, setDBerror] = useState(null);
+
+  async function authenthicateUser() {
+    const { email, password } = values;
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/v1.0/users/login`,
+        { email, password }
+      );
+      console.log(response);
+    } catch (err) {
+      setDBerror(err.response.data.payload.message);
+    }
+  }
 
   return (
     <Container>
@@ -68,6 +83,7 @@ const Login: React.FC = (): JSX.Element => {
           {errors.password && (
             <StyledFormError>{errors.password}</StyledFormError>
           )}
+          {dbError && <StyledFormError>{dbError}</StyledFormError>}
           <StyledButton disabled={isSubmitting} type="submit">
             Login
           </StyledButton>
