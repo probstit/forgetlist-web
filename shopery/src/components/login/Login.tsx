@@ -5,7 +5,6 @@ import {
   StyledButton,
   FormContainer,
   StyledForm,
-  StyledInput,
   StyledLink
 } from "../common-styled-components/common";
 import Logo from "../logo/Logo";
@@ -21,10 +20,10 @@ const Login: React.FC = (): JSX.Element => (
       <hr />
       <StyledForm>
         E-mail <br />
-        <StyledInput type="email" placeholder="address@email.com" required />
+        <input type="email" placeholder="address@email.com" required />
         <br />
         Password <br />
-        <StyledInput type="password" placeholder="********" required />
+        <input type="password" placeholder="********" required />
         <StyledButton type="submit">Login</StyledButton>
       </StyledForm>
       <StyledLink to="/register">

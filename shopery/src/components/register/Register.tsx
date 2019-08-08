@@ -1,21 +1,41 @@
 import React from "react";
-
-import useForm from "../../hooks/useForm";
+// Import custom hook
+import { useFormValidation } from "../../hooks/useFormValidation";
+// Import form validation function
+import validateRegistration from "../../hooks/validateRegistration";
+// Import styled components
 import {
   Container,
   StyledButton,
   FormContainer,
   StyledForm,
-  StyledInput,
-  StyledLink
+  StyledLink,
+  StyledFormError
 } from "../common-styled-components/common";
+// Import components
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
 import BackToLanding from "../back-to-landing/BackToLanding";
-import validate from "../../hooks/validateRegister";
+// Import interfaces
+import { IRegisterState } from "../../hooks/interfaces";
+
+const initialState: IRegisterState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: ""
+};
 
 const Register: React.FC = (): JSX.Element => {
-  const { handleChange, handleSubmit, values, errors } = useForm(validate);
+  const {
+    values,
+    handleChange,
+    handleSumbit,
+    handleBlur,
+    errors,
+    isSubmitting
+  } = useFormValidation(initialState, validateRegistration);
+
   return (
     <Container>
       <BackToLanding />
@@ -23,59 +43,64 @@ const Register: React.FC = (): JSX.Element => {
       <FormContainer>
         <h2>Register</h2>
         <hr />
-        <StyledForm noValidate onSubmit={handleSubmit}>
+        <StyledForm noValidate onSubmit={handleSumbit}>
           <label>First Name</label>
-          <br />
-          <StyledInput
+          <input
             type="text"
             name="firstName"
             value={values.firstName}
             placeholder="Ex. John"
-            required
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.firstName && "inputError"}
           />
-          {errors.firstName && <p>{errors.firstName}</p>}
-          <br />
+          {errors.firstName && (
+            <StyledFormError>{errors.firstName}</StyledFormError>
+          )}
 
           <label>Last Name</label>
-          <br />
-          <StyledInput
+          <input
             type="text"
             name="lastName"
             value={values.lastName}
             placeholder="Ex. Doe"
-            required
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.lastName && "inputError"}
           />
-          {errors.lastName && <p>{errors.lastName}</p>}
-          <br />
+          {errors.lastName && (
+            <StyledFormError>{errors.lastName}</StyledFormError>
+          )}
 
           <label>E-mail</label>
-          <br />
-          <StyledInput
+          <input
             type="email"
             name="email"
             value={values.email}
             placeholder="example@mail.com"
-            required
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.email && "inputError"}
           />
-          {errors.email && <p>{errors.email}</p>}
-          <br />
+          {errors.email && <StyledFormError>{errors.email}</StyledFormError>}
 
           <label>Password</label>
-          <br />
-          <StyledInput
+          <input
             type="password"
             name="password"
             value={values.password}
             placeholder="********"
-            required
             onChange={handleChange}
+            onBlur={handleBlur}
+            className={errors.password && "inputError"}
           />
-          {errors.password && <p>{errors.password}</p>}
+          {errors.password && (
+            <StyledFormError>{errors.password}</StyledFormError>
+          )}
 
-          <StyledButton type="submit">Create Account</StyledButton>
+          <StyledButton disabled={isSubmitting} type="submit">
+            Create Account
+          </StyledButton>
         </StyledForm>
         <StyledLink to="/login">
           <p>Already have an account? Sign up instead!</p>

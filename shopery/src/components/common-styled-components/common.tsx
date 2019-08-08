@@ -74,6 +74,16 @@ export const FormContainer = styled.div<ThemeProps>`
       (props.theme as DefaultTheme).colors.secondary};
   }
 
+  input {
+    width: 15em;
+    height: 25px;
+    display: block;
+    margin: 0 auto 0.4em auto;
+    text-align: center;
+    border: none;
+    border-radius: ${props => (props.theme as DefaultTheme).borderRadius};
+  }
+
   button {
     margin-top: 2em;
     font-weight: 600;
@@ -88,6 +98,10 @@ export const FormContainer = styled.div<ThemeProps>`
       text-decoration: underline;
     }
   }
+
+  .inputError {
+    border: 1.2px solid red;
+  }
 `;
 
 export const StyledForm = styled.form<ThemeProps>`
@@ -99,13 +113,15 @@ export const StyledForm = styled.form<ThemeProps>`
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
 `;
 
-export const StyledInput = styled.input<ThemeProps>`
-  width: 15em;
-  height: 25px;
+export const StyledFormError = styled.div<ThemeProps>`
+  width: 100%;
+  height: auto;
+  color: #ee0000;
   text-align: center;
-  vertical-align: middle;
-  padding: 2.5px 2px;
-  margin: 0.2em 0 1em 0;
-  border-style: none;
-  border-radius: ${props => (props.theme as DefaultTheme).borderRadius};
+
+  p {
+    font-weight: 600;
+    font-size: 10px;
+    font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+  }
 `;
