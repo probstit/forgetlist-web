@@ -10,6 +10,11 @@ export const StyledForm = styled.form<ThemeProps>`
   .inputError {
     border: 1.2px solid #eb2226;
   }
+
+  div {
+    font-size: 0.7em;
+    margin-top: 0.2em;
+  }
 `;
 
 export const StyledInput = styled.input<ThemeProps>`
@@ -21,6 +26,14 @@ export const StyledInput = styled.input<ThemeProps>`
   border: none;
   border-radius: ${props => (props.theme as DefaultTheme).borderRadius};
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
+`;
+
+export const StyledP = styled.p`
+  font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+  color: ${props => (props.theme as DefaultTheme).colors.secondary};
+  text-align: center;
+  font-size: 0.8em;
+  margin-top: 120px;
 `;
 
 export const StyledLabel = styled.label<ThemeProps>`
@@ -41,6 +54,7 @@ export const StyledButton = styled.button<ThemeProps>`
   background-color: ${props => (props.theme as DefaultTheme).colors.secondary};
 
   &: hover {
+    cursor: pointer;
     background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   }
 `;

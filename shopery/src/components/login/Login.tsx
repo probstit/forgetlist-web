@@ -34,21 +34,51 @@ const Login: React.FC = (): JSX.Element => {
     values,
     isSubmitting,
     errors
-  } = useLoginValidation(initialState, validateLogin, authenthicateUser);
+  } = useLoginValidation(
+    initialState,
+    validateLogin,
+    authenthicateUser,
+    isActivated
+  );
   const [dbError, setDBerror] = useState(null);
+  const [isActive, setIsActive] = useState<boolean>(true);
 
-  async function authenthicateUser() {
+  async function authenthicateUser(): Promise<void> {
     const { email, password } = values;
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/v1.0/users/login`,
-        { email, password }
-      );
-
-      console.log(response.data.message);
+      const isActive = await isActivated();
+      if (isActive) {
+        await axios.post(`http://localhost:8000/api/v1.0/users/login`, {
+          email,
+          password
+        });
+        console.log("authenthicated");
+        setIsActive(isActive);
+      } else {
+        console.log("rejected");
+        setIsActive(isActive);
+      }
     } catch (err) {
       setDBerror(err.response.data.payload.message);
     }
+  }
+  // Checks if users's account is activated.
+  async function isActivated(): Promise<boolean> {
+    const { email } = values;
+    let response;
+    let isActive;
+    try {
+      response = await axios.post(
+        `http://localhost:8000/api/v1.0/users/is-active`,
+        { email }
+      );
+
+      isActive = response.data.isActive;
+    } catch (err) {
+      console.error(err);
+    }
+
+    return isActive;
   }
 
   return (
@@ -84,6 +114,9 @@ const Login: React.FC = (): JSX.Element => {
           {errors.password && (
             <StyledFormError>{errors.password}</StyledFormError>
           )}
+          {!isActive && (
+            <StyledFormError>{`Please activate your account before logging in`}</StyledFormError>
+          )}
           {dbError && <StyledFormError>{dbError}</StyledFormError>}
           <StyledButton disabled={isSubmitting} type="submit">
             Login
@@ -92,7 +125,7 @@ const Login: React.FC = (): JSX.Element => {
         <StyledLink to="/register">
           <p>Don't have an account? Click here to Sign Up!</p>
         </StyledLink>
-        <StyledLink to="/forgot-password">
+        <StyledLink to="/users/forgot-password">
           <p>Forgot Password?</p>
         </StyledLink>
       </FormContainer>

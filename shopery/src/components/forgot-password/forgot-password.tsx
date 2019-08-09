@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
 
 import { Container, StyledFormError } from "../common-styled-components/common";
 import BackToLanding from "../back-to-landing/BackToLanding";
@@ -9,38 +10,27 @@ import {
   StyledForm,
   StyledInput,
   StyledLabel,
-  StyledButton
+  StyledButton,
+  StyledP
 } from "./forgot-password-styles";
 import { FormEvent, ChangeEvent } from "../../hooks/interfaces";
-import axios from "axios";
-
-function validate(email: string) {
-  const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
-  let error: string = "";
-
-  if (!email) {
-    error = "Email is required";
-  } else if (!emailRegex.test(email)) {
-    error = "Invalid Email";
-  }
-
-  return error;
-}
+import validate from "./validate";
 
 const ForgotPassword: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [response, setResponse] = useState();
 
   const submitForgotPw = useCallback(async () => {
     try {
-      const response = await axios.post(
+      const res = await axios.post(
         `http://localhost:8000/api/v1.0/users/forgot-password`,
         { email }
       );
-      console.log(response);
+      setResponse(res);
     } catch (err) {
-      console.error(err.response.data.payload.message);
+      setError(err.response.data.payload.message);
     }
   }, [email]);
 
@@ -78,22 +68,26 @@ const ForgotPassword: React.FC = (): JSX.Element => {
     <Container>
       <BackToLanding page="/login" />
       <Logo />
-      <StyledForm noValidate onSubmit={handleSubmit}>
-        <StyledLabel>Enter your email address</StyledLabel>
-        <StyledInput
-          name="email"
-          type="text"
-          value={email}
-          placeholder="example@mail.com"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          className={error && "inputError"}
-        />
-        {error && <StyledFormError>{error}</StyledFormError>}
-        <StyledButton disabled={isSubmitting} type="submit">
-          Submit
-        </StyledButton>
-      </StyledForm>
+      {response ? (
+        <StyledP>{response.data.message}</StyledP>
+      ) : (
+        <StyledForm noValidate onSubmit={handleSubmit}>
+          <StyledLabel>Enter your email address</StyledLabel>
+          <StyledInput
+            name="email"
+            type="text"
+            value={email}
+            placeholder="example@mail.com"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className={error && "inputError"}
+          />
+          {error && <StyledFormError>{error}</StyledFormError>}
+          <StyledButton disabled={isSubmitting} type="submit">
+            Submit
+          </StyledButton>
+        </StyledForm>
+      )}
       <Footer />
     </Container>
   );

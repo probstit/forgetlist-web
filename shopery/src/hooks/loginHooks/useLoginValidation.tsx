@@ -10,7 +10,8 @@ import {
 export const useLoginValidation = (
   initialState: ILoginState,
   validate: Function,
-  authenthicate: Function
+  authenthicate: Function,
+  isActivated: Function
 ) => {
   const [values, setValues] = useState<ILoginState>(initialState);
   const [errors, setErrors] = useState<IErrorState>({});
@@ -27,7 +28,14 @@ export const useLoginValidation = (
         setSubmitting(false);
       }
     }
-  }, [errors, isSubmitting, values.email, values.password, authenthicate]);
+  }, [
+    errors,
+    isSubmitting,
+    values.email,
+    values.password,
+    authenthicate,
+    isActivated
+  ]);
 
   const handleSumbit = (e: FormEvent): void => {
     e.preventDefault();

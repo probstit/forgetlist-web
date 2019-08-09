@@ -44,6 +44,7 @@ export const StyledButton = styled.button<ThemeProps>`
 
   &:hover {
     cursor: pointer;
+    text-decoration: underline;
   }
 
   @media ${device.tablet} {
