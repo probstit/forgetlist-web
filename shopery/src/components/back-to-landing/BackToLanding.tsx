@@ -4,9 +4,13 @@ import StyledBackButton from "./back-to-landing-styles";
 import { StyledLink } from "../common-styled-components/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const BackToLanding: React.FC = (): JSX.Element => (
+interface BackProps {
+  page: string;
+}
+
+const BackToLanding: React.FC<BackProps> = ({ page }): JSX.Element => (
   <StyledBackButton>
-    <StyledLink to="/landing">
+    <StyledLink to={page}>
       <FontAwesomeIcon icon="angle-left" />
     </StyledLink>
   </StyledBackButton>

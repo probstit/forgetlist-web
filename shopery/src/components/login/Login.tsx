@@ -44,7 +44,8 @@ const Login: React.FC = (): JSX.Element => {
         `http://localhost:8000/api/v1.0/users/login`,
         { email, password }
       );
-      console.log(response);
+
+      console.log(response.data.message);
     } catch (err) {
       setDBerror(err.response.data.payload.message);
     }
@@ -52,7 +53,7 @@ const Login: React.FC = (): JSX.Element => {
 
   return (
     <Container>
-      <BackToLanding />
+      <BackToLanding page="/landing" />
       <Logo />
       <FormContainer>
         <h2>Login</h2>
@@ -90,6 +91,9 @@ const Login: React.FC = (): JSX.Element => {
         </StyledForm>
         <StyledLink to="/register">
           <p>Don't have an account? Click here to Sign Up!</p>
+        </StyledLink>
+        <StyledLink to="/forgot-password">
+          <p>Forgot Password?</p>
         </StyledLink>
       </FormContainer>
       <Footer />

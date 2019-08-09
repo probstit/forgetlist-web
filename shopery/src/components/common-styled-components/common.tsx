@@ -81,6 +81,7 @@ export const FormContainer = styled.div<ThemeProps>`
     margin: 0 auto 0.4em auto;
     text-align: center;
     border: none;
+    background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
     border-radius: ${props => (props.theme as DefaultTheme).borderRadius};
   }
 
@@ -91,6 +92,7 @@ export const FormContainer = styled.div<ThemeProps>`
 
   p {
     text-align: center;
+    margin-top: 0.5em;
     font-size: 0.6em;
     font-family: ${props => (props.theme as DefaultTheme).fontFamily};
 
@@ -100,7 +102,7 @@ export const FormContainer = styled.div<ThemeProps>`
   }
 
   .inputError {
-    border: 1.2px solid red;
+    border: 1.2px solid #eb2226;
   }
 `;
 

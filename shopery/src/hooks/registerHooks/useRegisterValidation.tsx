@@ -33,7 +33,8 @@ export const useRegisterValidation = (
     values.firstName,
     values.lastName,
     values.email,
-    values.password
+    values.password,
+    registerUser
   ]);
 
   const handleSumbit = (e: FormEvent): void => {

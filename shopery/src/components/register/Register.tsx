@@ -53,7 +53,7 @@ const Register: React.FC = (): JSX.Element => {
 
   return (
     <Container>
-      <BackToLanding />
+      <BackToLanding page="/landing" />
       <Logo />
       <FormContainer>
         <h2>Register</h2>

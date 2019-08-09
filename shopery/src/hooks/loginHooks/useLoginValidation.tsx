@@ -27,7 +27,7 @@ export const useLoginValidation = (
         setSubmitting(false);
       }
     }
-  }, [errors, isSubmitting, values.email, values.password]);
+  }, [errors, isSubmitting, values.email, values.password, authenthicate]);
 
   const handleSumbit = (e: FormEvent): void => {
     e.preventDefault();

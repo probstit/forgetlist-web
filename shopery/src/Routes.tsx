@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import LandingPage from "./components/landing-page/Landing";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
+import ForgotPassword from "./components/forgot-password/forgot-password";
 import NoMatch from "./components/no-match/NoMatch";
 
 const Routes: React.FC = (): JSX.Element => (
@@ -13,6 +14,7 @@ const Routes: React.FC = (): JSX.Element => (
       <Route path="/landing" component={LandingPage} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/forgot-password" component={ForgotPassword} />
       <Route component={NoMatch} />
     </Switch>
   </BrowserRouter>

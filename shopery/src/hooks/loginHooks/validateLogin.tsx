@@ -1,6 +1,6 @@
 import { ILoginState, IErrorState } from "../interfaces";
 
-export default function validateRegistration(values: ILoginState) {
+export default function validateLogin(values: ILoginState) {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
   const { email, password } = values;
 
