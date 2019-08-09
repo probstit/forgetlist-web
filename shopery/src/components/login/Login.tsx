@@ -52,10 +52,8 @@ const Login: React.FC = (): JSX.Element => {
           email,
           password
         });
-        console.log("authenthicated");
         setIsActive(isActive);
       } else {
-        console.log("rejected");
         setIsActive(isActive);
       }
     } catch (err) {
@@ -64,13 +62,13 @@ const Login: React.FC = (): JSX.Element => {
   }
   // Checks if users's account is activated.
   async function isActivated(): Promise<boolean> {
-    const { email } = values;
+    const { email, password } = values;
     let response;
     let isActive;
     try {
       response = await axios.post(
         `http://localhost:8000/api/v1.0/users/is-active`,
-        { email }
+        { email, password }
       );
 
       isActive = response.data.isActive;
