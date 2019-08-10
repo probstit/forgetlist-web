@@ -103,7 +103,7 @@ export const FormContainer = styled.div<ThemeProps>`
   }
 
   .inputError {
-    border: 1.2px solid #eb2226;
+    border: 1.2px solid #ee4444;
   }
 `;
 

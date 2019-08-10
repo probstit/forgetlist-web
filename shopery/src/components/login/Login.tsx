@@ -34,49 +34,19 @@ const Login: React.FC = (): JSX.Element => {
     values,
     isSubmitting,
     errors
-  } = useLoginValidation(
-    initialState,
-    validateLogin,
-    authenthicateUser,
-    isActivated
-  );
+  } = useLoginValidation(initialState, validateLogin, authenthicateUser);
   const [dbError, setDBerror] = useState(null);
-  const [isActive, setIsActive] = useState<boolean>(true);
 
   async function authenthicateUser(): Promise<void> {
     const { email, password } = values;
     try {
-      const isActive = await isActivated();
-      if (isActive) {
-        await axios.post(`http://localhost:8000/api/v1.0/users/login`, {
-          email,
-          password
-        });
-        setIsActive(isActive);
-      } else {
-        setIsActive(isActive);
-      }
+      await axios.post(`http://localhost:8000/api/v1.0/users/login`, {
+        email,
+        password
+      });
     } catch (err) {
       setDBerror(err.response.data.payload.message);
     }
-  }
-  // Checks if users's account is activated.
-  async function isActivated(): Promise<boolean> {
-    const { email, password } = values;
-    let response;
-    let isActive;
-    try {
-      response = await axios.post(
-        `http://localhost:8000/api/v1.0/users/is-active`,
-        { email, password }
-      );
-
-      isActive = response.data.isActive;
-    } catch (err) {
-      console.error(err);
-    }
-
-    return isActive;
   }
 
   return (
@@ -112,12 +82,9 @@ const Login: React.FC = (): JSX.Element => {
           {errors.password && (
             <StyledFormError>{errors.password}</StyledFormError>
           )}
-          {!isActive && (
-            <StyledFormError>{`Please activate your account before logging in`}</StyledFormError>
-          )}
           {dbError && <StyledFormError>{dbError}</StyledFormError>}
           <StyledButton disabled={isSubmitting} type="submit">
-            Login
+            {isSubmitting ? "Logging in..." : "Login"}
           </StyledButton>
         </StyledForm>
         <StyledLink to="/register">

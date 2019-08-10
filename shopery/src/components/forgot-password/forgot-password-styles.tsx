@@ -8,7 +8,7 @@ export const StyledForm = styled.form<ThemeProps>`
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
 
   .inputError {
-    border: 1.2px solid #eb2226;
+    border: 1.2px solid #ee4444;
   }
 
   div {
