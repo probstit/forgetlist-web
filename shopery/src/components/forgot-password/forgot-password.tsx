@@ -1,10 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import { Container, StyledFormError } from "../common-styled-components/common";
 import BackToLanding from "../back-to-landing/BackToLanding";
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
+
+import { useFormValidation } from "../../hooks/useFormValidation";
+import validateForm from "../../hooks/validateForm";
+
+import { FormState } from "../../hooks/interfaces";
 
 import {
   StyledForm,
@@ -13,56 +18,35 @@ import {
   StyledButton,
   StyledP
 } from "./forgot-password-styles";
-import { FormEvent, ChangeEvent } from "../../hooks/interfaces";
-import validate from "./validate";
+
+const initialState: FormState = {
+  email: ""
+};
 
 const ForgotPassword: React.FC = (): JSX.Element => {
-  const [email, setEmail] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [response, setResponse] = useState();
+  const [response, setResponse] = useState<any>();
+  const [dbError, setDBerror] = useState<string>("");
 
-  const submitForgotPw = useCallback(async () => {
+  const submitForgotPw = async () => {
+    const { email } = values;
+    const url = "http://localhost:8000/api/v1.0/users/forgot-password";
+
     try {
-      const res = await axios.post(
-        `http://localhost:8000/api/v1.0/users/forgot-password`,
-        { email }
-      );
+      const res = await axios.post(url, { email });
       setResponse(res);
     } catch (err) {
-      setError(err.response.data.payload.message);
+      setDBerror(err.response.data.payload.message);
     }
-  }, [email]);
-
-  useEffect(() => {
-    if (isSubmitting) {
-      const noError = error.length === 0;
-
-      if (noError) {
-        submitForgotPw();
-        setIsSubmitting(false);
-      } else {
-        setIsSubmitting(false);
-      }
-    }
-  }, [error, email, isSubmitting, submitForgotPw]);
-
-  const handleSubmit = (e: FormEvent): void => {
-    e.preventDefault();
-    const validationError = validate(email);
-    setError(validationError);
-    setIsSubmitting(true);
   };
 
-  const handleChange = (e: ChangeEvent): void => {
-    const { value } = e.target;
-    setEmail(value);
-  };
-
-  const handleBlur = (): void => {
-    const validationError = validate(email);
-    setError(validationError);
-  };
+  const {
+    values,
+    handleChange,
+    handleSumbit,
+    handleBlur,
+    errors,
+    isSubmitting
+  } = useFormValidation(initialState, validateForm, submitForgotPw);
 
   return (
     <Container>
@@ -71,18 +55,19 @@ const ForgotPassword: React.FC = (): JSX.Element => {
       {response ? (
         <StyledP>{response.data.message}</StyledP>
       ) : (
-        <StyledForm noValidate onSubmit={handleSubmit}>
+        <StyledForm noValidate onSubmit={handleSumbit}>
           <StyledLabel>Enter your email address</StyledLabel>
           <StyledInput
             name="email"
             type="text"
-            value={email}
+            value={values.email}
             placeholder="example@mail.com"
             onChange={handleChange}
             onBlur={handleBlur}
-            className={error && "inputError"}
+            className={errors.email && "inputError"}
           />
-          {error && <StyledFormError>{error}</StyledFormError>}
+          {errors && <StyledFormError>{errors.email}</StyledFormError>}
+          {dbError && <StyledFormError>{dbError}</StyledFormError>}
           <StyledButton disabled={isSubmitting} type="submit">
             Submit
           </StyledButton>

@@ -9,6 +9,14 @@ export const Container = styled.div<ThemeProps>`
   min-height: 100%;
   padding-top: 3em;
   background-color: ${props => (props.theme as DefaultTheme).colors.primary};
+
+  .success-message {
+    margin-top: 120px;
+    padding: 0 15px;
+    text-align: center;
+    color: ${props => (props.theme as DefaultTheme).colors.secondary};
+    font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+  }
 `;
 
 export const StyledLink = styled(Link)<ThemeProps>`
@@ -31,6 +39,7 @@ export const StyledButton = styled.button<ThemeProps>`
   display: block;
   margin: 0 auto 0.3em auto;
   vertical-align: middle;
+  font-weight: bold;
   font-weight: ${props => (props.reversed ? "450" : "600")};
   background-color: ${props =>
     props.reversed

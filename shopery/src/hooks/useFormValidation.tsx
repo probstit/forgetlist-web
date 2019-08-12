@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
 
-import {
-  IRegisterState,
-  IErrorState,
-  FormEvent,
-  ChangeEvent
-} from "../interfaces";
+import { FormState, ErrorState, FormEvent, ChangeEvent } from "./interfaces";
 
-export const useRegisterValidation = (
-  initialState: IRegisterState,
+export const useFormValidation = (
+  initialState: FormState,
   validate: Function,
-  registerUser: Function
+  callback: Function
 ) => {
-  const [values, setValues] = useState<IRegisterState>(initialState);
-  const [errors, setErrors] = useState<IErrorState>({});
+  const [values, setValues] = useState<FormState>(initialState);
+  const [errors, setErrors] = useState<ErrorState>({});
   const [isSubmitting, setSubmitting] = useState<boolean>(false);
 
   useEffect(() => {
@@ -21,21 +16,13 @@ export const useRegisterValidation = (
       const noErrors = Object.keys(errors).length === 0;
 
       if (noErrors) {
-        registerUser();
+        callback();
         setSubmitting(false);
       } else {
         setSubmitting(false);
       }
     }
-  }, [
-    errors,
-    isSubmitting,
-    values.firstName,
-    values.lastName,
-    values.email,
-    values.password,
-    registerUser
-  ]);
+  }, [errors, isSubmitting, values, callback]);
 
   const handleSumbit = (e: FormEvent): void => {
     e.preventDefault();

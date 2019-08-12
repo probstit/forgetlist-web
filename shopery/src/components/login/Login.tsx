@@ -15,13 +15,13 @@ import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
 import BackToLanding from "../back-to-landing/BackToLanding";
 // Import interfaces
-import { ILoginState } from "../../hooks/interfaces";
+import { FormState } from "../../hooks/interfaces";
 // Import custom hook
-import { useLoginValidation } from "../../hooks/loginHooks/useLoginValidation";
+import { useFormValidation } from "../../hooks/useFormValidation";
 // Import validation function
-import validateLogin from "../../hooks/loginHooks/validateLogin";
+import validateForm from "../../hooks/validateForm";
 
-const initialState: ILoginState = {
+const initialState: FormState = {
   email: "",
   password: ""
 };
@@ -34,16 +34,18 @@ const Login: React.FC = (): JSX.Element => {
     values,
     isSubmitting,
     errors
-  } = useLoginValidation(initialState, validateLogin, authenthicateUser);
-  const [dbError, setDBerror] = useState(null);
+  } = useFormValidation(initialState, validateForm, authenthicateUser);
+  const [dbError, setDBerror] = useState<string>("");
 
   async function authenthicateUser(): Promise<void> {
     const { email, password } = values;
+    const url = "http://localhost:8000/api/v1.0/users/login";
     try {
-      await axios.post(`http://localhost:8000/api/v1.0/users/login`, {
+      await axios.post(url, {
         email,
         password
       });
+      setDBerror("");
     } catch (err) {
       setDBerror(err.response.data.payload.message);
     }
@@ -84,7 +86,7 @@ const Login: React.FC = (): JSX.Element => {
           )}
           {dbError && <StyledFormError>{dbError}</StyledFormError>}
           <StyledButton disabled={isSubmitting} type="submit">
-            {isSubmitting ? "Logging in..." : "Login"}
+            Login
           </StyledButton>
         </StyledForm>
         <StyledLink to="/register">
