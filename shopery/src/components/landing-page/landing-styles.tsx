@@ -41,7 +41,7 @@ export const Description = styled.section<ThemeProps>`
 export const ButtonsContainer = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
-  margin-top: 7em;
+  margin-top: 4em;
 
   @media ${device.mobileL} {
     margin: 9em auto 0 auto;

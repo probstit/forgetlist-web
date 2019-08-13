@@ -9,8 +9,9 @@ const StyledNotFound = styled.div<ThemeProps>`
 
   h2 {
     text-align: center;
-    margin-top: 5em;
+    margin-top: 7em;
     padding: 0 1.5em;
+    font-size: 1em;
     color: ${props => (props.theme as DefaultTheme).colors.secondary};
     font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   }

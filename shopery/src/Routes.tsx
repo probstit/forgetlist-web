@@ -4,8 +4,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import LandingPage from "./components/landing-page/Landing";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
-import ForgotPassword from "./components/forgot-password/Forgot-password";
-import ResetPassword from "./components/forgot-password/Reset-password";
+import ForgotPassword from "./components/password/Forgot-password";
+import ResetPassword from "./components/password/Reset-password";
 import Main from "./components/main/Main";
 import NoMatch from "./components/no-match/NoMatch";
 

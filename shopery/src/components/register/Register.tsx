@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 // Import custom hook
 import { useFormValidation } from "../../hooks/useFormValidation";
-// Import form validation function
+// Import form validation function to work with custom hook
 import validateForm from "../../hooks/validateForm";
 // Import styled components
 import {
   Container,
-  StyledButton,
   FormContainer,
   StyledForm,
+  StyledInput,
+  StyledLabel,
+  StyledButton,
   StyledLink,
-  StyledFormError
+  StyledFormError,
+  SuccessMessage
 } from "../common-styled-components/common";
 // Import components
 import Logo from "../logo/Logo";
@@ -19,7 +22,7 @@ import Footer from "../footer/Footer";
 import BackToLanding from "../back-to-landing/BackToLanding";
 // Import interfaces
 import { FormState } from "../../hooks/interfaces";
-
+// Initial state for Register component
 const initialState: FormState = {
   firstName: "",
   lastName: "",
@@ -30,8 +33,8 @@ const initialState: FormState = {
 const Register: React.FC = (): JSX.Element => {
   const [dbError, setDBerror] = useState<string>("");
   const [response, setResponse] = useState<any>(null);
-
-  const registerUser = async () => {
+  // Serves as callback function for the custom hook.
+  const registerUser = async (): Promise<void> => {
     const { firstName, lastName, email, password } = values;
     const url = "http://localhost:8000/api/v1.0/users/register";
     try {
@@ -55,20 +58,24 @@ const Register: React.FC = (): JSX.Element => {
     errors,
     isSubmitting
   } = useFormValidation(initialState, validateForm, registerUser);
+  // Helps with styling input elements (prop).
+  const checkForError: boolean =
+    (errors.email ? true : false) || dbError.length !== 0;
 
   return (
     <Container>
       <BackToLanding page="/landing" />
       <Logo />
       {response ? (
-        <p className="success-message">{response.data.message}</p>
+        <SuccessMessage>{response.data.message}</SuccessMessage>
       ) : (
         <FormContainer>
           <h2>Register</h2>
           <hr />
           <StyledForm noValidate onSubmit={handleSumbit}>
-            <label>First Name</label>
-            <input
+            <StyledLabel>First Name</StyledLabel>
+            <StyledInput
+              styleError={checkForError}
               type="text"
               name="firstName"
               value={values.firstName}
@@ -81,8 +88,9 @@ const Register: React.FC = (): JSX.Element => {
               <StyledFormError>{errors.firstName}</StyledFormError>
             )}
 
-            <label>Last Name</label>
-            <input
+            <StyledLabel>Last Name</StyledLabel>
+            <StyledInput
+              styleError={checkForError}
               type="text"
               name="lastName"
               value={values.lastName}
@@ -95,8 +103,9 @@ const Register: React.FC = (): JSX.Element => {
               <StyledFormError>{errors.lastName}</StyledFormError>
             )}
 
-            <label>E-mail</label>
-            <input
+            <StyledLabel>E-mail</StyledLabel>
+            <StyledInput
+              styleError={checkForError}
               type="email"
               name="email"
               value={values.email}
@@ -107,8 +116,9 @@ const Register: React.FC = (): JSX.Element => {
             />
             {errors.email && <StyledFormError>{errors.email}</StyledFormError>}
 
-            <label>Password</label>
-            <input
+            <StyledLabel>Password</StyledLabel>
+            <StyledInput
+              styleError={checkForError}
               type="password"
               name="password"
               value={values.password}
@@ -122,7 +132,7 @@ const Register: React.FC = (): JSX.Element => {
             )}
             {dbError && <StyledFormError>{dbError}</StyledFormError>}
 
-            <StyledButton disabled={isSubmitting} type="submit">
+            <StyledButton disabled={isSubmitting} formButton type="submit">
               Create Account
             </StyledButton>
           </StyledForm>

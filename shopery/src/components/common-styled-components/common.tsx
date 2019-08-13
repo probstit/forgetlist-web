@@ -9,23 +9,56 @@ export const Container = styled.div<ThemeProps>`
   min-height: 100%;
   padding-top: 3em;
   background-color: ${props => (props.theme as DefaultTheme).colors.primary};
+`;
 
-  .success-message {
-    margin-top: 120px;
-    padding: 0 15px;
-    text-align: center;
+export const FormContainer = styled.div<ThemeProps>`
+  width: 100%;
+  height: auto;
+  padding: 1.5em;
+
+  h2 {
     color: ${props => (props.theme as DefaultTheme).colors.secondary};
     font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+    text-align: center;
+    font-weight: 450;
+  }
+
+  hr {
+    width: 5em;
+    margin: 0.2em auto 0 auto;
+    border: 0.2px solid
+      ${props => (props.theme as DefaultTheme).colors.secondary};
+    background-color: ${props =>
+      (props.theme as DefaultTheme).colors.secondary};
   }
 `;
 
-export const StyledLink = styled(Link)<ThemeProps>`
-  text-decoration: none;
+export const StyledForm = styled.form<ThemeProps>`
+  text-align: center
+  font-size: 0.7em;
+  padding: 0 1.5em 1.5em 1.5em;
+  margin-top: ${props => (props.recover ? "9em" : "2em")};
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
+  font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+`;
 
-  &:hover {
-    cursor: pointer;
-  }
+export const StyledLabel = styled.label<ThemeProps>`
+  display: block;
+  font-size: 1em;
+  color: ${props => (props.theme as DefaultTheme).colors.secondary};
+  font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+  margin: 0.5em 0 0.2em 0;
+`;
+
+export const StyledInput = styled.input<ThemeProps>`
+  width: 15em;
+  height: 25px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  border: ${props => (props.styleError ? "1.2px solid #ee0000" : "none")}
+  background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
+  border-radius: ${props => (props.theme as DefaultTheme).borderRadius};
 `;
 
 export const StyledButton = styled.button<ThemeProps>`
@@ -37,7 +70,8 @@ export const StyledButton = styled.button<ThemeProps>`
       : "none"};
   border-radius: 20px;
   display: block;
-  margin: 0 auto 0.3em auto;
+  margin: ${props =>
+    props.formButton ? "1.5em auto 0 auto" : "0 auto 0.3em auto"};
   vertical-align: middle;
   font-weight: bold;
   font-weight: ${props => (props.reversed ? "450" : "600")};
@@ -63,66 +97,30 @@ export const StyledButton = styled.button<ThemeProps>`
   }
 `;
 
-export const FormContainer = styled.div<ThemeProps>`
-  width: 100%;
-  height: auto;
-  padding: 1.5em;
-
-  h2 {
-    color: ${props => (props.theme as DefaultTheme).colors.secondary};
-    font-family: ${props => (props.theme as DefaultTheme).fontFamily};
-    text-align: center;
-    font-weight: 450;
-  }
-
-  hr {
-    width: 5em;
-    margin: 0.2em auto 0 auto;
-    border: 0.2px solid
-      ${props => (props.theme as DefaultTheme).colors.secondary};
-    background-color: ${props =>
-      (props.theme as DefaultTheme).colors.secondary};
-  }
-
-  input {
-    width: 15em;
-    height: 25px;
-    display: block;
-    margin: 0 auto 0.4em auto;
-    text-align: center;
-    border: none;
-    background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
-    border-radius: ${props => (props.theme as DefaultTheme).borderRadius};
-  }
-
-  button {
-    margin-top: 2em;
-    font-weight: 600;
-  }
-
-  p {
-    text-align: center;
-    margin-top: 0.5em;
-    font-size: 0.6em;
-    font-family: ${props => (props.theme as DefaultTheme).fontFamily};
-
-    &: hover {
-      text-decoration: underline;
-    }
-  }
-
-  .inputError {
-    border: 1.2px solid #ee4444;
-  }
+/* This component will display after user successfully submits data */
+export const SuccessMessage = styled.p<ThemeProps>`
+  font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+  color: ${props => (props.theme as DefaultTheme).colors.secondary};
+  text-align: center;
+  font-size: 0.8em;
+  margin-top: 120px;
 `;
 
-export const StyledForm = styled.form<ThemeProps>`
-  text-align: center
-  font-size: 0.7em;
-  padding: 1.5em;
-  margin-top: 2em;
+export const StyledLink = styled(Link)<ThemeProps>`
+  text-decoration: none;
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
-  font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+
+  p {
+    font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+    font-size: 0.65em;
+    text-align: center;
+    margin-top: 0.2em;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
 `;
 
 export const StyledFormError = styled.div<ThemeProps>`

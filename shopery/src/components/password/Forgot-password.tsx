@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import axios from "axios";
-
-import { Container, StyledFormError } from "../common-styled-components/common";
+// Import custom hook
+import { useFormValidation } from "../../hooks/useFormValidation";
+// Import form validation function to work with custom hook
+import validateForm from "../../hooks/validateForm";
+// Import styled components
+import {
+  Container,
+  StyledFormError,
+  StyledForm,
+  StyledLabel,
+  StyledInput,
+  StyledButton,
+  SuccessMessage
+} from "../common-styled-components/common";
+// Import components
 import BackToLanding from "../back-to-landing/BackToLanding";
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
-
-import { useFormValidation } from "../../hooks/useFormValidation";
-import validateForm from "../../hooks/validateForm";
-
+// Import interfaces
 import { FormState } from "../../hooks/interfaces";
-
-import {
-  StyledForm,
-  StyledInput,
-  StyledLabel,
-  StyledButton,
-  StyledP
-} from "./forgot-password-styles";
-
+// Initial state for ForgotPassword component
 const initialState: FormState = {
   email: ""
 };
@@ -26,7 +28,7 @@ const initialState: FormState = {
 const ForgotPassword: React.FC = (): JSX.Element => {
   const [response, setResponse] = useState<any>();
   const [dbError, setDBerror] = useState<string>("");
-
+  // Serves as callback for the custom hook
   const submitForgotPw = async () => {
     const { email } = values;
     const url = "http://localhost:8000/api/v1.0/users/forgot-password";
@@ -34,6 +36,7 @@ const ForgotPassword: React.FC = (): JSX.Element => {
     try {
       const res = await axios.post(url, { email });
       setResponse(res);
+      setDBerror("");
     } catch (err) {
       setDBerror(err.response.data.payload.message);
     }
@@ -47,28 +50,31 @@ const ForgotPassword: React.FC = (): JSX.Element => {
     errors,
     isSubmitting
   } = useFormValidation(initialState, validateForm, submitForgotPw);
+  // Helps with styling input elements (prop).
+  const checkForError: boolean =
+    (errors.email ? true : false) || dbError.length !== 0;
 
   return (
     <Container>
       <BackToLanding page="/login" />
       <Logo />
       {response ? (
-        <StyledP>{response.data.message}</StyledP>
+        <SuccessMessage>{response.data.message}</SuccessMessage>
       ) : (
-        <StyledForm noValidate onSubmit={handleSumbit}>
+        <StyledForm recover noValidate onSubmit={handleSumbit}>
           <StyledLabel>Enter your email address</StyledLabel>
           <StyledInput
+            styleError={checkForError}
             name="email"
             type="text"
             value={values.email}
             placeholder="example@mail.com"
             onChange={handleChange}
             onBlur={handleBlur}
-            className={errors.email && "inputError"}
           />
           {errors && <StyledFormError>{errors.email}</StyledFormError>}
           {dbError && <StyledFormError>{dbError}</StyledFormError>}
-          <StyledButton disabled={isSubmitting} type="submit">
+          <StyledButton disabled={isSubmitting} formButton type="submit">
             Submit
           </StyledButton>
         </StyledForm>

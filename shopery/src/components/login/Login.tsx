@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+// Import custom hook
+import { useFormValidation } from "../../hooks/useFormValidation";
+// Import form validation function to work with custom hook
+import validateForm from "../../hooks/validateForm";
 // Import styled components
 import {
   Container,
-  StyledButton,
   FormContainer,
   StyledForm,
+  StyledInput,
+  StyledLabel,
+  StyledButton,
   StyledLink,
   StyledFormError
 } from "../common-styled-components/common";
@@ -16,28 +21,16 @@ import Footer from "../footer/Footer";
 import BackToLanding from "../back-to-landing/BackToLanding";
 // Import interfaces
 import { FormState } from "../../hooks/interfaces";
-// Import custom hook
-import { useFormValidation } from "../../hooks/useFormValidation";
-// Import validation function
-import validateForm from "../../hooks/validateForm";
-
+// Initial state for Login component
 const initialState: FormState = {
   email: "",
   password: ""
 };
 
 const Login: React.FC = (): JSX.Element => {
-  const {
-    handleSumbit,
-    handleBlur,
-    handleChange,
-    values,
-    isSubmitting,
-    errors
-  } = useFormValidation(initialState, validateForm, authenthicateUser);
   const [dbError, setDBerror] = useState<string>("");
-
-  async function authenthicateUser(): Promise<void> {
+  // Serves as callback for the custom hook
+  const authenthicateUser = async (): Promise<void> => {
     const { email, password } = values;
     const url = "http://localhost:8000/api/v1.0/users/login";
     try {
@@ -49,7 +42,19 @@ const Login: React.FC = (): JSX.Element => {
     } catch (err) {
       setDBerror(err.response.data.payload.message);
     }
-  }
+  };
+
+  const {
+    handleSumbit,
+    handleBlur,
+    handleChange,
+    values,
+    isSubmitting,
+    errors
+  } = useFormValidation(initialState, validateForm, authenthicateUser);
+  // Helps with styling input elements (prop).
+  const checkForError: boolean =
+    (errors.email ? true : false) || dbError.length !== 0;
 
   return (
     <Container>
@@ -59,8 +64,9 @@ const Login: React.FC = (): JSX.Element => {
         <h2>Login</h2>
         <hr />
         <StyledForm noValidate onSubmit={handleSumbit}>
-          E-mail <br />
-          <input
+          <StyledLabel>E-mail</StyledLabel>
+          <StyledInput
+            styleError={checkForError}
             name="email"
             type="email"
             placeholder="address@email.com"
@@ -70,9 +76,9 @@ const Login: React.FC = (): JSX.Element => {
             className={errors.email && "inputError"}
           />
           {errors.email && <StyledFormError>{errors.email}</StyledFormError>}
-          <br />
-          Password <br />
-          <input
+          <StyledLabel>Password</StyledLabel>
+          <StyledInput
+            styleError={checkForError}
             name="password"
             type="password"
             placeholder="********"
@@ -85,7 +91,7 @@ const Login: React.FC = (): JSX.Element => {
             <StyledFormError>{errors.password}</StyledFormError>
           )}
           {dbError && <StyledFormError>{dbError}</StyledFormError>}
-          <StyledButton disabled={isSubmitting} type="submit">
+          <StyledButton disabled={isSubmitting} formButton type="submit">
             Login
           </StyledButton>
         </StyledForm>

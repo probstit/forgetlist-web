@@ -20,9 +20,9 @@ export default function validateForm(values: FormState) {
 
   if (values.hasOwnProperty("email")) {
     if (!email) {
-      errors.email = "Email is required";
+      errors.email = "E-mail is required";
     } else if (!emailRegex.test(email)) {
-      errors.email = "Invalid email";
+      errors.email = "Invalid e-mail";
     }
   }
 
