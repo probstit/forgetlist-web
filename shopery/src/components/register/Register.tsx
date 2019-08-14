@@ -14,12 +14,13 @@ import {
   StyledButton,
   StyledLink,
   StyledFormError,
-  SuccessMessage
+  ResponseMessage
 } from "../common-styled-components/common";
 // Import components
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
 import BackToLanding from "../back-to-landing/BackToLanding";
+import Loading from "../loading-animation/Loading";
 // Import interfaces
 import { FormState } from "../../hooks/interfaces";
 // Initial state for Register component
@@ -33,11 +34,13 @@ const initialState: FormState = {
 const Register: React.FC = (): JSX.Element => {
   const [dbError, setDBerror] = useState<string>("");
   const [response, setResponse] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   // Serves as callback function for the custom hook.
   const registerUser = async (): Promise<void> => {
     const { firstName, lastName, email, password } = values;
     const url = "http://localhost:8000/api/v1.0/users/register";
     try {
+      setIsLoading(true);
       const res = await axios.post(url, {
         firstName,
         lastName,
@@ -45,6 +48,7 @@ const Register: React.FC = (): JSX.Element => {
         password
       });
       setResponse(res);
+      setIsLoading(false);
     } catch (err) {
       setDBerror(err.response.data.payload.message);
     }
@@ -67,7 +71,7 @@ const Register: React.FC = (): JSX.Element => {
       <BackToLanding page="/landing" />
       <Logo />
       {response ? (
-        <SuccessMessage>{response.data.message}</SuccessMessage>
+        <ResponseMessage>{response.data.message}</ResponseMessage>
       ) : (
         <FormContainer>
           <h2>Register</h2>
@@ -131,10 +135,13 @@ const Register: React.FC = (): JSX.Element => {
               <StyledFormError>{errors.password}</StyledFormError>
             )}
             {dbError && <StyledFormError>{dbError}</StyledFormError>}
-
-            <StyledButton disabled={isSubmitting} formButton type="submit">
-              Create Account
-            </StyledButton>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <StyledButton disabled={isSubmitting} formButton type="submit">
+                Create Account
+              </StyledButton>
+            )}
           </StyledForm>
           <StyledLink to="/login">
             <p>Already have an account? Sign in instead!</p>

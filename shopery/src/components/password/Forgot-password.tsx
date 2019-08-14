@@ -12,7 +12,7 @@ import {
   StyledLabel,
   StyledInput,
   StyledButton,
-  SuccessMessage
+  ResponseMessage
 } from "../common-styled-components/common";
 // Import components
 import BackToLanding from "../back-to-landing/BackToLanding";
@@ -59,7 +59,7 @@ const ForgotPassword: React.FC = (): JSX.Element => {
       <BackToLanding page="/login" />
       <Logo />
       {response ? (
-        <SuccessMessage>{response.data.message}</SuccessMessage>
+        <ResponseMessage>{response.data.message}</ResponseMessage>
       ) : (
         <StyledForm recover noValidate onSubmit={handleSumbit}>
           <StyledLabel>Enter your email address</StyledLabel>

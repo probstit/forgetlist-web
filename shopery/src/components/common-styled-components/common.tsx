@@ -97,13 +97,14 @@ export const StyledButton = styled.button<ThemeProps>`
   }
 `;
 
-/* This component will display after user successfully submits data */
-export const SuccessMessage = styled.p<ThemeProps>`
+/* This component will display after server responds to the request */
+export const ResponseMessage = styled.p<ThemeProps>`
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
   text-align: center;
   font-size: 0.8em;
   margin-top: 120px;
+  margin-bottom: 40px;
 `;
 
 export const StyledLink = styled(Link)<ThemeProps>`
@@ -134,4 +135,9 @@ export const StyledFormError = styled.div<ThemeProps>`
     font-size: 10px;
     font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   }
+`;
+// This component will style and encapsulate spinner animation
+export const LoadingAnimation = styled.div<ThemeProps>`
+  margin-top: 1.5em;
+  font-size: 1.5em;
 `;

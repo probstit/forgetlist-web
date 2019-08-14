@@ -5,9 +5,10 @@ import App from "./App";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faShoppingBasket,
-  faAngleLeft
+  faAngleLeft,
+  faSync
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faShoppingBasket, faAngleLeft);
+library.add(faShoppingBasket, faAngleLeft, faSync);
 
 ReactDOM.render(<App />, document.getElementById("root"));

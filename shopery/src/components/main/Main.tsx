@@ -3,7 +3,7 @@ import React from "react";
 const Main: React.FC = (): JSX.Element => {
   return (
     <div>
-      <h1>Main components</h1>
+      <h1>Main component</h1>
     </div>
   );
 };

@@ -19,6 +19,7 @@ import {
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
 import BackToLanding from "../back-to-landing/BackToLanding";
+import Loading from "../loading-animation/Loading";
 // Import interfaces
 import { FormState } from "../../hooks/interfaces";
 // Initial state for Login component
@@ -29,16 +30,19 @@ const initialState: FormState = {
 
 const Login: React.FC = (): JSX.Element => {
   const [dbError, setDBerror] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   // Serves as callback for the custom hook
   const authenthicateUser = async (): Promise<void> => {
     const { email, password } = values;
     const url = "http://localhost:8000/api/v1.0/users/login";
     try {
+      setIsLoading(true);
       await axios.post(url, {
         email,
         password
       });
       setDBerror("");
+      setIsLoading(false);
     } catch (err) {
       setDBerror(err.response.data.payload.message);
     }
@@ -91,9 +95,13 @@ const Login: React.FC = (): JSX.Element => {
             <StyledFormError>{errors.password}</StyledFormError>
           )}
           {dbError && <StyledFormError>{dbError}</StyledFormError>}
-          <StyledButton disabled={isSubmitting} formButton type="submit">
-            Login
-          </StyledButton>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <StyledButton disabled={isSubmitting} formButton type="submit">
+              Login
+            </StyledButton>
+          )}
         </StyledForm>
         <StyledLink to="/register">
           <p>Don't have an account? Click here to Sign Up!</p>
