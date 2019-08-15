@@ -24,7 +24,7 @@ export const useFormValidation = (
     }
   }, [errors, isSubmitting, values, callback]);
 
-  const handleSumbit = (e: FormEvent): void => {
+  const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
     const validationErrors = validate(values);
     setErrors(validationErrors);
@@ -48,7 +48,7 @@ export const useFormValidation = (
   return {
     values,
     handleChange,
-    handleSumbit,
+    handleSubmit,
     handleBlur,
     errors,
     isSubmitting

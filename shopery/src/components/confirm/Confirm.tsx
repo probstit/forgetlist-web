@@ -55,10 +55,7 @@ const Confirm: React.FC<RouteComponentProps> = ({
       {isActive && <ResponseMessage>{message}</ResponseMessage>}
       {error && <ResponseMessage>{error}</ResponseMessage>}
       <StyledLink to="/">
-        <p>
-          Click here if the browser won't automatically redirect you to the main
-          page.
-        </p>
+        <p>Click here if the browser doesn't automatically redirect you.</p>
       </StyledLink>
       <Footer />
     </Container>

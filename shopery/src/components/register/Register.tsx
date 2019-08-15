@@ -51,13 +51,14 @@ const Register: React.FC = (): JSX.Element => {
       setIsLoading(false);
     } catch (err) {
       setDBerror(err.response.data.payload.message);
+      setIsLoading(false);
     }
   };
 
   const {
     values,
     handleChange,
-    handleSumbit,
+    handleSubmit,
     handleBlur,
     errors,
     isSubmitting
@@ -76,7 +77,7 @@ const Register: React.FC = (): JSX.Element => {
         <FormContainer>
           <h2>Register</h2>
           <hr />
-          <StyledForm noValidate onSubmit={handleSumbit}>
+          <StyledForm noValidate onSubmit={handleSubmit}>
             <StyledLabel>First Name</StyledLabel>
             <StyledInput
               styleError={checkForError}

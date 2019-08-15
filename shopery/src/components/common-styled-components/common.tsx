@@ -56,6 +56,7 @@ export const StyledInput = styled.input<ThemeProps>`
   display: block;
   margin: 0 auto;
   text-align: center;
+  padding: 0 5px;
   border: ${props => (props.styleError ? "1.2px solid #ee0000" : "none")}
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   border-radius: ${props => (props.theme as DefaultTheme).borderRadius};

@@ -22,13 +22,14 @@ import BackToLanding from "../back-to-landing/BackToLanding";
 import Loading from "../loading-animation/Loading";
 // Import interfaces
 import { FormState } from "../../hooks/interfaces";
+import { RouteComponentProps } from "react-router-dom";
 // Initial state for Login component
 const initialState: FormState = {
   email: "",
   password: ""
 };
 
-const Login: React.FC = (): JSX.Element => {
+const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
   const [dbError, setDBerror] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // Serves as callback for the custom hook
@@ -43,13 +44,15 @@ const Login: React.FC = (): JSX.Element => {
       });
       setDBerror("");
       setIsLoading(false);
+      history.push("/");
     } catch (err) {
       setDBerror(err.response.data.payload.message);
+      setIsLoading(false);
     }
   };
 
   const {
-    handleSumbit,
+    handleSubmit,
     handleBlur,
     handleChange,
     values,
@@ -67,7 +70,7 @@ const Login: React.FC = (): JSX.Element => {
       <FormContainer>
         <h2>Login</h2>
         <hr />
-        <StyledForm noValidate onSubmit={handleSumbit}>
+        <StyledForm noValidate onSubmit={handleSubmit}>
           <StyledLabel>E-mail</StyledLabel>
           <StyledInput
             styleError={checkForError}
@@ -77,7 +80,6 @@ const Login: React.FC = (): JSX.Element => {
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={errors.email && "inputError"}
           />
           {errors.email && <StyledFormError>{errors.email}</StyledFormError>}
           <StyledLabel>Password</StyledLabel>
@@ -89,7 +91,6 @@ const Login: React.FC = (): JSX.Element => {
             value={values.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={errors.password && "inputError"}
           />
           {errors.password && (
             <StyledFormError>{errors.password}</StyledFormError>
