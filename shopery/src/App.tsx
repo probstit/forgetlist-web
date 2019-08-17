@@ -21,13 +21,15 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-const App: React.FC = (): JSX.Element => (
-  <ThemeProvider theme={theme}>
-    <React.Fragment>
-      <GlobalStyle />
-      <Routes />
-    </React.Fragment>
-  </ThemeProvider>
-);
+const App: React.FC = (): JSX.Element => {
+  return (
+    <ThemeProvider theme={theme}>
+      <React.Fragment>
+        <GlobalStyle />
+        <Routes />
+      </React.Fragment>
+    </ThemeProvider>
+  );
+};
 
 export default App;

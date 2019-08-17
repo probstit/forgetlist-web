@@ -13,7 +13,7 @@ const NoMatch: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
     <StyledNotFound>
       <Logo />
       <h2>
-        We are sorry! Looks like we couldn't find the page you were looking for!
+        We are sorry! Looks like we couldn't find the page you are looking for!
       </h2>
       <StyledButton formButton onClick={() => history.goBack()}>
         Go Back

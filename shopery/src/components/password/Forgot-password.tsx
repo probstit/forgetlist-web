@@ -5,7 +5,6 @@ import { useFormValidation } from "../../hooks/useFormValidation";
 // Import form validation function to work with custom hook
 import validateForm from "../../hooks/validateForm";
 import PasswordFeatures from "./PasswordFeatures";
-
 // Import interfaces
 import { FormState } from "../../hooks/interfaces";
 // Initial state for ForgotPassword component

@@ -88,6 +88,7 @@ export const StyledButton = styled.button<ThemeProps>`
 
   &:hover {
     cursor: pointer;
+    opacity: 0.9;
     text-decoration: underline;
   }
 
