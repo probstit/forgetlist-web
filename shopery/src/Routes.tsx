@@ -13,8 +13,8 @@ import NoMatch from "./components/no-match/NoMatch";
 import AuthContextProvider from "./contexts/authContext";
 
 const Routes: React.FC = (): JSX.Element => (
-  <BrowserRouter>
-    <AuthContextProvider>
+  <AuthContextProvider>
+    <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Main} />
         <Route path="/landing" component={LandingPage} />
@@ -25,8 +25,8 @@ const Routes: React.FC = (): JSX.Element => (
         <Route path="/users/confirm" component={Confirm} />
         <Route component={NoMatch} />
       </Switch>
-    </AuthContextProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </AuthContextProvider>
 );
 
 export default Routes;

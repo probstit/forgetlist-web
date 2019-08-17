@@ -165,7 +165,6 @@ const Register: React.FC = (): JSX.Element => {
           <Footer />
         </>
       )}
-      )}
     </Container>
   );
 };
