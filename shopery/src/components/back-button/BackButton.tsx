@@ -1,6 +1,6 @@
 import React from "react";
 
-import StyledBackButton from "./back-to-landing-styles";
+import StyledBackButton from "./back-button-styles";
 import { StyledLink } from "../common-styled-components/common";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -8,7 +8,7 @@ interface BackProps {
   page: string;
 }
 
-const BackToLanding: React.FC<BackProps> = ({ page }): JSX.Element => (
+const BackButton: React.FC<BackProps> = ({ page }): JSX.Element => (
   <StyledBackButton>
     <StyledLink to={page}>
       <FontAwesomeIcon icon="angle-left" />
@@ -16,4 +16,4 @@ const BackToLanding: React.FC<BackProps> = ({ page }): JSX.Element => (
   </StyledBackButton>
 );
 
-export default BackToLanding;
+export default BackButton;

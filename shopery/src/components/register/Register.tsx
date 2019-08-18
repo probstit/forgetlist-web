@@ -19,7 +19,7 @@ import {
 // Import components
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
-import BackToLanding from "../back-to-landing/BackToLanding";
+import BackButton from "../back-button/BackButton";
 import Loading from "../loading-animation/Loading";
 // Import interfaces
 import { FormState } from "../../hooks/interfaces";
@@ -76,7 +76,7 @@ const Register: React.FC = (): JSX.Element => {
         <Redirect to="/" />
       ) : (
         <>
-          <BackToLanding page="/landing" />
+          <BackButton page="/landing" />
           <Logo />
           {response ? (
             <ResponseMessage>{response.data.message}</ResponseMessage>

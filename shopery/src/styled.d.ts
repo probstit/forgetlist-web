@@ -6,6 +6,7 @@ declare module "styled-components" {
     fontFamily: string;
     logoFont: string;
     borderRadius: string;
+    dashboardBorderRadius: string;
     colors: {
       primary: string;
       secondary: string;

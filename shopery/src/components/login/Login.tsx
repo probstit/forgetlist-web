@@ -18,7 +18,7 @@ import {
 // Import components
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
-import BackToLanding from "../back-to-landing/BackToLanding";
+import BackButton from "../back-button/BackButton";
 import Loading from "../loading-animation/Loading";
 // Import interfaces
 import { FormState } from "../../hooks/interfaces";
@@ -82,7 +82,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
         <Redirect to="/" />
       ) : (
         <>
-          <BackToLanding page="/landing" />
+          <BackButton page="/landing" />
           <Logo />
           <FormContainer>
             <h2>Login</h2>

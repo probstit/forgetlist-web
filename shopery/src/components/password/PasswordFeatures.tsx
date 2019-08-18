@@ -13,7 +13,7 @@ import {
 import Logo from "../logo/Logo";
 import Footer from "../footer/Footer";
 import Loading from "../loading-animation/Loading";
-import BackToLanding from "../back-to-landing/BackToLanding";
+import BackButton from "../back-button/BackButton";
 import { Auth, AuthContext } from "../../contexts/authContext";
 import { Redirect } from "react-router";
 // Import context
@@ -47,7 +47,7 @@ const PasswordFeatures: React.FC<PwFeaturesConfig> = ({
         <Redirect to="/" />
       ) : (
         <>
-          <BackToLanding page="/login" />
+          <BackButton page="/login" />
           <Logo />
           {options.response ? (
             <ResponseMessage>{options.response.data.message}</ResponseMessage>

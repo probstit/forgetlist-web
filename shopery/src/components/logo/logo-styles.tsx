@@ -6,6 +6,8 @@ import ThemeProps from "../../theme/theme-props.interface";
 export const StyledLogo = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
+  display: block;
+  margin: 0 auto;
 
   h1 {
     text-align: center;

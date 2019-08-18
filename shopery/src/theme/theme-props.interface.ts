@@ -6,4 +6,7 @@ export default interface ThemeProps {
   styleError?: boolean;
   formButton?: boolean;
   recover?: boolean;
+  dashboard?: boolean;
+  shared?: boolean;
+  footer?: boolean;
 }

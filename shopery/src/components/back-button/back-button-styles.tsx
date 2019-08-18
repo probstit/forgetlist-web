@@ -4,6 +4,7 @@ import ThemeProps from "../../theme/theme-props.interface";
 
 const StyledBackButton = styled.div<ThemeProps>`
   width: 100%;
+  display: block;
   height: 35px;
   padding: 0.7em 0 0 0.7em;
   font-size: 1.2em;

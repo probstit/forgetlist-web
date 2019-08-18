@@ -7,8 +7,11 @@ import ThemeProps from "../../theme/theme-props.interface";
 export const Container = styled.div<ThemeProps>`
   position: relative;
   min-height: 100%;
-  padding-top: 3em;
-  background-color: ${props => (props.theme as DefaultTheme).colors.primary};
+  padding-top: ${props => (props.dashboard ? "0" : "3em")};
+  background-color: ${props =>
+    props.dashboard
+      ? (props.theme as DefaultTheme).colors.tertiary
+      : (props.theme as DefaultTheme).colors.primary};
 `;
 
 export const FormContainer = styled.div<ThemeProps>`
