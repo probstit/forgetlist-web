@@ -28,7 +28,6 @@ const Dashboard: React.FC = (): JSX.Element => {
           </DashboardNav>
           <DashboardWrapper>
             <List />
-            <List />
           </DashboardWrapper>
           <DashboardFooter>
             <Icon footer icon="user-friends" />

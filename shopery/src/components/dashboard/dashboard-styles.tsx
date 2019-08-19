@@ -12,8 +12,8 @@ export const DashboardNav = styled.nav<ThemeProps>`
 `;
 
 export const DashboardWrapper = styled.main<ThemeProps>`
-  padding: 50px 15px 0 15px;
-  overflow: scroll;
+  padding: 50px 10px 0 10px;
+  overflow-y: scroll;
   height: auto;
   width: 100%;
 `;

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 // Import custom hook
-import { useFormValidation } from "../../hooks/useFormValidation";
+import { useFormValidation } from "../../hooks/form-validation/useFormValidation";
 // Import form validation function to work with custom hook
-import validateForm from "../../hooks/validateForm";
+import validateForm from "../../hooks/form-validation/validateForm";
 import PasswordFeatures from "./PasswordFeatures";
 // Import interfaces
-import { FormState } from "../../hooks/interfaces";
+import { FormState } from "../../hooks/form-validation/interfaces";
 // Initial state for ForgotPassword component
 const initialState: FormState = {
   email: ""

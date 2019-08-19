@@ -37,18 +37,22 @@ export const FormContainer = styled.div<ThemeProps>`
 `;
 
 export const StyledForm = styled.form<ThemeProps>`
-  text-align: center
+  text-align: ${props => (props.listHeader ? "left" : "center")};
   font-size: 0.7em;
-  padding: 0 1.5em 1.5em 1.5em;
+  padding: 0 ${props => (props.listHeader ? "0 0 0" : "1.5em 1.5em 1.5em")};
   margin-top: ${props => (props.recover ? "9em" : "2em")};
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
 `;
 
 export const StyledLabel = styled.label<ThemeProps>`
-  display: block;
+  display: "block"
+  width: 100%;
   font-size: 1em;
-  color: ${props => (props.theme as DefaultTheme).colors.secondary};
+  color: ${props =>
+    props.listHeader
+      ? (props.theme as DefaultTheme).colors.primary
+      : (props.theme as DefaultTheme).colors.secondary};
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   margin: 0.5em 0 0.2em 0;
 `;
@@ -56,11 +60,11 @@ export const StyledLabel = styled.label<ThemeProps>`
 export const StyledInput = styled.input<ThemeProps>`
   width: 15em;
   height: 25px;
-  display: block;
-  margin: 0 auto;
+  display: ${props => (props.listHeader ? "inline-block" : "block")};
+  margin: 0 auto 0 auto;
   text-align: center;
-  padding: 0 5px;
-  border: ${props => (props.styleError ? "1.2px solid #ee0000" : "none")}
+  padding: 0 ${props => (props.listHeader ? "10px" : "5px")};
+  border: ${props => (props.styleError ? "1.2px solid #ee0000" : "none")};
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   border-radius: ${props => (props.theme as DefaultTheme).borderRadius};
 `;

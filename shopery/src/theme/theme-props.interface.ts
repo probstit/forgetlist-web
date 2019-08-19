@@ -9,4 +9,9 @@ export default interface ThemeProps {
   dashboard?: boolean;
   shared?: boolean;
   footer?: boolean;
+  liOption?: boolean;
+  trash?: boolean;
+  listHeader?: boolean;
+  itemName?: boolean;
+  shareItem?: boolean;
 }

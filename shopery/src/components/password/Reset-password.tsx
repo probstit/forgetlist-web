@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 // Import custom hook
-import { useFormValidation } from "../../hooks/useFormValidation";
+import { useFormValidation } from "../../hooks/form-validation/useFormValidation";
 // Import form validation function to work with custom hook
-import validateForm from "../../hooks/validateForm";
+import validateForm from "../../hooks/form-validation/validateForm";
 // Import interfaces
-import { FormState } from "../../hooks/interfaces";
+import { FormState } from "../../hooks/form-validation/interfaces";
 import { RouteComponentProps } from "react-router-dom";
 // Import components
 import PasswordFeatures from "./PasswordFeatures";

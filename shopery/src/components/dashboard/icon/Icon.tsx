@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 // Import styled components
 import { IconWrapper } from "./icon-styles";
 // Import FA Icon
@@ -8,22 +8,36 @@ import ThemeProps from "../../../theme/theme-props.interface";
 
 interface FAIcon extends ThemeProps {
   icon: IconProp;
+  onClick?: MouseEventHandler;
 }
 
 const FooterIcon: React.SFC<FAIcon> = (props): JSX.Element => {
-  return (
-    <>
-      {props.footer ? (
-        <IconWrapper footer>
+  if (props.footer) {
+    return (
+      <IconWrapper footer>
+        <FontAwesomeIcon icon={props.icon} />
+      </IconWrapper>
+    );
+  } else if (props.liOption) {
+    if (props.trash) {
+      return (
+        <IconWrapper trash liOption>
           <FontAwesomeIcon icon={props.icon} />
         </IconWrapper>
-      ) : (
-        <IconWrapper>
-          <FontAwesomeIcon icon={props.icon} />
-        </IconWrapper>
-      )}
-    </>
-  );
+      );
+    }
+    return (
+      <IconWrapper liOption>
+        <FontAwesomeIcon icon={props.icon} />
+      </IconWrapper>
+    );
+  } else {
+    return (
+      <IconWrapper>
+        <FontAwesomeIcon icon={props.icon} />
+      </IconWrapper>
+    );
+  }
 };
 
 export default FooterIcon;

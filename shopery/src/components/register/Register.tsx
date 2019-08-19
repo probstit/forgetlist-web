@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 // Import custom hook
-import { useFormValidation } from "../../hooks/useFormValidation";
+import { useFormValidation } from "../../hooks/form-validation/useFormValidation";
 // Import form validation function to work with custom hook
-import validateForm from "../../hooks/validateForm";
+import validateForm from "../../hooks/form-validation/validateForm";
 // Import styled components
 import {
   Container,
@@ -22,7 +22,7 @@ import Footer from "../footer/Footer";
 import BackButton from "../back-button/BackButton";
 import Loading from "../loading-animation/Loading";
 // Import interfaces
-import { FormState } from "../../hooks/interfaces";
+import { FormState } from "../../hooks/form-validation/interfaces";
 import { AuthContext, Auth } from "../../contexts/authContext";
 import { Redirect } from "react-router";
 // Initial state for Register component
