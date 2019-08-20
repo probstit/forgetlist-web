@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 // Styled Components
 import {
   ListBodyWrapper,
@@ -10,17 +10,14 @@ import {
 } from "./list-body-styles";
 // Components
 import ItemList from "./item-list/ItemList";
-// Interface
-import { ListItem } from "../List";
+// Context
+import { ListContext, ItemListContext } from "../../../../contexts/listContext";
 
-export interface ListItemProps {
-  items: ListItem[];
-}
-
-const ListBody: React.FC<ListItemProps> = ({ items }): JSX.Element => {
+const ListBody: React.FC = (): JSX.Element => {
+  const { items } = useContext<ItemListContext>(ListContext);
   return (
     <ListBodyWrapper>
-      {items.length > 0 ? (
+      {items && items.length > 0 ? (
         <>
           <ListBodyHeader>
             <FloatedContent>
@@ -28,7 +25,7 @@ const ListBody: React.FC<ListItemProps> = ({ items }): JSX.Element => {
               <QtyWrapper>Qty</QtyWrapper>
             </FloatedContent>
           </ListBodyHeader>
-          <ItemList items={items} />
+          <ItemList />
         </>
       ) : (
         <NoItems>No items added yet.</NoItems>

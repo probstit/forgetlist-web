@@ -30,7 +30,6 @@ const useGetUser = () => {
   }, []);
 
   useEffect(() => {
-    console.log("rendering effect");
     fetchUser();
   }, [fetchUser]);
 

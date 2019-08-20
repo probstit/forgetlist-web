@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 // Import styled components
 import {
@@ -10,17 +10,15 @@ import {
 import { StyledForm } from "../../../../common-styled-components/common";
 // Import FA Icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ListItem } from "../../List";
+// Context
+import { ListContext, ItemListContext } from "../../../../../contexts/listContext";
 
 interface Item {
   name: string;
   quantity: number;
   isShared: boolean;
-}
-
-interface AddItemFormProps {
-  setItems: React.Dispatch<React.SetStateAction<ListItem[]>>;
-  items: ListItem[];
+  isBought: boolean;
+  _id: string;
 }
 
 const sendItem = async (item: Item) => {
@@ -34,14 +32,14 @@ const sendItem = async (item: Item) => {
   });
 };
 
-const AddItemForm: React.FC<AddItemFormProps> = ({
-  setItems,
-  items
-}): JSX.Element => {
+const AddItemForm: React.FC = (): JSX.Element => {
+  const { dispatch } = useContext<ItemListContext>(ListContext);
   const [item, setItem] = useState<Item>({
     name: "",
     quantity: 0,
-    isShared: false
+    isShared: false,
+    isBought: false,
+    _id: ""
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,20 +54,25 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendItem(item);
-    setItems([
-      ...items,
-      {
-        name: item.name,
-        quantity: item.quantity,
-        isBought: false,
-        isShared: false,
-        _id: ""
-      }
-    ]);
+    if (dispatch) {
+      dispatch({
+        type: "ADD_ITEM",
+        item: {
+          _id: item._id,
+          name: item.name,
+          quantity: item.quantity,
+          isShared: item.isShared,
+          isBought: item.isBought
+        }
+      });
+    }
+    
     setItem({
       name: "",
       quantity: 0,
-      isShared: false
+      isShared: false,
+      isBought: false,
+      _id: ""
     });
   };
 

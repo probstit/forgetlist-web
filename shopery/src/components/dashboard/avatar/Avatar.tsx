@@ -12,7 +12,6 @@ const Avatar: React.FC<AvatarProps> = ({ user }): JSX.Element => {
   const { firstName, lastName } = user;
   const avatarContent = lastName.charAt(0);
 
-  console.log("rendering avatar");
   return (
     <UserDetails>
       <StyledUserAvatar>
