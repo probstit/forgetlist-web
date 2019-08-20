@@ -11,68 +11,87 @@ import { StyledForm } from "../../../../common-styled-components/common";
 // Import FA Icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Context
-import { ListContext, ItemListContext } from "../../../../../contexts/listContext";
+import {
+  ListContext,
+  ItemListContext
+} from "../../../../../contexts/listContext";
+import { Item } from "../../../../../reducers/itemsReducer";
 
-interface Item {
-  name: string;
-  quantity: number;
-  isShared: boolean;
-  isBought: boolean;
-  _id: string;
-}
-
-const sendItem = async (item: Item) => {
+// Sends item info to DB.
+const sendItem = async (item: Item): Promise<Item> => {
   let token = localStorage.getItem("token");
   if (token) token = JSON.parse(token);
   const url = "http://localhost:8000/api/v1.0/items/add-item";
-  await axios.post(url, item, {
+  const response = await axios.post(url, item, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
+
+  return response.data.addedItem;
+};
+
+const initialState: Item = {
+  name: "",
+  quantity: 0,
+  isShared: false,
+  isBought: false,
+  _id: ""
 };
 
 const AddItemForm: React.FC = (): JSX.Element => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
-  const [item, setItem] = useState<Item>({
-    name: "",
-    quantity: 0,
-    isShared: false,
-    isBought: false,
-    _id: ""
-  });
+  const [item, setItem] = useState<Item>(initialState);
+  const [checked, setChecked] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    if (name === "isShared") {
+      setChecked(!checked);
+    }
+
+    const checkValue = () => {
+      if (value === "true") {
+        return true;
+      } else if (value === "false") {
+        return false;
+      } else {
+        return value;
+      }
+    };
+
     setItem({
       ...item,
-      [name]: value
+      [name]: checkValue()
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendItem(item);
+
+    // Send the item.
+    const { _id, name, quantity, isShared, isBought } = await sendItem(item);
+    // Dispatch action to update state.
     if (dispatch) {
       dispatch({
         type: "ADD_ITEM",
         item: {
-          _id: item._id,
-          name: item.name,
-          quantity: item.quantity,
-          isShared: item.isShared,
-          isBought: item.isBought
+          _id,
+          name,
+          quantity,
+          isShared,
+          isBought
         }
       });
     }
-    
+    // Reset form values.
     setItem({
+      _id: "",
       name: "",
       quantity: 0,
       isShared: false,
-      isBought: false,
-      _id: ""
+      isBought: false
     });
   };
 
@@ -100,10 +119,20 @@ const AddItemForm: React.FC = (): JSX.Element => {
         />
       </InputWrapper>
       <InputWrapper shareItem>
-        <ListItemLabel shareItem>
-          <FontAwesomeIcon icon="lock" />
+        <ListItemLabel shareItem htmlFor="isShared">
+          {checked ? (
+            <FontAwesomeIcon icon="lock-open" />
+          ) : (
+            <FontAwesomeIcon icon="lock" />
+          )}
         </ListItemLabel>
-        <ListItemInput type="checkbox" />
+        <ListItemInput
+          type="checkbox"
+          name="isShared"
+          checked={checked}
+          value={`${!checked}`}
+          onChange={handleChange}
+        />
       </InputWrapper>
       <AddButton type="submit">Add</AddButton>
     </StyledForm>

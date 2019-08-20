@@ -11,7 +11,7 @@ interface FAIcon extends ThemeProps {
   onClick?: MouseEventHandler;
 }
 
-const FooterIcon: React.SFC<FAIcon> = (props): JSX.Element => {
+const Icon: React.SFC<FAIcon> = (props): JSX.Element => {
   if (props.footer) {
     return (
       <IconWrapper footer>
@@ -21,7 +21,7 @@ const FooterIcon: React.SFC<FAIcon> = (props): JSX.Element => {
   } else if (props.liOption) {
     if (props.trash) {
       return (
-        <IconWrapper trash liOption>
+        <IconWrapper onClick={props.onClick} trash liOption>
           <FontAwesomeIcon icon={props.icon} />
         </IconWrapper>
       );
@@ -40,4 +40,4 @@ const FooterIcon: React.SFC<FAIcon> = (props): JSX.Element => {
   }
 };
 
-export default FooterIcon;
+export default Icon;

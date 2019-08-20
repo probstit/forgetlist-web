@@ -11,12 +11,6 @@ interface ListOptionsProps {
 const ListOptions: React.FC<ListOptionsProps> = ({
   toggleShowAdd
 }): JSX.Element => {
-  // const addItem = () => {
-  //   // let token = localStorage.getItem("token") as string;
-  //   // if (token) token = JSON.parse(token);
-  //   // const url = "http://localhost:8000/api/v1.0/items/add-item";
-  //   // axios.post(url)
-  // };
   return (
     <ListOptionsWrapper>
       <IconWrapper onClick={toggleShowAdd}>

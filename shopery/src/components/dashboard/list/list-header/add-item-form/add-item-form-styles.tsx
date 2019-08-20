@@ -21,6 +21,7 @@ export const ListItemLabel = styled.label<ThemeProps>`
   margin-left: ${props => (props.shareItem ? "1.5px" : "0")};
   padding-left: ${props => (props.itemName ? "10px" : "15px")};
   color: ${props => (props.theme as DefaultTheme).colors.primary};
+  font-weight: 650;
 `;
 
 export const ListItemInput = styled.input<ThemeProps>`

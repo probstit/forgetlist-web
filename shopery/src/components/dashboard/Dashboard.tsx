@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import {
   DashboardNav,
   DashboardWrapper,
-  DashboardFooter
+  DashboardHeader
 } from "./dashboard-styles";
 import { Container } from "../common-styled-components/common";
 // Import components
@@ -22,18 +22,18 @@ const Dashboard: React.FC = (): JSX.Element => {
     <Container dashboard>
       {isLoggedIn ? (
         <>
-          <DashboardNav>
+          <DashboardHeader>
             <HamburgerMenu />
             <Logo />
-          </DashboardNav>
+          </DashboardHeader>
           <DashboardWrapper>
             <List />
           </DashboardWrapper>
-          <DashboardFooter>
+          <DashboardNav>
             <Icon footer icon="user-friends" />
             <Icon footer icon="clipboard-list" />
             <Icon footer icon="history" />
-          </DashboardFooter>
+          </DashboardNav>
         </>
       ) : (
         <Redirect to="/landing" />

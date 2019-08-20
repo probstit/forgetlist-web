@@ -2,7 +2,7 @@ import styled, { DefaultTheme } from "styled-components";
 
 import ThemeProps from "../../theme/theme-props.interface";
 
-export const DashboardNav = styled.nav<ThemeProps>`
+export const DashboardHeader = styled.nav<ThemeProps>`
   width: 100%;
   height: 50px;
   padding: 5px 15px;
@@ -18,7 +18,7 @@ export const DashboardWrapper = styled.main<ThemeProps>`
   width: 100%;
 `;
 
-export const DashboardFooter = styled.footer<ThemeProps>`
+export const DashboardNav = styled.footer<ThemeProps>`
   position: fixed;
   bottom: 0px;
   width: 100%;

@@ -16,7 +16,7 @@ export const IconWrapper = styled.div<ThemeProps>`
       : (props.theme as DefaultTheme).colors.primary};
   text-align: center;
   line-height: ${props => (props.footer ? "50px" : "0px")};
-
+  margin-left: ${props => (props.liOption ? "5px" : "0")};
   & :hover {
     opacity: 0.9;
     cursor: pointer;

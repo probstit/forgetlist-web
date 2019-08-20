@@ -7,15 +7,7 @@ import React, {
 } from "react";
 import axios from "axios";
 // Reducers
-import { itemsReducer } from "../reducers/itemsReducer";
-
-export interface ListItem {
-  name: string;
-  quantity: number;
-  isBought: boolean;
-  isShared: boolean;
-  _id: string;
-}
+import { itemsReducer, Item } from "../reducers/itemsReducer";
 
 export interface Action {
   type: string;
@@ -29,13 +21,13 @@ export interface Action {
 }
 
 export interface ItemListContext {
-  items?: ListItem[];
+  items?: Item[];
   dispatch?: Dispatch<SetStateAction<Action>>;
 }
 
 export const ListContext = createContext<ItemListContext>({});
 
-const fetchItems = async (): Promise<ListItem[]> => {
+const fetchItems = async (): Promise<Item[]> => {
   const url = "http://localhost:8000/api/v1.0/items/get-items";
   let token = localStorage.getItem("token");
   if (token) token = JSON.parse(token);
