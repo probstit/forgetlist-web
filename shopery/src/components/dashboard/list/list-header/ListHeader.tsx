@@ -15,6 +15,7 @@ interface ListHeaderProps {
 const ListHeader: React.FC<ListHeaderProps> = ({ user }): JSX.Element => {
   const [showAdd, setShowAdd] = useState<boolean>(false);
 
+  // Toggle the form for adding an item.
   const toggleShowAdd = () => {
     setShowAdd(!showAdd);
   };

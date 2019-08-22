@@ -3,7 +3,7 @@ import styled, { DefaultTheme } from "styled-components";
 import ThemeProps from "../../../theme/theme-props.interface";
 
 export const UserDetails = styled.div<ThemeProps>`
-  width 70%;
+  width 75%;
   display: inline-block;
   height: 30px;
   padding-left: 2px;

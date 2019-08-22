@@ -9,6 +9,7 @@ import {
 import { StyledItem, ItemOptions } from "./item-styles";
 // Import FA Icon
 import Icon from "../../../../icon/Icon";
+import { IconWrapper } from "../../../../icon/icon-styles";
 // Interfaces
 import { Item as ItemDetails } from "../../../../../../reducers/itemsReducer";
 // Contexts
@@ -16,6 +17,8 @@ import {
   ListContext,
   ItemListContext
 } from "../../../../../../contexts/listContext";
+// Util
+import grabToken from "../../../../../../util/grab-token";
 
 interface ItemProp {
   item: ItemDetails;
@@ -23,8 +26,7 @@ interface ItemProp {
 }
 
 const deleteFromDB = async (id: string) => {
-  let token = localStorage.getItem("token");
-  if (token) token = JSON.parse(token);
+  let token = grabToken();
   const url = `http://localhost:8000/api/v1.0/items/delete-item/${id}`;
   try {
     await axios.delete(url, {
@@ -37,9 +39,26 @@ const deleteFromDB = async (id: string) => {
   }
 };
 
+const updateItemShareStatus = async (url: string) => {
+  let token = grabToken();
+  try {
+    await axios.put(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err); // For now
+  }
+};
+
 const Item: React.FC<ItemProp> = ({ item }) => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
-
+  // Deletes an item from item state also updates the DB.
   const deleteItem = () => {
     if (dispatch) {
       dispatch({
@@ -52,6 +71,20 @@ const Item: React.FC<ItemProp> = ({ item }) => {
       deleteFromDB(item._id);
     }
   };
+  // Updates an item shared status in the state also in the DB.
+  const shareItem = () => {
+    if (item.isShared) {
+      updateItemShareStatus(
+        `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`
+      );
+      if (dispatch) dispatch({ type: "HIDE_ITEM", item: { _id: item._id } });
+    } else {
+      updateItemShareStatus(
+        `http://localhost:8000/api/v1.0/items/share-with-all/${item._id}`
+      );
+      if (dispatch) dispatch({ type: "SHARE_ITEM", item: { _id: item._id } });
+    }
+  };
 
   return (
     <StyledItem>
@@ -61,14 +94,23 @@ const Item: React.FC<ItemProp> = ({ item }) => {
       </FloatedContent>
       <ItemOptions>
         {item.isShared ? (
-          <Icon liOption icon="lock-open" />
+          <IconWrapper liOption onClick={shareItem}>
+            <Icon liOption icon="lock-open" />
+          </IconWrapper>
         ) : (
-          <Icon liOption icon="lock" />
+          <IconWrapper liOption onClick={shareItem}>
+            <Icon liOption icon="lock" />
+          </IconWrapper>
         )}
-
-        <Icon liOption icon="share" />
-        <Icon onClick={deleteItem} trash liOption icon="trash-alt" />
-        <Icon liOption icon="caret-up" />
+        <IconWrapper liOption>
+          <Icon liOption icon="edit" />
+        </IconWrapper>
+        <IconWrapper liOption onClick={deleteItem}>
+          <Icon trash liOption icon="trash-alt" />
+        </IconWrapper>
+        <IconWrapper liOption>
+          <Icon liOption icon="caret-up" />
+        </IconWrapper>
       </ItemOptions>
     </StyledItem>
   );

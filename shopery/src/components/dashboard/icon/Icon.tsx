@@ -21,7 +21,7 @@ const Icon: React.SFC<FAIcon> = (props): JSX.Element => {
   } else if (props.liOption) {
     if (props.trash) {
       return (
-        <IconWrapper onClick={props.onClick} trash liOption>
+        <IconWrapper trash liOption>
           <FontAwesomeIcon icon={props.icon} />
         </IconWrapper>
       );

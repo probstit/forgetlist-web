@@ -8,19 +8,18 @@ import {
   AddButton
 } from "./add-item-form-styles";
 import { StyledForm } from "../../../../common-styled-components/common";
-// Import FA Icon
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Context
 import {
   ListContext,
   ItemListContext
 } from "../../../../../contexts/listContext";
 import { Item } from "../../../../../reducers/itemsReducer";
+// Util
+import grabToken from "../../../../../util/grab-token";
 
 // Sends item info to DB.
 const sendItem = async (item: Item): Promise<Item> => {
-  let token = localStorage.getItem("token");
-  if (token) token = JSON.parse(token);
+  let token = grabToken();
   const url = "http://localhost:8000/api/v1.0/items/add-item";
   const response = await axios.post(url, item, {
     headers: {
@@ -42,28 +41,12 @@ const initialState: Item = {
 const AddItemForm: React.FC = (): JSX.Element => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
   const [item, setItem] = useState<Item>(initialState);
-  const [checked, setChecked] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (name === "isShared") {
-      setChecked(!checked);
-    }
-
-    const checkValue = () => {
-      if (value === "true") {
-        return true;
-      } else if (value === "false") {
-        return false;
-      } else {
-        return value;
-      }
-    };
-
     setItem({
       ...item,
-      [name]: checkValue()
+      [name]: value
     });
   };
 
@@ -85,6 +68,7 @@ const AddItemForm: React.FC = (): JSX.Element => {
         }
       });
     }
+
     // Reset form values.
     setItem({
       _id: "",
@@ -118,22 +102,7 @@ const AddItemForm: React.FC = (): JSX.Element => {
           onChange={handleChange}
         />
       </InputWrapper>
-      <InputWrapper shareItem>
-        <ListItemLabel shareItem htmlFor="isShared">
-          {checked ? (
-            <FontAwesomeIcon icon="lock-open" />
-          ) : (
-            <FontAwesomeIcon icon="lock" />
-          )}
-        </ListItemLabel>
-        <ListItemInput
-          type="checkbox"
-          name="isShared"
-          checked={checked}
-          value={`${!checked}`}
-          onChange={handleChange}
-        />
-      </InputWrapper>
+
       <AddButton type="submit">Add</AddButton>
     </StyledForm>
   );

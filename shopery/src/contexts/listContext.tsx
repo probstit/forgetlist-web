@@ -2,16 +2,20 @@ import React, {
   createContext,
   useEffect,
   useReducer,
+  useState,
   Dispatch,
-  SetStateAction
+  SetStateAction,
+  MouseEventHandler
 } from "react";
 import axios from "axios";
 // Reducers
 import { itemsReducer, Item } from "../reducers/itemsReducer";
+// Util
+import grabToken from "../util/grab-token";
 
 export interface Action {
   type: string;
-  item: {
+  item?: {
     _id?: string;
     name?: string;
     quantity?: number;
@@ -23,14 +27,16 @@ export interface Action {
 export interface ItemListContext {
   items?: Item[];
   dispatch?: Dispatch<SetStateAction<Action>>;
+  setIsShared?: Dispatch<SetStateAction<boolean>>;
+  isShared?: boolean;
+  toggleShareStatus?: MouseEventHandler;
 }
 
 export const ListContext = createContext<ItemListContext>({});
-
+// For setting the initial list state.
 const fetchItems = async (): Promise<Item[]> => {
   const url = "http://localhost:8000/api/v1.0/items/get-items";
-  let token = localStorage.getItem("token");
-  if (token) token = JSON.parse(token);
+  let token = grabToken();
   const response = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -39,9 +45,35 @@ const fetchItems = async (): Promise<Item[]> => {
 
   return response.data.items;
 };
+// Updates items share status in the DB.
+const updateShareStatus = async (url: string) => {
+  let token = grabToken();
+  await axios.put(
+    url,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+};
 
 const ListContextProvider: React.FC = props => {
   const [items, dispatch] = useReducer(itemsReducer, []);
+  const [isShared, setIsShared] = useState<boolean>();
+
+  const toggleShareStatus = () => {
+    if (isShared) {
+      updateShareStatus("http://localhost:8000/api/v1.0/items/hide-list");
+      if (dispatch) dispatch({ type: "HIDE_LIST" });
+    } else {
+      updateShareStatus("http://localhost:8000/api/v1.0/items/share-list");
+      if (dispatch) dispatch({ type: "SHARE_LIST" });
+    }
+
+    setIsShared(!isShared);
+  };
 
   useEffect(() => {
     fetchItems()
@@ -51,8 +83,20 @@ const ListContextProvider: React.FC = props => {
       .catch(err => console.log(err)); //FOR NOW
   }, []);
 
+  useEffect(() => {
+    let shared = false;
+    items.forEach(item => {
+      if (item.isShared) {
+        shared = true;
+      }
+    });
+    setIsShared(shared);
+  }, [items]);
+
   return (
-    <ListContext.Provider value={{ items, dispatch }}>
+    <ListContext.Provider
+      value={{ items, dispatch, isShared, toggleShareStatus }}
+    >
       {props.children}
     </ListContext.Provider>
   );

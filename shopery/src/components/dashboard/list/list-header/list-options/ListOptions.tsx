@@ -1,8 +1,13 @@
-import React, { MouseEventHandler } from "react";
+import React, { useContext, MouseEventHandler } from "react";
 // Styled components
 import { ListOptionsWrapper, IconWrapper } from "./list-options-styles";
 // Import FA Icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// Contexts
+import {
+  ItemListContext,
+  ListContext
+} from "../../../../../contexts/listContext";
 
 interface ListOptionsProps {
   toggleShowAdd: MouseEventHandler;
@@ -11,16 +16,21 @@ interface ListOptionsProps {
 const ListOptions: React.FC<ListOptionsProps> = ({
   toggleShowAdd
 }): JSX.Element => {
+  const { isShared, toggleShareStatus } = useContext<ItemListContext>(
+    ListContext
+  );
   return (
     <ListOptionsWrapper>
       <IconWrapper onClick={toggleShowAdd}>
         <FontAwesomeIcon icon="plus" />
       </IconWrapper>
-      <IconWrapper>
-        <FontAwesomeIcon icon="lock" />
-      </IconWrapper>
-      <IconWrapper>
-        <FontAwesomeIcon icon="share-square" />
+
+      <IconWrapper onClick={toggleShareStatus}>
+        {isShared ? (
+          <FontAwesomeIcon icon="lock-open" />
+        ) : (
+          <FontAwesomeIcon icon="lock" />
+        )}
       </IconWrapper>
     </ListOptionsWrapper>
   );
