@@ -13,4 +13,6 @@ export default interface ThemeProps {
   trash?: boolean;
   listHeader?: boolean;
   itemName?: boolean;
+  itemQty?: boolean;
+  setShare?: boolean;
 }

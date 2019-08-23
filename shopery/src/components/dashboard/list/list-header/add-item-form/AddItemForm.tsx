@@ -16,6 +16,8 @@ import {
 import { Item } from "../../../../../reducers/itemsReducer";
 // Util
 import grabToken from "../../../../../util/grab-token";
+// FA
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Sends item info to DB.
 const sendItem = async (item: Item): Promise<Item> => {
@@ -41,12 +43,28 @@ const initialState: Item = {
 const AddItemForm: React.FC = (): JSX.Element => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
   const [item, setItem] = useState<Item>(initialState);
+  const [checked, setChecked] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    if (name === "isShared") {
+      setChecked(!checked);
+    }
+
+    const checkValue = () => {
+      if (value === "true") {
+        return true;
+      } else if (value === "false") {
+        return false;
+      } else {
+        return value;
+      }
+    };
+
     setItem({
       ...item,
-      [name]: value
+      [name]: checkValue()
     });
   };
 
@@ -55,6 +73,7 @@ const AddItemForm: React.FC = (): JSX.Element => {
 
     // Send the item.
     const { _id, name, quantity, isShared, isBought } = await sendItem(item);
+
     // Dispatch action to update state.
     if (dispatch) {
       dispatch({
@@ -92,13 +111,29 @@ const AddItemForm: React.FC = (): JSX.Element => {
           onChange={handleChange}
         />
       </InputWrapper>
-      <InputWrapper>
+      <InputWrapper itemQty>
         <ListItemLabel>Qty</ListItemLabel>
         <ListItemInput
           type="number"
           placeholder="0"
           name="quantity"
           value={item.quantity}
+          onChange={handleChange}
+        />
+      </InputWrapper>
+      <InputWrapper setShare>
+        <ListItemLabel setShare htmlFor="isShared">
+          {checked ? (
+            <FontAwesomeIcon icon="lock-open" />
+          ) : (
+            <FontAwesomeIcon icon="lock" />
+          )}
+        </ListItemLabel>
+        <ListItemInput
+          type="checkbox"
+          name="isShared"
+          checked={checked}
+          value={`${!checked}`}
           onChange={handleChange}
         />
       </InputWrapper>

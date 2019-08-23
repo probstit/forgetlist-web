@@ -4,8 +4,9 @@ import ThemeProps from "../../../../../theme/theme-props.interface";
 
 export const InputWrapper = styled.div<ThemeProps>`
   float: left;
-  width: ${props => (props.itemName ? "80%" : "20%")};
+  width: ${props => (props.itemName ? "70%" : props.itemQty ? "18%" : "12%")};
   margin-bottom: 10px;
+  padding-top: ${props => (props.setShare ? "2px" : "0")};
 
   & ::after {
     content: "";
@@ -17,8 +18,9 @@ export const InputWrapper = styled.div<ThemeProps>`
 export const ListItemLabel = styled.label<ThemeProps>`
   display: block;
   font-size: 1.1em;
-  margin-bottom: "5px";
-  padding-left: ${props => (props.itemName ? "10px" : "15px")};
+  margin-bottom: ${props => (props.setShare ? "8.5px" : "5px")};
+  padding-left: ${props =>
+    props.itemName ? "10px" : props.setShare ? "16.5px" : "15px"};
   color: ${props => (props.theme as DefaultTheme).colors.primary};
   font-weight: 650;
 `;
@@ -30,8 +32,7 @@ export const ListItemInput = styled.input<ThemeProps>`
   border: none;
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   padding: 5px 10px;
-  margin: 0 5px 0 0;
-  margin-right: 5px;
+
   border-radius: ${props =>
     (props.theme as DefaultTheme).dashboardBorderRadius};
 `;
