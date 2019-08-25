@@ -27,36 +27,47 @@ export const itemsReducer = (state: Item[], action: any) => {
       return state.filter((item: Item) => item._id !== action.item._id);
 
     case "SHARE_LIST":
-      const itemsCopy = state.slice(0);
-      itemsCopy.forEach(item => {
+      const itemsCopy_shareAll = state.slice(0);
+      itemsCopy_shareAll.forEach(item => {
         if (!item.isShared) item.isShared = true;
       });
-      return [...itemsCopy];
+      return [...itemsCopy_shareAll];
 
     case "HIDE_LIST":
-      const itemsCopy_2 = state.slice(0);
-      itemsCopy_2.forEach(item => {
+      const itemsCopy_hideAll = state.slice(0);
+      itemsCopy_hideAll.forEach(item => {
         if (item.isShared) item.isShared = false;
       });
-      return [...itemsCopy_2];
+      return [...itemsCopy_hideAll];
 
     case "SHARE_ITEM":
-      const stateCopy = state.slice(0);
-      stateCopy.forEach(item => {
+      const itemsCopy_shareOne = state.slice(0);
+      itemsCopy_shareOne.forEach(item => {
         if (item._id === action.item._id) {
           item.isShared = true;
         }
       });
-      return [...stateCopy];
+      return [...itemsCopy_shareOne];
 
     case "HIDE_ITEM":
-      const stateCopy_2 = state.slice(0);
-      stateCopy_2.forEach(item => {
+      const itemsCopy_hideOne = state.slice(0);
+      itemsCopy_hideOne.forEach(item => {
         if (item._id === action.item._id) {
           item.isShared = false;
         }
       });
-      return [...stateCopy_2];
+      return [...itemsCopy_hideOne];
+
+    case "EDIT_ITEM":
+      const itemsCopy_edit = state.slice(0);
+      itemsCopy_edit.forEach(item => {
+        if (item._id === action.item._id) {
+          item.name = action.item.name;
+          item.quantity = action.item.quantity;
+          item.isShared = action.item.isShared;
+        }
+      });
+      return [...itemsCopy_edit];
 
     default:
       return state;

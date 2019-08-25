@@ -7,7 +7,7 @@ import Register from "./components/register/Register";
 import ForgotPassword from "./components/password/Forgot-password";
 import ResetPassword from "./components/password/Reset-password";
 import Confirm from "./components/confirm/Confirm";
-import Dashboard from "./components/dashboard/Dashboard";
+import DashboardWContext from "./components/dashboard-w-context/DashboardWContext";
 import NoMatch from "./components/no-match/NoMatch";
 // Contexts
 import AuthContextProvider from "./contexts/authContext";
@@ -16,7 +16,7 @@ const Routes: React.FC = (): JSX.Element => (
   <AuthContextProvider>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/" component={DashboardWContext} />
         <Route path="/landing" component={LandingPage} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />

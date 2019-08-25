@@ -17,6 +17,11 @@ import {
   ListContext,
   ItemListContext
 } from "../../../../../../contexts/listContext";
+import {
+  EditContext,
+  ItemEditContext
+} from "../../../../../../contexts/editContext";
+
 // Util
 import grabToken from "../../../../../../util/grab-token";
 
@@ -52,12 +57,20 @@ const updateItemShareStatus = async (url: string) => {
       }
     );
   } catch (err) {
-    console.log(err); // For now
+    alert(err.response.data.payload.message);
   }
 };
 
 const Item: React.FC<ItemProp> = ({ item }) => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
+  const { showEdit, setItemData } = useContext<ItemEditContext>(EditContext);
+
+  // Click handler for edit.
+  const handleEdit = () => {
+    if (showEdit) showEdit();
+    if (setItemData) setItemData(item);
+  };
+
   // Deletes an item from item state also updates the DB.
   const deleteItem = () => {
     if (dispatch) {
@@ -102,7 +115,7 @@ const Item: React.FC<ItemProp> = ({ item }) => {
             <Icon liOption icon="lock" />
           </IconWrapper>
         )}
-        <IconWrapper liOption>
+        <IconWrapper liOption onClick={handleEdit}>
           <Icon liOption icon="edit" />
         </IconWrapper>
         <IconWrapper liOption onClick={deleteItem}>

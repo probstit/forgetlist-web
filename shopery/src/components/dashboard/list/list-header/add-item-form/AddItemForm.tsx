@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import axios from "axios";
 // Import styled components
 import {
@@ -40,10 +40,29 @@ const initialState: Item = {
   _id: ""
 };
 
-const AddItemForm: React.FC = (): JSX.Element => {
+interface AddItemFormProps {
+  setShowAdd: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AddItemForm: React.FC<AddItemFormProps> = ({
+  setShowAdd
+}): JSX.Element => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
   const [item, setItem] = useState<Item>(initialState);
   const [checked, setChecked] = useState<boolean>(false);
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const detectOutsideClick = (e: any) => {
+      e.stopPropagation();
+      if (formRef.current && !formRef.current.contains(e.target))
+        setShowAdd(false);
+    };
+    window.addEventListener("click", detectOutsideClick, false);
+    return () => window.removeEventListener("click", detectOutsideClick, false);
+  }, [setShowAdd]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -86,6 +105,7 @@ const AddItemForm: React.FC = (): JSX.Element => {
           isBought
         }
       });
+      if (nameInputRef.current) nameInputRef.current.focus();
     }
 
     // Reset form values.
@@ -99,11 +119,12 @@ const AddItemForm: React.FC = (): JSX.Element => {
   };
 
   return (
-    <StyledForm listHeader onSubmit={handleSubmit}>
+    <StyledForm ref={formRef} listHeader onSubmit={handleSubmit}>
       <InputWrapper itemName>
         <ListItemLabel itemName>Item Name</ListItemLabel>
         <ListItemInput
           itemName
+          ref={nameInputRef}
           type="text"
           placeholder="Name"
           name="name"

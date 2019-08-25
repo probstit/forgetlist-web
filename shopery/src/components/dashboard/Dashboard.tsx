@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Redirect } from "react-router-dom";
 // Import styled components
 import {
   DashboardNav,
@@ -11,17 +12,20 @@ import Logo from "../logo/Logo";
 import HamburgerMenu from "./hamburger-menu/HamburgerMenu";
 import List from "./list/List";
 import Icon from "./icon/Icon";
+import Edit from "./edit-item/Edit";
 // Import Context
 import { AuthContext, Auth } from "../../contexts/authContext";
-import { Redirect } from "react-router-dom";
+import { EditContext, ItemEditContext } from "../../contexts/editContext";
 
 const Dashboard: React.FC = (): JSX.Element => {
   const { isLoggedIn } = useContext<Auth>(AuthContext);
+  const { displayEdit } = useContext<ItemEditContext>(EditContext);
 
   return (
     <Container dashboard>
       {isLoggedIn ? (
         <>
+          {displayEdit && <Edit />}
           <DashboardHeader>
             <HamburgerMenu />
             <Logo />

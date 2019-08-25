@@ -13,7 +13,7 @@ interface ListHeaderProps {
 }
 
 const ListHeader: React.FC<ListHeaderProps> = ({ user }): JSX.Element => {
-  const [showAdd, setShowAdd] = useState<boolean>(true);
+  const [showAdd, setShowAdd] = useState<boolean>(false);
 
   // Toggle the form for adding an item.
   const toggleShowAdd = () => {
@@ -24,7 +24,7 @@ const ListHeader: React.FC<ListHeaderProps> = ({ user }): JSX.Element => {
     <StyledListHeader>
       <Avatar user={user} />
       <ListOptions toggleShowAdd={toggleShowAdd} />
-      {showAdd && <AddItemForm />}
+      {showAdd && <AddItemForm setShowAdd={setShowAdd} />}
     </StyledListHeader>
   );
 };
