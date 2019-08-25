@@ -90,7 +90,7 @@ export const EditButton = styled.button<ThemeProps>`
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   border-radius: ${props =>
     (props.theme as DefaultTheme).dashboardBorderRadius};
-  padding: 3px 0;
+  padding: 4px 0;
   margin: 8px auto 0 auto;
 
   &:hover {

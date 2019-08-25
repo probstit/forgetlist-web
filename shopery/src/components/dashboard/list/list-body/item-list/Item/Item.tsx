@@ -1,17 +1,13 @@
 import React, { useContext } from "react";
 import axios from "axios";
 // Styled Components
-import {
-  FloatedContent,
-  NameWrapper,
-  QtyWrapper
-} from "../../list-body-styles";
-import { StyledItem, ItemOptions } from "./item-styles";
+import { NameWrapper, QtyWrapper } from "../../list-body-styles";
+import { StyledItem, ItemDetails, ItemOptions } from "./item-styles";
 // Import FA Icon
 import Icon from "../../../../icon/Icon";
 import { IconWrapper } from "../../../../icon/icon-styles";
 // Interfaces
-import { Item as ItemDetails } from "../../../../../../reducers/itemsReducer";
+import { Item as ItemData } from "../../../../../../reducers/itemsReducer";
 // Contexts
 import {
   ListContext,
@@ -26,7 +22,7 @@ import {
 import grabToken from "../../../../../../util/grab-token";
 
 interface ItemProp {
-  item: ItemDetails;
+  item: ItemData;
   key: string;
 }
 
@@ -42,6 +38,19 @@ const deleteFromDB = async (id: string) => {
   } catch (err) {
     console.log(err); // For now
   }
+};
+
+const updateItemBoughtStatus = async (url: string) => {
+  let token = grabToken();
+  axios.put(
+    url,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
 };
 
 const updateItemShareStatus = async (url: string) => {
@@ -69,6 +78,25 @@ const Item: React.FC<ItemProp> = ({ item }) => {
   const handleEdit = () => {
     if (showEdit) showEdit();
     if (setItemData) setItemData(item);
+  };
+
+  // Mark item as bought.
+  const buyItem = () => {
+    if (dispatch) {
+      // Same action type as deleting because the result is the same.
+      if (dispatch) {
+        dispatch({
+          type: "DELETE_ITEM",
+          item: {
+            _id: item._id
+          }
+        });
+      }
+    }
+
+    updateItemBoughtStatus(
+      `http://localhost:8000/api/v1.0/items/mark-bought/${item._id}`
+    );
   };
 
   // Deletes an item from item state also updates the DB.
@@ -101,10 +129,10 @@ const Item: React.FC<ItemProp> = ({ item }) => {
 
   return (
     <StyledItem>
-      <FloatedContent>
+      <ItemDetails onClick={buyItem}>
         <NameWrapper>{item.name}</NameWrapper>
         <QtyWrapper>{item.quantity}</QtyWrapper>
-      </FloatedContent>
+      </ItemDetails>
       <ItemOptions>
         {item.isShared ? (
           <IconWrapper liOption onClick={shareItem}>

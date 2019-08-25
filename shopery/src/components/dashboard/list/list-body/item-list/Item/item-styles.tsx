@@ -23,6 +23,23 @@ export const StyledItem = styled.li<ThemeProps>`
   }
 `;
 
+export const ItemDetails = styled.div<ThemeProps>`
+  width: 55%;
+  height: auto;
+  font-size: 0.9em;
+  font-weight: 600;
+  padding-left: 2px;
+  float: left;
+
+  &:hover p {
+    text-decoration: line-through;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 export const ItemOptions = styled.div`
   float: right;
   width: 40%;

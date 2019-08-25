@@ -89,7 +89,7 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    item.isShared = checked;
     // Send the item.
     const { _id, name, quantity, isShared, isBought } = await sendItem(item);
 

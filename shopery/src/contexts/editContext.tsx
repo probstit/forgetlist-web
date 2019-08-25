@@ -21,7 +21,7 @@ const initialItemState: Item = {
 export const EditContext = createContext<ItemEditContext>({});
 
 const EditContextProvider: React.FC = props => {
-  const [displayEdit, setDisplayEdit] = useState<boolean>(true);
+  const [displayEdit, setDisplayEdit] = useState<boolean>(false);
   const [itemData, setItemData] = useState<Item>(initialItemState);
 
   const showEdit = () => {
