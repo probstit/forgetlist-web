@@ -32,7 +32,6 @@ export const ListItemInput = styled.input<ThemeProps>`
   border: none;
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   padding: 5px 10px;
-
   border-radius: ${props =>
     (props.theme as DefaultTheme).dashboardBorderRadius};
 `;

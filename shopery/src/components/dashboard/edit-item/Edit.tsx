@@ -13,6 +13,7 @@ import {
   EditContainer,
   EditForm,
   EditHeader,
+  EditBody,
   EditInputWrapper,
   EditLabel,
   EditInput,
@@ -93,46 +94,48 @@ const Edit: React.FC = () => {
             <FontAwesomeIcon icon="times" />
           </div>
         </EditHeader>
-        <EditInputWrapper itemName>
-          <EditLabel itemName>Item name</EditLabel>
-          <EditInput
-            type="text"
-            name="name"
-            placeholder="Name"
-            ref={nameInputRef}
-            value={itemData && itemData.name}
-            onChange={handleChange}
-          />
-        </EditInputWrapper>
-        <EditInputWrapper itemQty>
-          <EditLabel>Qty</EditLabel>
-          <EditInput
-            itemQty
-            type="number"
-            name="quantity"
-            placeholder="0"
-            value={itemData && itemData.quantity}
-            onChange={handleChange}
-          />
-        </EditInputWrapper>
-        <EditInputWrapper>
-          <EditLabel setShare htmlFor="isShared">
-            {itemData && itemData.isShared ? (
-              <FontAwesomeIcon icon="lock-open" />
-            ) : (
-              <FontAwesomeIcon icon="lock" />
-            )}
-          </EditLabel>
-          <EditInput
-            setShare
-            type="checkbox"
-            name="isShared"
-            checked={itemData && itemData.isShared}
-            value={`${itemData && !itemData.isShared}`}
-            onChange={handleChange}
-          />
-        </EditInputWrapper>
-        <EditButton type="submit">Save</EditButton>
+        <EditBody>
+          <EditInputWrapper itemName>
+            <EditLabel itemName>Item name</EditLabel>
+            <EditInput
+              type="text"
+              name="name"
+              placeholder="Name"
+              ref={nameInputRef}
+              value={itemData && itemData.name}
+              onChange={handleChange}
+            />
+          </EditInputWrapper>
+          <EditInputWrapper itemQty>
+            <EditLabel>Qty</EditLabel>
+            <EditInput
+              itemQty
+              type="number"
+              name="quantity"
+              placeholder="0"
+              value={itemData && itemData.quantity}
+              onChange={handleChange}
+            />
+          </EditInputWrapper>
+          <EditInputWrapper>
+            <EditLabel setShare htmlFor="isShared">
+              {itemData && itemData.isShared ? (
+                <FontAwesomeIcon icon="lock-open" />
+              ) : (
+                <FontAwesomeIcon icon="lock" />
+              )}
+            </EditLabel>
+            <EditInput
+              setShare
+              type="checkbox"
+              name="isShared"
+              checked={itemData && itemData.isShared}
+              value={`${itemData && !itemData.isShared}`}
+              onChange={handleChange}
+            />
+          </EditInputWrapper>
+          <EditButton type="submit">Save</EditButton>
+        </EditBody>
       </EditForm>
     </EditContainer>
   );

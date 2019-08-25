@@ -43,9 +43,14 @@ export const EditHeader = styled.div<ThemeProps>`
   }
 `;
 
+export const EditBody = styled.div<ThemeProps>`
+  width: 100%;
+  padding: 0;
+`;
+
 export const EditInputWrapper = styled.div<ThemeProps>`
   display: inline-block;
-  margin-left: 5px;
+  margin-left: 7.5px;
   width: ${props => (props.itemName ? "60%" : props.itemQty ? "20%" : "10%")};
   text-align: ${props => (props.itemName ? "left" : "center")};
   height: auto;
@@ -54,20 +59,24 @@ export const EditInputWrapper = styled.div<ThemeProps>`
 `;
 
 export const EditLabel = styled.label<ThemeProps>`
+  display: block;
   padding-left: ${props =>
-    props.itemName ? "10px" : props.setShare ? "2.3px" : "0"};
+    props.itemName ? "10px" : props.setShare ? "1.5px" : "0"};
   color: ${props => (props.theme as DefaultTheme).colors.primary};
+  margin-bottom: ${props => (props.setShare ? "7px" : "5px")};
+  font-weight: 600;
 `;
 
 export const EditInput = styled.input<ThemeProps>`
-  width: 95%;
+  width: ${props => (props.setShare ? "15px" : "95%")};
+  height: ${props => (props.setShare ? "15px" : "auto")};
   padding: 5px 10px;
   border: none;
   text-align: ${props => (props.itemQty ? "center" : "left")};
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   border-radius: ${props =>
     (props.theme as DefaultTheme).dashboardBorderRadius};
-  margin-top: ${props => (props.setShare ? "8px" : "5px")};
+
   margin-left: ${props => (props.setShare ? "3px" : "0")};
   cursor: ${props => (props.setShare ? "pointer" : "normal")};
 `;
