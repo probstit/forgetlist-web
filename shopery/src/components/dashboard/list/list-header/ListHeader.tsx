@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 // Styled Components
 import { StyledListHeader } from "./list-header-styles";
 // Import components
@@ -14,6 +14,7 @@ interface ListHeaderProps {
 
 const ListHeader: React.FC<ListHeaderProps> = ({ user }): JSX.Element => {
   const [showAdd, setShowAdd] = useState<boolean>(false);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   // Toggle the form for adding an item.
   const toggleShowAdd = () => {
@@ -21,10 +22,10 @@ const ListHeader: React.FC<ListHeaderProps> = ({ user }): JSX.Element => {
   };
 
   return (
-    <StyledListHeader>
+    <StyledListHeader ref={headerRef}>
       <Avatar user={user} />
       <ListOptions toggleShowAdd={toggleShowAdd} />
-      {showAdd && <AddItemForm setShowAdd={setShowAdd} />}
+      {showAdd && <AddItemForm setShowAdd={setShowAdd} headerRef={headerRef} />}
     </StyledListHeader>
   );
 };

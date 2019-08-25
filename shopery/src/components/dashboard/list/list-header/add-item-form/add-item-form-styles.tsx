@@ -7,12 +7,6 @@ export const InputWrapper = styled.div<ThemeProps>`
   width: ${props => (props.itemName ? "70%" : props.itemQty ? "18%" : "12%")};
   margin-bottom: 10px;
   padding-top: ${props => (props.setShare ? "2px" : "0")};
-
-  & ::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
 `;
 
 export const ListItemLabel = styled.label<ThemeProps>`
@@ -29,7 +23,7 @@ export const ListItemInput = styled.input<ThemeProps>`
   display: block;
   width: ${props => (props.itemName ? "90%" : "55px")};
   text-align: ${props => (props.itemName ? "left" : "center")};
-  border: none;
+  border: ${props => (props.styleError ? ".8px solid #ee0000" : "none")};
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   padding: 5px 10px;
   border-radius: ${props =>

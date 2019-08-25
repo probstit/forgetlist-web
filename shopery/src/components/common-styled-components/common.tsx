@@ -43,6 +43,11 @@ export const StyledForm = styled.form<ThemeProps>`
   margin-top: ${props => (props.recover ? "9em" : "2em")};
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+  & ::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
 `;
 
 export const StyledLabel = styled.label<ThemeProps>`
@@ -137,7 +142,7 @@ export const StyledFormError = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
   color: #ee0000;
-  text-align: center;
+  text-align: ${props => (props.itemForm ? "left" : "center")};
 
   p {
     font-weight: 600;
@@ -149,4 +154,11 @@ export const StyledFormError = styled.div<ThemeProps>`
 export const LoadingAnimation = styled.div<ThemeProps>`
   margin-top: 1.5em;
   font-size: 1.5em;
+`;
+
+export const ErrorsContainer = styled.div<ThemeProps>`
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  clear: both;
 `;

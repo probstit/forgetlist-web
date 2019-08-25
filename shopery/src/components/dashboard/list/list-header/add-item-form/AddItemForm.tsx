@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import axios from "axios";
 // Import styled components
 import {
@@ -7,7 +7,11 @@ import {
   ListItemLabel,
   AddButton
 } from "./add-item-form-styles";
-import { StyledForm } from "../../../../common-styled-components/common";
+import {
+  StyledForm,
+  StyledFormError,
+  ErrorsContainer
+} from "../../../../common-styled-components/common";
 // Context
 import {
   ListContext,
@@ -16,6 +20,9 @@ import {
 import { Item } from "../../../../../reducers/itemsReducer";
 // Util
 import grabToken from "../../../../../util/grab-token";
+// Hooks
+import useItemFormValidation from "../../../../../hooks/item-form-validation/useItemFormValidation";
+import validateItemForm from "../../../../../hooks/item-form-validation/validateItemForm";
 // FA
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -34,7 +41,7 @@ const sendItem = async (item: Item): Promise<Item> => {
 
 const initialState: Item = {
   name: "",
-  quantity: 0,
+  quantity: 1,
   isShared: false,
   isBought: false,
   _id: ""
@@ -42,56 +49,19 @@ const initialState: Item = {
 
 interface AddItemFormProps {
   setShowAdd: React.Dispatch<React.SetStateAction<boolean>>;
+  headerRef: React.RefObject<HTMLDivElement>;
 }
 
 const AddItemForm: React.FC<AddItemFormProps> = ({
-  setShowAdd
+  setShowAdd,
+  headerRef
 }): JSX.Element => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
-  const [item, setItem] = useState<Item>(initialState);
-  const [checked, setChecked] = useState<boolean>(false);
 
-  const formRef = useRef<HTMLFormElement>(null);
-  const nameInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const detectOutsideClick = (e: any) => {
-      e.stopPropagation();
-      if (formRef.current && !formRef.current.contains(e.target))
-        setShowAdd(false);
-    };
-    window.addEventListener("click", detectOutsideClick, false);
-    return () => window.removeEventListener("click", detectOutsideClick, false);
-  }, [setShowAdd]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    if (name === "isShared") {
-      setChecked(!checked);
-    }
-
-    const checkValue = () => {
-      if (value === "true") {
-        return true;
-      } else if (value === "false") {
-        return false;
-      } else {
-        return value;
-      }
-    };
-
-    setItem({
-      ...item,
-      [name]: checkValue()
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    item.isShared = checked;
-    // Send the item.
-    const { _id, name, quantity, isShared, isBought } = await sendItem(item);
+  const dispatchItemData = async () => {
+    values.isShared = checked;
+    // Send the item to DB.
+    const { _id, name, quantity, isShared, isBought } = await sendItem(values);
 
     // Dispatch action to update state.
     if (dispatch) {
@@ -107,39 +77,58 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
       });
       if (nameInputRef.current) nameInputRef.current.focus();
     }
-
-    // Reset form values.
-    setItem({
-      _id: "",
-      name: "",
-      quantity: 0,
-      isShared: false,
-      isBought: false
-    });
   };
 
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleBlur,
+    errors,
+    isSubmitting,
+    checked
+  } = useItemFormValidation(initialState, validateItemForm, dispatchItemData);
+
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const detectOutsideClick = (e: any) => {
+      e.stopPropagation();
+      if (headerRef.current && !headerRef.current.contains(e.target))
+        setShowAdd(false);
+    };
+    window.addEventListener("click", detectOutsideClick, false);
+    return () => window.removeEventListener("click", detectOutsideClick, false);
+  }, [setShowAdd, headerRef]);
+
+  const checkForError: boolean = errors.name ? true : false;
+
   return (
-    <StyledForm ref={formRef} listHeader onSubmit={handleSubmit}>
+    <StyledForm listHeader onSubmit={handleSubmit}>
       <InputWrapper itemName>
         <ListItemLabel itemName>Item Name</ListItemLabel>
         <ListItemInput
           itemName
+          styleError={checkForError}
           ref={nameInputRef}
           type="text"
           placeholder="Name"
           name="name"
-          value={item.name}
+          value={values.name}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
       </InputWrapper>
       <InputWrapper itemQty>
         <ListItemLabel>Qty</ListItemLabel>
         <ListItemInput
+          styleError={checkForError}
           type="number"
-          placeholder="0"
+          placeholder="1"
           name="quantity"
-          value={item.quantity}
+          value={values.quantity}
           onChange={handleChange}
+          onBlur={handleBlur}
         />
       </InputWrapper>
       <InputWrapper setShare>
@@ -158,8 +147,19 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
           onChange={handleChange}
         />
       </InputWrapper>
-
-      <AddButton type="submit">Add</AddButton>
+      {checkForError && (
+        <ErrorsContainer>
+          {errors.name && (
+            <StyledFormError itemForm>{errors.name}</StyledFormError>
+          )}
+          {errors.quantity && (
+            <StyledFormError itemForm>{errors.quantity}</StyledFormError>
+          )}
+        </ErrorsContainer>
+      )}
+      <AddButton disabled={isSubmitting} type="submit">
+        Add
+      </AddButton>
     </StyledForm>
   );
 };
