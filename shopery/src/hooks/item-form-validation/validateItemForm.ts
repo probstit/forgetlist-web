@@ -5,7 +5,7 @@ export default function validateItemForm(values: Item) {
   const { name, quantity } = values;
   let errors: ItemErrors = {};
 
-  if (!name) {
+  if (!name || name.trim().length === 0) {
     errors.name = "- Name cannot be empty.";
   }
 

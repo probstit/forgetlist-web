@@ -74,7 +74,7 @@ const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
   } = useFormValidation(initialState, validateForm, authenthicateUser);
   // Helps with styling input elements (prop).
   const checkForError: boolean =
-    (errors.email ? true : false) || dbError.length !== 0;
+    Object.keys(errors).length > 0 || dbError.length !== 0;
 
   return (
     <Container>

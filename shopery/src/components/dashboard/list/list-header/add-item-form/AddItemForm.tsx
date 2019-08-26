@@ -60,19 +60,16 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
 
   const dispatchItemData = async () => {
     values.isShared = checked;
+    values.name = values.name.trim();
     // Send the item to DB.
-    const { _id, name, quantity, isShared, isBought } = await sendItem(values);
+    const sentItem = await sendItem(values);
 
     // Dispatch action to update state.
     if (dispatch) {
       dispatch({
         type: "ADD_ITEM",
         item: {
-          _id,
-          name,
-          quantity,
-          isShared,
-          isBought
+          ...sentItem
         }
       });
       if (nameInputRef.current) nameInputRef.current.focus();
@@ -101,7 +98,7 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
     return () => window.removeEventListener("click", detectOutsideClick, false);
   }, [setShowAdd, headerRef]);
 
-  const checkForError: boolean = errors.name ? true : false;
+  const checkForError: boolean = Object.keys(errors).length > 0 ? true : false;
 
   return (
     <StyledForm listHeader onSubmit={handleSubmit}>

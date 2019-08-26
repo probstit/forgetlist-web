@@ -57,8 +57,7 @@ const ResetPassword: React.FC<RouteComponentProps> = ({
     errors
   } = useFormValidation(initialState, validateForm, submitNewPw);
 
-  const checkForError =
-    (errors.password ? true : false) || dbError.length !== 0;
+  const checkForError = Object.keys(errors).length > 0 || dbError.length !== 0;
 
   const config = {
     checkForError,

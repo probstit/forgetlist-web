@@ -16,7 +16,7 @@ export const EditContainer = styled.div<ThemeProps>`
 export const EditForm = styled.form<ThemeProps>`
   width: 90%;
   height: auto;
-  padding: 5px 10px;
+  padding: 5px 10px 10px 10px;
   vertical-align: middle;
   background-color: ${props => (props.theme as DefaultTheme).colors.secondary};
   border-radius: ${props =>
@@ -51,6 +51,7 @@ export const EditBody = styled.div<ThemeProps>`
 export const EditInputWrapper = styled.div<ThemeProps>`
   display: inline-block;
   margin-left: 7.5px;
+  margin-bottom: 5px;
   width: ${props => (props.itemName ? "60%" : props.itemQty ? "20%" : "10%")};
   text-align: ${props => (props.itemName ? "left" : "center")};
   height: auto;
@@ -71,7 +72,7 @@ export const EditInput = styled.input<ThemeProps>`
   width: ${props => (props.setShare ? "15px" : "95%")};
   height: ${props => (props.setShare ? "15px" : "auto")};
   padding: 5px 10px;
-  border: none;
+  border: ${props => (props.styleError ? "0.6px solid #ee0000" : "none")};
   text-align: ${props => (props.itemQty ? "center" : "left")};
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   border-radius: ${props =>

@@ -142,7 +142,8 @@ export const StyledFormError = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
   color: #ee0000;
-  text-align: ${props => (props.itemForm ? "left" : "center")};
+  text-align: ${props =>
+    props.itemForm || props.editForm ? "left" : "center"};
 
   p {
     font-weight: 600;

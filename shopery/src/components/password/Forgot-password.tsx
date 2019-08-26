@@ -43,7 +43,7 @@ const ForgotPassword: React.FC = (): JSX.Element => {
   } = useFormValidation(initialState, validateForm, submitForgotPw);
   // Helps with styling input elements (prop).
   const checkForError: boolean =
-    (errors.email ? true : false) || dbError.length !== 0;
+    Object.keys(errors).length > 0 || dbError.length !== 0;
 
   const config = {
     checkForError,

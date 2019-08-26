@@ -16,4 +16,5 @@ export default interface ThemeProps {
   itemQty?: boolean;
   setShare?: boolean;
   itemForm?: boolean;
+  editForm?: boolean;
 }
