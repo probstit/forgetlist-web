@@ -13,6 +13,7 @@ export const StyledLogo = styled.div<ThemeProps>`
     text-align: center;
     font-weight: 550;
     letter-spacing: 1.3px;
+    font-size: 1.5em;
     color: ${props => (props.theme as DefaultTheme).colors.secondary};
     font-family: ${props => (props.theme as DefaultTheme).logoFont};
 

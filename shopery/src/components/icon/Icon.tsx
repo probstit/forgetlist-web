@@ -4,7 +4,7 @@ import { IconWrapper } from "./icon-styles";
 // Import FA Icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import ThemeProps from "../../../theme/theme-props.interface";
+import ThemeProps from "../../theme/theme-props.interface";
 
 interface FAIcon extends ThemeProps {
   icon: IconProp;
@@ -14,7 +14,7 @@ interface FAIcon extends ThemeProps {
 const Icon: React.SFC<FAIcon> = (props): JSX.Element => {
   if (props.footer) {
     return (
-      <IconWrapper footer>
+      <IconWrapper footer onClick={props.onClick}>
         <FontAwesomeIcon icon={props.icon} />
       </IconWrapper>
     );

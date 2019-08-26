@@ -25,7 +25,7 @@ const ListBody: React.FC = (): JSX.Element => {
               <QtyWrapper>Qty</QtyWrapper>
             </FloatedContent>
           </ListBodyHeader>
-          <ItemList />
+          <ItemList items={items} displayOptions={true} historyItem={false} />
         </>
       ) : (
         <NoItems>No items added yet.</NoItems>

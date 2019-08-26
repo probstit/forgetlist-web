@@ -1,19 +1,33 @@
-import React, { useContext } from "react";
+import React from "react";
 // Styled components
 import { StyledItemList } from "./item-list-styles";
 // Components
 import Item from "./Item/Item";
-// Context
-import {
-  ListContext,
-  ItemListContext
-} from "../../../../../contexts/listContext";
+// Interface
+import { Item as ItemDetails } from "../../../../../reducers/itemsReducer";
 
-const ItemList: React.FC = () => {
-  const { items } = useContext<ItemListContext>(ListContext);
+interface ItemListProps {
+  items: ItemDetails[];
+  displayOptions: boolean;
+  historyItem: boolean;
+}
+
+const ItemList: React.FC<ItemListProps> = ({
+  items,
+  displayOptions,
+  historyItem
+}) => {
   return (
     <StyledItemList>
-      {items && items.map(item => <Item key={item._id} item={item} />)}
+      {items &&
+        items.map(item => (
+          <Item
+            key={item._id}
+            item={item}
+            displayOptions={displayOptions}
+            historyItem={historyItem}
+          />
+        ))}
     </StyledItemList>
   );
 };

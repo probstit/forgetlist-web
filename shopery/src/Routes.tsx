@@ -8,6 +8,7 @@ import ForgotPassword from "./components/password/Forgot-password";
 import ResetPassword from "./components/password/Reset-password";
 import Confirm from "./components/confirm/Confirm";
 import DashboardWContext from "./components/dashboard-w-context/DashboardWContext";
+import History from "./components/history/History";
 import NoMatch from "./components/no-match/NoMatch";
 // Contexts
 import AuthContextProvider from "./contexts/authContext";
@@ -23,6 +24,7 @@ const Routes: React.FC = (): JSX.Element => (
         <Route path="/users/forgot-password" component={ForgotPassword} />
         <Route path="/users/reset-password" component={ResetPassword} />
         <Route path="/users/confirm" component={Confirm} />
+        <Route path="/history" component={History} />
         <Route component={NoMatch} />
       </Switch>
     </BrowserRouter>

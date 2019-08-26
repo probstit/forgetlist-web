@@ -163,3 +163,10 @@ export const ErrorsContainer = styled.div<ThemeProps>`
   margin-bottom: 10px;
   clear: both;
 `;
+
+export const Wrapper = styled.section<ThemeProps>`
+  padding: 50px 10px;
+  overflow-y: scroll;
+  height: auto;
+  width: 100%;
+`;

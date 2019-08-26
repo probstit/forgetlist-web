@@ -24,7 +24,7 @@ export const StyledItem = styled.li<ThemeProps>`
 `;
 
 export const ItemDetails = styled.div<ThemeProps>`
-  width: 55%;
+  width: ${props => (props.historyList ? "100%" : "55%")};
   height: auto;
   font-size: 0.9em;
   font-weight: 600;

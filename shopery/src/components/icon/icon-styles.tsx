@@ -1,6 +1,6 @@
 import styled, { DefaultTheme } from "styled-components";
 
-import ThemeProps from "../../../theme/theme-props.interface";
+import ThemeProps from "../../theme/theme-props.interface";
 
 export const IconWrapper = styled.div<ThemeProps>`
   display: inline-block;

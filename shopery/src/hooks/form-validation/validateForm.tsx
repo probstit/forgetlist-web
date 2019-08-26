@@ -27,9 +27,9 @@ export default function validateForm(values: FormState) {
   }
 
   if (values.hasOwnProperty("password")) {
-    if (!password) {
+    if (!password || password.trim().length === 0) {
       errors.password = "Password is required";
-    } else if (password.length < 6) {
+    } else if (password.length < 6 || password.trim().length < 6) {
       errors.password = "Password must be at least 6 characters";
     }
   }

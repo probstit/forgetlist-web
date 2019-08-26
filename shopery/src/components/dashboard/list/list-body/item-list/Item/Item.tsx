@@ -4,8 +4,8 @@ import axios from "axios";
 import { NameWrapper, QtyWrapper } from "../../list-body-styles";
 import { StyledItem, ItemDetails, ItemOptions } from "./item-styles";
 // Import FA Icon
-import Icon from "../../../../icon/Icon";
-import { IconWrapper } from "../../../../icon/icon-styles";
+import Icon from "../../../../../icon/Icon";
+import { IconWrapper } from "../../../../../icon/icon-styles";
 // Interfaces
 import { Item as ItemData } from "../../../../../../reducers/itemsReducer";
 // Contexts
@@ -24,6 +24,8 @@ import grabToken from "../../../../../../util/grab-token";
 interface ItemProp {
   item: ItemData;
   key: string;
+  displayOptions: boolean;
+  historyItem: boolean;
 }
 
 const deleteFromDB = async (id: string) => {
@@ -70,7 +72,7 @@ const updateItemShareStatus = async (url: string) => {
   }
 };
 
-const Item: React.FC<ItemProp> = ({ item }) => {
+const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
   const { showEdit, setItemData } = useContext<ItemEditContext>(EditContext);
 
@@ -129,30 +131,32 @@ const Item: React.FC<ItemProp> = ({ item }) => {
 
   return (
     <StyledItem>
-      <ItemDetails onClick={buyItem}>
+      <ItemDetails onClick={buyItem} historyList={historyItem}>
         <NameWrapper>{item.name}</NameWrapper>
-        <QtyWrapper>{item.quantity}</QtyWrapper>
+        <QtyWrapper itemQty>{item.quantity}</QtyWrapper>
       </ItemDetails>
-      <ItemOptions>
-        {item.isShared ? (
-          <IconWrapper liOption onClick={shareItem}>
-            <Icon liOption icon="lock-open" />
+      {displayOptions && (
+        <ItemOptions>
+          {item.isShared ? (
+            <IconWrapper liOption onClick={shareItem}>
+              <Icon liOption icon="lock-open" />
+            </IconWrapper>
+          ) : (
+            <IconWrapper liOption onClick={shareItem}>
+              <Icon liOption icon="lock" />
+            </IconWrapper>
+          )}
+          <IconWrapper liOption onClick={handleEdit}>
+            <Icon liOption icon="edit" />
           </IconWrapper>
-        ) : (
-          <IconWrapper liOption onClick={shareItem}>
-            <Icon liOption icon="lock" />
+          <IconWrapper liOption onClick={deleteItem}>
+            <Icon trash liOption icon="trash-alt" />
           </IconWrapper>
-        )}
-        <IconWrapper liOption onClick={handleEdit}>
-          <Icon liOption icon="edit" />
-        </IconWrapper>
-        <IconWrapper liOption onClick={deleteItem}>
-          <Icon trash liOption icon="trash-alt" />
-        </IconWrapper>
-        <IconWrapper liOption>
-          <Icon liOption icon="caret-up" />
-        </IconWrapper>
-      </ItemOptions>
+          <IconWrapper liOption>
+            <Icon liOption icon="caret-up" />
+          </IconWrapper>
+        </ItemOptions>
+      )}
     </StyledItem>
   );
 };
