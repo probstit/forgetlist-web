@@ -48,6 +48,8 @@ export const QtyWrapper = styled.p<ThemeProps>`
     props.itemQty || props.historyList ? "center" : "left"};
 `;
 
-export const NoItems = styled.p`
+export const NoItems = styled.p<ThemeProps>`
+  font-size: 0.9em;
   text-align: center;
+  margin-top: ${props => (props.historyList ? "5px" : "0")};
 `;

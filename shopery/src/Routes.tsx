@@ -12,6 +12,7 @@ import History from "./components/history/History";
 import NoMatch from "./components/no-match/NoMatch";
 // Contexts
 import AuthContextProvider from "./contexts/authContext";
+import FriendsList from "./components/friends-list/FriendsList";
 
 const Routes: React.FC = (): JSX.Element => (
   <AuthContextProvider>
@@ -25,6 +26,7 @@ const Routes: React.FC = (): JSX.Element => (
         <Route path="/users/reset-password" component={ResetPassword} />
         <Route path="/users/confirm" component={Confirm} />
         <Route path="/history" component={History} />
+        <Route path="/friends" component={FriendsList} />
         <Route component={NoMatch} />
       </Switch>
     </BrowserRouter>

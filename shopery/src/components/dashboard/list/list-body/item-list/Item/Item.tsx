@@ -86,14 +86,12 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
   const buyItem = () => {
     if (dispatch) {
       // Same action type as deleting because the result is the same.
-      if (dispatch) {
-        dispatch({
-          type: "DELETE_ITEM",
-          item: {
-            _id: item._id
-          }
-        });
-      }
+      dispatch({
+        type: "DELETE_ITEM",
+        item: {
+          _id: item._id
+        }
+      });
     }
 
     updateItemBoughtStatus(
@@ -131,7 +129,7 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
 
   return (
     <StyledItem>
-      <ItemDetails onClick={buyItem} historyList={historyItem}>
+      <ItemDetails historyList={historyItem} onClick={buyItem}>
         <NameWrapper>{item.name}</NameWrapper>
         <QtyWrapper itemQty>{item.quantity}</QtyWrapper>
       </ItemDetails>

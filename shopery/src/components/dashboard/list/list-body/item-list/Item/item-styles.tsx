@@ -32,11 +32,11 @@ export const ItemDetails = styled.div<ThemeProps>`
   float: left;
 
   &:hover p {
-    text-decoration: line-through;
+    text-decoration: ${props => (props.historyList ? "none" : "line-through")};
   }
 
   &:hover {
-    cursor: pointer;
+    cursor: ${props => (props.historyList ? "default" : "pointer")};
   }
 `;
 

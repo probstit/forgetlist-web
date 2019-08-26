@@ -14,7 +14,8 @@ import {
   FloatedContent,
   NameWrapper,
   QtyWrapper,
-  ListBodyHeader
+  ListBodyHeader,
+  NoItems
 } from "../dashboard/list/list-body/list-body-styles";
 import { HistoryListHeader } from "./history-styles";
 // Import Context
@@ -50,20 +51,26 @@ const History: React.FC<RouteComponentProps> = ({ history }) => {
           <Wrapper>
             <ListWrapper>
               <HistoryListHeader>
-                <h3>History</h3>
+                <h4>History</h4>
               </HistoryListHeader>
               <ListBodyWrapper historyList>
-                <ListBodyHeader>
-                  <FloatedContent historyList>
-                    <NameWrapper historyList>Name</NameWrapper>
-                    <QtyWrapper historyList>Qty</QtyWrapper>
-                  </FloatedContent>
-                </ListBodyHeader>
-                <ItemList
-                  items={items}
-                  displayOptions={false}
-                  historyItem={true}
-                />
+                {items.length > 0 ? (
+                  <>
+                    <ListBodyHeader>
+                      <FloatedContent historyList>
+                        <NameWrapper historyList>Name</NameWrapper>
+                        <QtyWrapper historyList>Qty</QtyWrapper>
+                      </FloatedContent>
+                    </ListBodyHeader>
+                    <ItemList
+                      items={items}
+                      displayOptions={false}
+                      historyItem={true}
+                    />
+                  </>
+                ) : (
+                  <NoItems historyList>No items added yet.</NoItems>
+                )}
               </ListBodyWrapper>
             </ListWrapper>
           </Wrapper>
