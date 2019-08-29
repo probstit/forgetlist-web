@@ -17,5 +17,7 @@ export default interface ThemeProps {
   setShare?: boolean;
   itemForm?: boolean;
   editForm?: boolean;
+  friendForm?: boolean;
+  friendResult?: boolean;
   historyList?: boolean;
 }

@@ -13,7 +13,6 @@ import { Item } from "../../../reducers/itemsReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Styled components
 import {
-  EditContainer,
   EditForm,
   EditHeader,
   EditBody,
@@ -24,7 +23,8 @@ import {
 } from "./edit-styles";
 import {
   ErrorsContainer,
-  StyledFormError
+  StyledFormError,
+  Overlay
 } from "../../common-styled-components/common";
 
 // Updated item data in db.
@@ -90,7 +90,7 @@ const Edit: React.FC = () => {
   const checkForErrors: boolean = Object.keys(errors).length > 0 ? true : false;
 
   return (
-    <EditContainer>
+    <Overlay>
       <EditForm onSubmit={handleSubmit}>
         <EditHeader>
           <div onClick={hideEditHandler}>
@@ -160,7 +160,7 @@ const Edit: React.FC = () => {
           </EditButton>
         </EditBody>
       </EditForm>
-    </EditContainer>
+    </Overlay>
   );
 };
 

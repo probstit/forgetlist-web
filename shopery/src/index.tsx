@@ -20,7 +20,10 @@ import {
   faSignOutAlt,
   faCaretUp,
   faCaretDown,
-  faTimes
+  faTimes,
+  faSearch,
+  faUserTimes,
+  faUserCheck
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -40,7 +43,10 @@ library.add(
   faSignOutAlt,
   faCaretUp,
   faCaretDown,
-  faTimes
+  faTimes,
+  faSearch,
+  faUserTimes,
+  faUserCheck
 );
 
 ReactDOM.render(<App />, document.getElementById("root"));

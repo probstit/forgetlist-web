@@ -5,6 +5,8 @@ import grabToken from "../../util/grab-token";
 // Components
 import AppHeader from "../app-header/AppHeader";
 import AppNav from "../app-nav/AppNav";
+import List from "./list/List";
+import AddFriend from "./add-friend/AddFriend";
 // Styled Components
 import { Container, Wrapper } from "../common-styled-components/common";
 import { ListWrapper } from "../dashboard/list/list-styles";
@@ -14,42 +16,55 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Context
 import { Auth, AuthContext } from "../../contexts/authContext";
 
-interface IfriendsID {
+export interface IfriendsID {
   _id: string;
 }
 
-async function getFriendsData(url: string) {
-  const token = grabToken();
-  const response = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+export interface IfriendsData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  _id: string;
+}
 
-  return response.data;
+export async function getFriendsData(url: string) {
+  const token = grabToken();
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return response.data;
+  } catch (err) {
+    console.log(err.response.data.payload.message);
+  }
 }
 
 const FriendsList: React.FC<RouteComponentProps> = ({ history }) => {
   const { isLoggedIn } = useContext<Auth>(AuthContext);
   const [friendsID, setFriendsID] = useState<IfriendsID[]>([]);
-  const [friendsData, setFriendsData] = useState([]);
+  const [friendsData, setFriendsData] = useState<IfriendsData[]>([]);
+  const [showAddFriend, setShowAddFriend] = useState<boolean>(false);
+
+  const toggleAddFriend = () => {
+    setShowAddFriend(!showAddFriend);
+  };
 
   useEffect(() => {
-    getFriendsData("http://localhost:8000/api/v1.0/social/friends").then(
-      response => {
+    getFriendsData("http://localhost:8000/api/v1.0/social/friends")
+      .then(response => {
         setFriendsID(response.friendList.friendIDs);
-      }
-    );
+      })
+      .catch(err => console.log(err.response.data.payload.message));
   }, []);
 
   useEffect(() => {
-    const friendsData: any = [];
     friendsID.forEach(id => {
       getFriendsData(`http://localhost:8000/api/v1.0/users/user/${id}`).then(
-        user => friendsData.push(user)
+        friend => setFriendsData(friendsData => [...friendsData, friend])
       );
-
-      setFriendsData(friendsData);
     });
   }, [friendsID]);
 
@@ -57,15 +72,17 @@ const FriendsList: React.FC<RouteComponentProps> = ({ history }) => {
     <Container dashboard>
       {isLoggedIn ? (
         <>
+          {showAddFriend && <AddFriend setShowAddFriend={setShowAddFriend} />}
           <AppHeader />
           <Wrapper>
             <ListWrapper>
               <FriendsListHead>
-                <FriendsIconWrapper>
+                <FriendsIconWrapper onClick={toggleAddFriend}>
                   <FontAwesomeIcon icon="user-plus" />
                 </FriendsIconWrapper>
                 <h4>Friends</h4>
               </FriendsListHead>
+              <List friendsData={friendsData} setFriendsData={setFriendsData} />
             </ListWrapper>
           </Wrapper>
           <AppNav history={history} />

@@ -2,22 +2,10 @@ import styled, { DefaultTheme } from "styled-components";
 
 import ThemeProps from "../../../theme/theme-props.interface";
 
-export const EditContainer = styled.div<ThemeProps>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(169, 169, 169, 0.6);
-  width: 100%;
-  height: 100%;
-  z-index: 3;
-  padding: 45% 0;
-`;
-
 export const EditForm = styled.form<ThemeProps>`
   width: 90%;
   height: auto;
   padding: 5px 10px 10px 10px;
-  vertical-align: middle;
   background-color: ${props => (props.theme as DefaultTheme).colors.secondary};
   border-radius: ${props =>
     (props.theme as DefaultTheme).dashboardBorderRadius};

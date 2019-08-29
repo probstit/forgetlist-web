@@ -1,7 +1,5 @@
 import styled, { DefaultTheme } from "styled-components";
 
-import ThemeProps from "../../theme/theme-props.interface";
-
 export const FriendsListHead = styled.div`
   width: 100%;
   padding: 10px 20px;
@@ -9,7 +7,10 @@ export const FriendsListHead = styled.div`
     ${props => (props.theme as DefaultTheme).colors.tertiary};
 
   h4 {
-    text-align: center;
+    width: 60px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
   }
 
   &::after {

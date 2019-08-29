@@ -143,7 +143,9 @@ export const StyledFormError = styled.div<ThemeProps>`
   height: auto;
   color: #ee0000;
   text-align: ${props =>
-    props.itemForm || props.editForm ? "left" : "center"};
+    props.itemForm || props.editForm || props.friendForm ? "left" : "center"};
+  padding-left: ${props => (props.friendForm ? "10px" : "0")};
+  margin-top: ${props => (props.friendForm ? "5px" : "0")};
 
   p {
     font-weight: 600;
@@ -169,4 +171,15 @@ export const Wrapper = styled.section<ThemeProps>`
   overflow-y: scroll;
   height: auto;
   width: 100%;
+`;
+
+export const Overlay = styled.div<ThemeProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(175, 175, 175, 0.6);
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  padding: 45% 0;
 `;

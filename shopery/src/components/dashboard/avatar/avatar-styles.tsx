@@ -7,6 +7,7 @@ export const UserDetails = styled.div<ThemeProps>`
   display: inline-block;
   height: 30px;
   padding-left: 2px;
+  
 `;
 
 export const StyledUserAvatar = styled.div<ThemeProps>`
