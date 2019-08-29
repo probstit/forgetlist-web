@@ -20,13 +20,11 @@ const removeFriendDB = async (friendID: string) => {
   const token = grabToken();
   const url = `http://localhost:8000/api/v1.0/social/remove-friend/${friendID}`;
   try {
-    const response = await axios.delete(url, {
+    await axios.delete(url, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
-
-    console.log(response);
   } catch (err) {
     console.log(err.response.data.payload.message);
   }
