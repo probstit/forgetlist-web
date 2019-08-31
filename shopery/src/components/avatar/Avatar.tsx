@@ -2,7 +2,7 @@ import React from "react";
 // Styled components
 import { UserDetails, StyledUserAvatar, StyledUserName } from "./avatar-styles";
 // Interfaces
-import { User } from "../../../hooks/get-user/interfaces";
+import { User } from "../../hooks/get-user/interfaces";
 
 interface AvatarProps {
   user: User;

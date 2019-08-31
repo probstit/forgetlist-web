@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import axios from "axios";
 import grabToken from "../../../util/grab-token";
 // Components
-import Avatar from "../../dashboard/avatar/Avatar";
+import Avatar from "../../avatar/Avatar";
 // Styled Componnts
 import { StyledList, RemoveFriendBtn } from "./list-styles";
 // FA

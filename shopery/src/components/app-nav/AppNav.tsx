@@ -1,30 +1,21 @@
 import React from "react";
+import { Link } from "react-router-dom";
 //Styled Components
 import { AppNavContainer } from "./app-nav-styles";
 import Icon from "../icon/Icon";
 
-interface AppNavProps {
-  history: any;
-}
-
-const AppNav: React.FC<AppNavProps> = ({ history }) => {
-  const moveToFriendList = () => {
-    history.push("/friends");
-  };
-
-  const moveToItemList = () => {
-    history.push("/");
-  };
-
-  const moveToHistory = () => {
-    history.push("/history");
-  };
-
+const AppNav: React.FC = () => {
   return (
     <AppNavContainer>
-      <Icon footer onClick={moveToFriendList} icon="user-friends" />
-      <Icon footer onClick={moveToItemList} icon="clipboard-list" />
-      <Icon footer onClick={moveToHistory} icon="history" />
+      <Link to="/friends">
+        <Icon footer icon="user-friends" />
+      </Link>
+      <Link to="/">
+        <Icon footer icon="clipboard-list" />
+      </Link>
+      <Link to="/history">
+        <Icon footer icon="history" />
+      </Link>
     </AppNavContainer>
   );
 };

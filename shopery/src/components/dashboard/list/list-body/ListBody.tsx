@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 // Styled Components
 import {
   ListBodyWrapper,
@@ -10,11 +10,14 @@ import {
 } from "./list-body-styles";
 // Components
 import ItemList from "./item-list/ItemList";
-// Context
-import { ListContext, ItemListContext } from "../../../../contexts/listContext";
+// Interface
+import { Item } from "../../../../reducers/itemsReducer";
 
-const ListBody: React.FC = (): JSX.Element => {
-  const { items } = useContext<ItemListContext>(ListContext);
+interface ListBodyProps {
+  items: Item[];
+}
+
+const ListBody: React.FC<ListBodyProps> = ({ items }): JSX.Element => {
   return (
     <ListBodyWrapper>
       {items && items.length > 0 ? (

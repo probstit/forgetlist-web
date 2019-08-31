@@ -8,16 +8,13 @@ import AppNav from "../app-nav/AppNav";
 import AppHeader from "../app-header/AppHeader";
 import List from "./list/List";
 import Edit from "./edit-item/Edit";
+import SharedItemList from "./shared-item-list/SharedItemList";
 
 // Import Context
 import { AuthContext, Auth } from "../../contexts/authContext";
 import { EditContext, ItemEditContext } from "../../contexts/editContext";
 
-interface DashboardProps {
-  history: any;
-}
-
-const Dashboard: React.FC<DashboardProps> = ({ history }): JSX.Element => {
+const Dashboard: React.FC = (): JSX.Element => {
   const { isLoggedIn } = useContext<Auth>(AuthContext);
   const { displayEdit } = useContext<ItemEditContext>(EditContext);
 
@@ -29,8 +26,9 @@ const Dashboard: React.FC<DashboardProps> = ({ history }): JSX.Element => {
           <AppHeader />
           <DashboardWrapper>
             <List />
+            <SharedItemList />
           </DashboardWrapper>
-          <AppNav history={history} />
+          <AppNav />
         </>
       ) : (
         <Redirect to="/landing" />

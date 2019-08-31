@@ -66,7 +66,7 @@ export const StyledInput = styled.input<ThemeProps>`
   width: 15em;
   height: 25px;
   display: ${props => (props.listHeader ? "inline-block" : "block")};
-  margin: 0 auto 0 auto;
+  margin: 0 auto 3px auto;
   text-align: center;
   padding: 0 ${props => (props.listHeader ? "10px" : "5px")};
   border: ${props => (props.styleError ? "1.2px solid #ee0000" : "none")};

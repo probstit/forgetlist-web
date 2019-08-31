@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Redirect, RouteComponentProps } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import grabToken from "../../util/grab-token";
 // Components
@@ -31,7 +31,7 @@ const fetchHistoryItems = async (url: string): Promise<Item[]> => {
   return historyItems;
 };
 
-const History: React.FC<RouteComponentProps> = ({ history }) => {
+const History: React.FC = () => {
   const { isLoggedIn } = useContext<Auth>(AuthContext);
   const [items, setItems] = useState<Item[]>([]);
 
@@ -74,7 +74,7 @@ const History: React.FC<RouteComponentProps> = ({ history }) => {
               </ListBodyWrapper>
             </ListWrapper>
           </Wrapper>
-          <AppNav history={history} />
+          <AppNav />
         </>
       ) : (
         <Redirect to="/landing" />

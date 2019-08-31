@@ -5,7 +5,7 @@ import grabToken from "../../../../util/grab-token";
 import { ResultContainer, ResultItem, ResultError } from "./result-styles";
 import { FloatedIconWrapper } from "../add-friend-styles";
 // Components
-import Avatar from "../../../dashboard/avatar/Avatar";
+import Avatar from "../../../avatar/Avatar";
 // FA
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Interface

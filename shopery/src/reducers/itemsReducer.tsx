@@ -1,6 +1,7 @@
 export interface Item {
   _id: string;
   name: string;
+  userID?: string;
   quantity: number;
   isShared: boolean;
   isBought: boolean;

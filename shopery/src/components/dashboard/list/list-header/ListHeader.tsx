@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 // Styled Components
 import { StyledListHeader } from "./list-header-styles";
 // Import components
-import Avatar from "../../avatar/Avatar";
+import Avatar from "../../../avatar/Avatar";
 import ListOptions from "./list-options/ListOptions";
 import AddItemForm from "./add-item-form/AddItemForm";
 // Interfaces

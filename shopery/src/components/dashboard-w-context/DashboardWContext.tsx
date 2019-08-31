@@ -1,16 +1,15 @@
 import React from "react";
-import { RouteComponentProps } from "react-router";
 // Components
 import Dashboard from "../dashboard/Dashboard";
 // Context
 import EditContextProvider from "../../contexts/editContext";
 import ListContextProvider from "../../contexts/listContext";
 
-const DashboardWContext: React.FC<RouteComponentProps> = ({ history }) => {
+const DashboardWContext: React.FC = () => {
   return (
     <EditContextProvider>
       <ListContextProvider>
-        <Dashboard history={history} />
+        <Dashboard />
       </ListContextProvider>
     </EditContextProvider>
   );

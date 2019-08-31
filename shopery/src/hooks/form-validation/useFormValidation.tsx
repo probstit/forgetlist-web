@@ -18,6 +18,7 @@ export const useFormValidation = (
       if (noErrors) {
         callback();
         setSubmitting(false);
+        setErrors({});
       } else {
         setSubmitting(false);
       }

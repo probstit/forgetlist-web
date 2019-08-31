@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useContext } from "react";
 import { Redirect } from "react-router-dom";
 // Import styled components
 import { ListWrapper } from "../list/list-styles";
@@ -8,9 +7,12 @@ import ListHeader from "./list-header/ListHeader";
 import ListBody from "./list-body/ListBody";
 // Hooks
 import useGetUser from "../../../hooks/get-user/useGetUser";
+// Context
+import { ListContext, ItemListContext } from "../../../contexts/listContext";
 
 const List: React.FC = (): JSX.Element => {
   const { user, error } = useGetUser();
+  const { items } = useContext<ItemListContext>(ListContext);
 
   return (
     <ListWrapper>
@@ -19,7 +21,7 @@ const List: React.FC = (): JSX.Element => {
       ) : (
         <>
           <ListHeader user={user} />
-          <ListBody />
+          <ListBody items={items ? items : []} />
         </>
       )}
     </ListWrapper>

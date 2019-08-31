@@ -21,6 +21,11 @@ export const StyledItem = styled.li<ThemeProps>`
   p {
     padding-right: 7px;
   }
+
+  &:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
 `;
 
 export const ItemDetails = styled.div<ThemeProps>`

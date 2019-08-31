@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { RouteComponentProps, Redirect } from "react-router";
+import { Redirect } from "react-router";
 import axios from "axios";
 import grabToken from "../../util/grab-token";
 // Components
@@ -42,7 +42,7 @@ export async function getFriendsData(url: string) {
   }
 }
 
-const FriendsList: React.FC<RouteComponentProps> = ({ history }) => {
+const FriendsList: React.FC = () => {
   const { isLoggedIn } = useContext<Auth>(AuthContext);
   const [friendsID, setFriendsID] = useState<IfriendsID[]>([]);
   const [friendsData, setFriendsData] = useState<IfriendsData[]>([]);
@@ -55,10 +55,10 @@ const FriendsList: React.FC<RouteComponentProps> = ({ history }) => {
   useEffect(() => {
     getFriendsData("http://localhost:8000/api/v1.0/social/friends")
       .then(response => {
-        setFriendsID(response.friendList.friendIDs);
+        if (isLoggedIn) setFriendsID(response.friendList.friendIDs);
       })
-      .catch(err => console.log(err.response.data.payload.message));
-  }, []);
+      .catch(err => alert(err.response.data.payload.message));
+  }, [isLoggedIn]);
 
   useEffect(() => {
     friendsID.forEach(id => {
@@ -85,7 +85,7 @@ const FriendsList: React.FC<RouteComponentProps> = ({ history }) => {
               <List friendsData={friendsData} setFriendsData={setFriendsData} />
             </ListWrapper>
           </Wrapper>
-          <AppNav history={history} />
+          <AppNav />
         </>
       ) : (
         <Redirect to="/landing" />
