@@ -3,6 +3,7 @@ import styled, { DefaultTheme } from "styled-components";
 import ThemeProps from "../../../../../../theme/theme-props.interface";
 
 export const StyledItem = styled.li<ThemeProps>`
+  position: relative;
   width: 100%;
   height: auto;
   padding: 5px;

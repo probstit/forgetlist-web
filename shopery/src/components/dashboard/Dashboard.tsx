@@ -8,7 +8,7 @@ import AppNav from "../app-nav/AppNav";
 import AppHeader from "../app-header/AppHeader";
 import List from "./list/List";
 import Edit from "./edit-item/Edit";
-import SharedItemList from "./shared-item-list/SharedItemList";
+import SharedItems from "./shared-items/SharedItems";
 
 // Import Context
 import { AuthContext, Auth } from "../../contexts/authContext";
@@ -26,7 +26,7 @@ const Dashboard: React.FC = (): JSX.Element => {
           <AppHeader />
           <DashboardWrapper>
             <List />
-            <SharedItemList />
+            <SharedItems />
           </DashboardWrapper>
           <AppNav />
         </>
