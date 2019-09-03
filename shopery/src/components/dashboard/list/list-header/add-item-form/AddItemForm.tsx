@@ -63,7 +63,7 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
     values.name = values.name.trim();
     // Send the item to DB.
     const sentItem = await sendItem(values);
-
+    console.log(sentItem);
     // Dispatch action to update state.
     if (dispatch) {
       dispatch({

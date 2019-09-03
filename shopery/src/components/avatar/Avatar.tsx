@@ -6,15 +6,16 @@ import { User } from "../../hooks/get-user/interfaces";
 
 interface AvatarProps {
   user: User;
+  shared?: boolean;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ user }): JSX.Element => {
+const Avatar: React.FC<AvatarProps> = ({ user, shared }): JSX.Element => {
   const { firstName, lastName } = user;
   const avatarContent = lastName.charAt(0);
 
   return (
     <UserDetails>
-      <StyledUserAvatar>
+      <StyledUserAvatar shared={shared ? shared : false}>
         <p>{avatarContent}</p>
       </StyledUserAvatar>
       <StyledUserName>{`${firstName} ${lastName}`}</StyledUserName>

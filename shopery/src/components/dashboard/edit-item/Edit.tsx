@@ -50,7 +50,8 @@ const Edit: React.FC = () => {
     name: "",
     quantity: 1,
     isShared: false,
-    isBought: false
+    isBought: false,
+    sharedWith: []
   };
   if (itemData) initialState = itemData;
 

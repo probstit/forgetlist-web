@@ -1,7 +1,7 @@
 import React from "react";
 import Routes from "./Routes";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
 
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import theme from "./theme/theme";
 
 const GlobalStyle = createGlobalStyle`

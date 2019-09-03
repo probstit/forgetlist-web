@@ -5,4 +5,3 @@ export const StyledItemList = styled.ul`
   height: auto;
   list-style-type: none;
 `;
-

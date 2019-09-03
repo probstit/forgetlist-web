@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // Styled components
 import { StyledItemList } from "../../list/list-body/item-list/item-list-styles";
 import SharedBodyHeader from "../shared-body-header/SharedBodyHeader";
@@ -12,11 +12,21 @@ interface SharedItemListProps {
 }
 
 const SharedItemList: React.FC<SharedItemListProps> = ({ items }) => {
+  const [sharedItems, setSharedItems] = useState<Item[]>(items);
+
+  const buySharedItem = (itemID: string) => {
+    setSharedItems(items => items.filter(item => item._id !== itemID));
+  };
+
+  useEffect(() => {
+    setSharedItems(items);
+  }, [items]);
+
   return (
     <StyledItemList>
       <SharedBodyHeader />
-      {items.map(item => (
-        <SharedItem key={item._id} item={item} />
+      {sharedItems.map(item => (
+        <SharedItem key={item._id} item={item} buySharedItem={buySharedItem} />
       ))}
     </StyledItemList>
   );

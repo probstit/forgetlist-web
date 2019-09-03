@@ -4,7 +4,7 @@ import ThemeProps from "../../../../theme/theme-props.interface";
 export const StyledSharedItem = styled.li<ThemeProps>`
   width: 100%;
   height: auto;
-  padding: 5px 6px;
+  padding: 7px;
   font-size: 0.8em;
   font-weight: 600;
   margin-top: 5px;
@@ -15,6 +15,10 @@ export const StyledSharedItem = styled.li<ThemeProps>`
   &:hover {
     opacity: 0.7;
     cursor: pointer;
+  }
+
+  &:hover p {
+    text-decoration: line-through;
   }
 
   p {

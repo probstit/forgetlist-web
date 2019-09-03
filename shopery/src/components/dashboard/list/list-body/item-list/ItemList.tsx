@@ -3,6 +3,7 @@ import React from "react";
 import { StyledItemList } from "./item-list-styles";
 // Components
 import Item from "./Item/Item";
+
 // Interface
 import { Item as ItemDetails } from "../../../../../reducers/itemsReducer";
 
@@ -21,12 +22,13 @@ const ItemList: React.FC<ItemListProps> = ({
     <StyledItemList>
       {items &&
         items.map(item => (
-          <Item
-            key={item._id}
-            item={item}
-            displayOptions={displayOptions}
-            historyItem={historyItem}
-          />
+          <div key={item._id}>
+            <Item
+              item={item}
+              displayOptions={displayOptions}
+              historyItem={historyItem}
+            />
+          </div>
         ))}
     </StyledItemList>
   );

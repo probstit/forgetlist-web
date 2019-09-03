@@ -5,6 +5,7 @@ export interface Item {
   quantity: number;
   isShared: boolean;
   isBought: boolean;
+  sharedWith?: string[];
 }
 
 export const itemsReducer = (state: Item[], action: any) => {
@@ -19,7 +20,8 @@ export const itemsReducer = (state: Item[], action: any) => {
           name: action.item.name,
           quantity: action.item.quantity,
           isShared: action.item.isShared,
-          isBought: action.item.isBought
+          isBought: action.item.isBought,
+          sharedWith: action.item.sharedWith
         },
         ...state
       ];
@@ -38,6 +40,7 @@ export const itemsReducer = (state: Item[], action: any) => {
       const itemsCopy_hideAll = state.slice(0);
       itemsCopy_hideAll.forEach(item => {
         if (item.isShared) item.isShared = false;
+        item.sharedWith = [];
       });
       return [...itemsCopy_hideAll];
 
@@ -46,6 +49,7 @@ export const itemsReducer = (state: Item[], action: any) => {
       itemsCopy_shareOne.forEach(item => {
         if (item._id === action.item._id) {
           item.isShared = true;
+          item.sharedWith = action.item.sharedWith;
         }
       });
       return [...itemsCopy_shareOne];
@@ -55,6 +59,7 @@ export const itemsReducer = (state: Item[], action: any) => {
       itemsCopy_hideOne.forEach(item => {
         if (item._id === action.item._id) {
           item.isShared = false;
+          item.sharedWith = [];
         }
       });
       return [...itemsCopy_hideOne];

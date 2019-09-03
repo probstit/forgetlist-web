@@ -11,14 +11,14 @@ export const UserDetails = styled.div<ThemeProps>`
 `;
 
 export const StyledUserAvatar = styled.div<ThemeProps>`
-  width: 30px;
-  height: 30px;
+  width: ${props => (props.shared ? "25px" : "30px")};
+  height: ${props => (props.shared ? "25px" : "30px")};
   display: inline-block;
   border-radius: 100%;
   background-color: ${props => (props.theme as DefaultTheme).colors.primary};
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
   text-align: center;
-  line-height: 30px;
+  line-height: ${props => (props.shared ? "25px" : "30px")};
   font-weight: bold;
 `;
 

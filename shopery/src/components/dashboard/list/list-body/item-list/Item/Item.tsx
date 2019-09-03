@@ -1,5 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+// Components
+import SharedWith from "../shared-with/SharedWith";
 // Styled Components
 import { NameWrapper, QtyWrapper } from "../../list-body-styles";
 import { StyledItem, ItemDetails, ItemOptions } from "./item-styles";
@@ -23,7 +25,6 @@ import grabToken from "../../../../../../util/grab-token";
 
 interface ItemProp {
   item: ItemData;
-  key: string;
   displayOptions: boolean;
   historyItem: boolean;
 }
@@ -75,7 +76,7 @@ const updateItemShareStatus = async (url: string) => {
 const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
   const { showEdit, setItemData } = useContext<ItemEditContext>(EditContext);
-
+  const [displaySharedWith, setDisplaySharedWith] = useState<boolean>(false);
   // Click handler for edit.
   const handleEdit = () => {
     if (showEdit) showEdit();
@@ -123,39 +124,59 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
       updateItemShareStatus(
         `http://localhost:8000/api/v1.0/items/share-with-all/${item._id}`
       );
-      if (dispatch) dispatch({ type: "SHARE_ITEM", item: { _id: item._id } });
+      if (dispatch)
+        dispatch({
+          type: "SHARE_ITEM",
+          item: { _id: item._id }
+        });
     }
   };
 
+  const toggleDisplay = () => {
+    setDisplaySharedWith(!displaySharedWith);
+  };
+
   return (
-    <StyledItem>
-      <ItemDetails historyList={historyItem} onClick={buyItem}>
-        <NameWrapper>{item.name}</NameWrapper>
-        <QtyWrapper itemQty>{item.quantity}</QtyWrapper>
-      </ItemDetails>
-      {displayOptions && (
-        <ItemOptions>
-          {item.isShared ? (
-            <IconWrapper liOption onClick={shareItem}>
-              <Icon liOption icon="lock-open" />
+    <>
+      <StyledItem>
+        <ItemDetails historyList={historyItem} onClick={buyItem}>
+          <NameWrapper>{item.name}</NameWrapper>
+          <QtyWrapper itemQty>{item.quantity}</QtyWrapper>
+        </ItemDetails>
+        {displayOptions && (
+          <ItemOptions>
+            {item.isShared ? (
+              <IconWrapper liOption onClick={shareItem}>
+                <Icon liOption icon="lock-open" />
+              </IconWrapper>
+            ) : (
+              <IconWrapper liOption onClick={shareItem}>
+                <Icon liOption icon="lock" />
+              </IconWrapper>
+            )}
+
+            <IconWrapper liOption onClick={handleEdit}>
+              <Icon liOption icon="edit" />
             </IconWrapper>
-          ) : (
-            <IconWrapper liOption onClick={shareItem}>
-              <Icon liOption icon="lock" />
+
+            <IconWrapper liOption onClick={deleteItem}>
+              <Icon trash liOption icon="trash-alt" />
             </IconWrapper>
-          )}
-          <IconWrapper liOption onClick={handleEdit}>
-            <Icon liOption icon="edit" />
-          </IconWrapper>
-          <IconWrapper liOption onClick={deleteItem}>
-            <Icon trash liOption icon="trash-alt" />
-          </IconWrapper>
-          <IconWrapper liOption>
-            <Icon liOption icon="caret-up" />
-          </IconWrapper>
-        </ItemOptions>
-      )}
-    </StyledItem>
+
+            {displaySharedWith ? (
+              <IconWrapper liOption onClick={toggleDisplay}>
+                <Icon liOption icon="caret-down" />
+              </IconWrapper>
+            ) : (
+              <IconWrapper liOption onClick={toggleDisplay}>
+                <Icon liOption icon="caret-up" />
+              </IconWrapper>
+            )}
+          </ItemOptions>
+        )}
+      </StyledItem>
+      {displaySharedWith && <SharedWith userIDs={item.sharedWith} />}
+    </>
   );
 };
 

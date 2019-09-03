@@ -8,13 +8,15 @@ import { Item } from "../../../../reducers/itemsReducer";
 
 interface SharedItemProps {
   item: Item;
+  buySharedItem: Function;
 }
 
-const SharedItem: React.FC<SharedItemProps> = ({ item }) => {
+const SharedItem: React.FC<SharedItemProps> = ({ item, buySharedItem }) => {
   const markAsBought = async () => {
     const token = grabToken();
     const url = `http://localhost:8000/api/v1.0/items/mark-bought/${item._id}`;
     await axios.put(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+    buySharedItem(item._id);
   };
 
   return (

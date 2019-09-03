@@ -23,7 +23,8 @@ import {
   faTimes,
   faSearch,
   faUserTimes,
-  faUserCheck
+  faUserCheck,
+  faBan
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -46,7 +47,8 @@ library.add(
   faTimes,
   faSearch,
   faUserTimes,
-  faUserCheck
+  faUserCheck,
+  faBan
 );
 
 ReactDOM.render(<App />, document.getElementById("root"));
