@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import grabToken from "../../../../../../../util/grab-token";
+import React from "react";
 // Styled Components
 import { IconWrapper, UserContainer } from "./shared-with-user-styles";
 // Components
@@ -11,31 +9,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User } from "../../../../../../../hooks/get-user/interfaces";
 
 interface SharedWithUserProps {
-  userID: string;
+  user: User;
 }
 
-const initialState: User = {
-  _id: "",
-  firstName: "",
-  lastName: "",
-  email: ""
-};
-
-const SharedWithUser: React.FC<SharedWithUserProps> = ({ userID }) => {
-  const [user, setUser] = useState<User>(initialState);
-
-  useEffect(() => {
-    const findUser = async () => {
-      const token = grabToken();
-      const url = `http://localhost:8000/api/v1.0/users/user/${userID}`;
-      const response = await axios.get(url, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setUser(response.data);
-    };
-    findUser();
-  }, [userID]);
-
+const SharedWithUser: React.FC<SharedWithUserProps> = ({ user }) => {
   return (
     <UserContainer>
       <Avatar shared user={user} />
