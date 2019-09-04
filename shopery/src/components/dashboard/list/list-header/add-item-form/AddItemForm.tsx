@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useContext, useRef } from "react";
 import axios from "axios";
 // Import styled components
 import {
@@ -49,12 +49,10 @@ const initialState: Item = {
 
 interface AddItemFormProps {
   setShowAdd: React.Dispatch<React.SetStateAction<boolean>>;
-  headerRef: React.RefObject<HTMLDivElement>;
 }
 
 const AddItemForm: React.FC<AddItemFormProps> = ({
-  setShowAdd,
-  headerRef
+  setShowAdd
 }): JSX.Element => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
 
@@ -63,7 +61,7 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
     values.name = values.name.trim();
     // Send the item to DB.
     const sentItem = await sendItem(values);
-    console.log(sentItem);
+
     // Dispatch action to update state.
     if (dispatch) {
       dispatch({
@@ -87,16 +85,6 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
   } = useItemFormValidation(initialState, validateItemForm, dispatchItemData);
 
   const nameInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const detectOutsideClick = (e: any) => {
-      e.stopPropagation();
-      if (headerRef.current && !headerRef.current.contains(e.target))
-        setShowAdd(false);
-    };
-    window.addEventListener("click", detectOutsideClick, false);
-    return () => window.removeEventListener("click", detectOutsideClick, false);
-  }, [setShowAdd, headerRef]);
 
   const checkForError: boolean = Object.keys(errors).length > 0 ? true : false;
 

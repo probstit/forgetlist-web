@@ -1,46 +1,43 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import grabToken from "../../../../../../util/grab-token";
+import React from "react";
 import { User } from "../../../../../../hooks/get-user/interfaces";
 
 // Styled Components
 import { SharedWithContainer, Title, Users } from "./shared-with-styles";
 // Components
 import SharedWithUser from "./shared-with-user/SharedWithUser";
+import { NoItems } from "../../list-body-styles";
 
 interface SharedWithProps {
-  userIDs: string[] | undefined;
+  usersData: User[];
+  setUsersData: React.Dispatch<React.SetStateAction<User[]>>;
+  itemID: string;
+  hideFromUserData: Function;
 }
 
-const SharedWith: React.FC<SharedWithProps> = ({ userIDs }) => {
-  const [usersData, setUsersData] = useState<User[]>([]);
-
-  useEffect(() => {
-    const findUsers = async () => {
-      const token = grabToken();
-      const url = "http://localhost:8000/api/v1.0/users/shared-with";
-      const response = await axios.get(url, {
-        params: {
-          users: userIDs
-        },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      setUsersData(response.data.users);
-    };
-
-    findUsers();
-  }, [userIDs]);
-
+const SharedWith: React.FC<SharedWithProps> = ({
+  usersData,
+  setUsersData,
+  itemID,
+  hideFromUserData
+}) => {
   return (
     <SharedWithContainer>
       <Title>Shared With</Title>
-      <Users>
-        {usersData &&
-          usersData.map(user => <SharedWithUser key={user._id} user={user} />)}
-      </Users>
+      {usersData.length > 0 ? (
+        <Users>
+          {usersData.map(user => (
+            <SharedWithUser
+              key={user._id}
+              user={user}
+              setUsersData={setUsersData}
+              itemID={itemID}
+              hideFromUserData={hideFromUserData}
+            />
+          ))}
+        </Users>
+      ) : (
+        <NoItems shared>This item is not being shared with anyone.</NoItems>
+      )}
     </SharedWithContainer>
   );
 };

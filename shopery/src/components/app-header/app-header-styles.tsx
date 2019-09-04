@@ -9,7 +9,7 @@ export const AppHeaderContainer = styled.div<ThemeProps>`
   position: fixed;
   background-color: ${props => (props.theme as DefaultTheme).colors.primary};
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
-  
+  z-index: 15;
   & ::after {
     content: "",
     clear: both;

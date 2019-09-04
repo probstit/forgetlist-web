@@ -61,11 +61,20 @@ const FriendsList: React.FC = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    friendsID.forEach(id => {
-      getFriendsData(`http://localhost:8000/api/v1.0/users/user/${id}`).then(
-        friend => setFriendsData(friendsData => [...friendsData, friend])
+    const getFriendsAll = async () => {
+      const friends = await Promise.all(
+        friendsID.map(async id => {
+          const result = await getFriendsData(
+            `http://localhost:8000/api/v1.0/users/user/${id}`
+          );
+          return result;
+        })
       );
-    });
+
+      setFriendsData(friends);
+    };
+
+    getFriendsAll();
   }, [friendsID]);
 
   return (

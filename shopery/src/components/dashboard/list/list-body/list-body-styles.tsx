@@ -38,7 +38,8 @@ export const QtyWrapper = styled.p<ThemeProps>`
 `;
 
 export const NoItems = styled.p<ThemeProps>`
-  font-size: 0.9em;
+  font-size: ${props => (props.shared ? "0.7em" : "0.9em")};
+  padding-top: ${props => (props.shared ? "5px" : "0")};
   text-align: center;
   margin-top: ${props => (props.historyList ? "5px" : "0")};
 `;

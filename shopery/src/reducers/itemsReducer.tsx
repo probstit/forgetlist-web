@@ -32,7 +32,10 @@ export const itemsReducer = (state: Item[], action: any) => {
     case "SHARE_LIST":
       const itemsCopy_shareAll = state.slice(0);
       itemsCopy_shareAll.forEach(item => {
-        if (!item.isShared) item.isShared = true;
+        if (!item.isShared) {
+          item.isShared = true;
+          item.sharedWith = action.item.sharedWith;
+        }
       });
       return [...itemsCopy_shareAll];
 
@@ -59,7 +62,7 @@ export const itemsReducer = (state: Item[], action: any) => {
       itemsCopy_hideOne.forEach(item => {
         if (item._id === action.item._id) {
           item.isShared = false;
-          item.sharedWith = [];
+          item.sharedWith = action.item.sharedWith;
         }
       });
       return [...itemsCopy_hideOne];

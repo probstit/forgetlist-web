@@ -47,7 +47,7 @@ export const ItemDetails = styled.div<ThemeProps>`
 
 export const ItemOptions = styled.div`
   float: right;
-  width: 40%;
+  width: 45%;
   height: auto;
   font-size: 0.9em;
 `;

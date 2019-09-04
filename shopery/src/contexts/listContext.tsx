@@ -12,6 +12,8 @@ import axios from "axios";
 import { itemsReducer, Item } from "../reducers/itemsReducer";
 // Util
 import grabToken from "../util/grab-token";
+// Fetch friends
+import { getFriendsData } from "../components/friends-list/FriendsList";
 
 export interface Action {
   type: string;
@@ -21,6 +23,7 @@ export interface Action {
     quantity?: number;
     isBought?: boolean;
     isShared?: boolean;
+    sharedWith?: string[];
   };
 }
 
@@ -33,10 +36,11 @@ export interface ItemListContext {
 }
 
 export const ListContext = createContext<ItemListContext>({});
+
 // For setting the initial list state.
 const fetchItems = async (): Promise<Item[]> => {
   const url = "http://localhost:8000/api/v1.0/items/get-items";
-  let token = grabToken();
+  const token = grabToken();
   const response = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -48,7 +52,7 @@ const fetchItems = async (): Promise<Item[]> => {
 // Updates items share status in the DB.
 const updateShareStatus = async (url: string) => {
   let token = grabToken();
-  await axios.put(
+  const response = await axios.put(
     url,
     {},
     {
@@ -57,19 +61,25 @@ const updateShareStatus = async (url: string) => {
       }
     }
   );
+
+  return response;
 };
 
 const ListContextProvider: React.FC = props => {
   const [items, dispatch] = useReducer(itemsReducer, []);
   const [isShared, setIsShared] = useState<boolean>();
+  const [userFriends, setUserFriends] = useState<string[]>([]);
 
   const toggleShareStatus = () => {
     if (isShared) {
       updateShareStatus("http://localhost:8000/api/v1.0/items/hide-list");
       if (dispatch) dispatch({ type: "HIDE_LIST" });
     } else {
-      updateShareStatus("http://localhost:8000/api/v1.0/items/share-list");
-      if (dispatch) dispatch({ type: "SHARE_LIST" });
+      updateShareStatus("http://localhost:8000/api/v1.0/items/share-list").then(
+        response => setUserFriends(response.data.userFriends)
+      );
+      if (dispatch)
+        dispatch({ type: "SHARE_LIST", item: { sharedWith: userFriends } });
     }
 
     setIsShared(!isShared);
@@ -92,6 +102,12 @@ const ListContextProvider: React.FC = props => {
     });
     setIsShared(shared);
   }, [items]);
+
+  useEffect(() => {
+    getFriendsData("http://localhost:8000/api/v1.0/social/friends").then(
+      response => setUserFriends(response.friendList.friendIDs)
+    );
+  }, []);
 
   return (
     <ListContext.Provider
