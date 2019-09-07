@@ -13,7 +13,7 @@ import { itemsReducer, Item } from "../reducers/itemsReducer";
 // Util
 import grabToken from "../util/grab-token";
 // Fetch friends
-import { getFriendsData } from "../components/friends-list/FriendsList";
+import { getFriendIDs } from "../contexts/friends-context/friends-context-utils";
 
 export interface Action {
   type: string;
@@ -104,7 +104,7 @@ const ListContextProvider: React.FC = props => {
   }, [items]);
 
   useEffect(() => {
-    getFriendsData("http://localhost:8000/api/v1.0/social/friends").then(
+    getFriendIDs("http://localhost:8000/api/v1.0/social/friends").then(
       response => setUserFriends(response.friendList.friendIDs)
     );
   }, []);

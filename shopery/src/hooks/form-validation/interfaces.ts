@@ -3,6 +3,7 @@ export interface ErrorState {
   lastName?: string;
   email?: string;
   password?: string;
+  name?: string;
 }
 
 export interface FormState {
@@ -10,6 +11,7 @@ export interface FormState {
   lastName?: string;
   email?: string;
   password?: string;
+  name?: string;
 }
 
 export type FormEvent = React.FormEvent<HTMLFormElement>;

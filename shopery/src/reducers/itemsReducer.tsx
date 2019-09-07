@@ -62,7 +62,7 @@ export const itemsReducer = (state: Item[], action: any) => {
       itemsCopy_hideOne.forEach(item => {
         if (item._id === action.item._id) {
           item.isShared = false;
-          item.sharedWith = action.item.sharedWith;
+          item.sharedWith = [];
         }
       });
       return [...itemsCopy_hideOne];

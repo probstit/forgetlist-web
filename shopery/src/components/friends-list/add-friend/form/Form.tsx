@@ -2,8 +2,12 @@ import React from "react";
 import grabToken from "../../../../util/grab-token";
 import axios from "axios";
 // Styled Components
-import { AddFriendForm, FriendInput, FriendIconWrapper } from "./form-styles";
-import { StyledFormError } from "../../../common-styled-components/common";
+import {
+  StyledFormError,
+  OverlayForm,
+  OverlayInput,
+  OverlaySearchBtn
+} from "../../../common-styled-components/common";
 // FA
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Hooks
@@ -60,8 +64,8 @@ const Form: React.FC<FormProps> = ({
   const checkForError: boolean = Object.keys(errors).length > 0;
 
   return (
-    <AddFriendForm onSubmit={handleSubmit} noValidate>
-      <FriendInput
+    <OverlayForm onSubmit={handleSubmit} noValidate>
+      <OverlayInput
         styleError={checkForError}
         name="email"
         type="email"
@@ -70,15 +74,15 @@ const Form: React.FC<FormProps> = ({
         onBlur={handleBlur}
         placeholder="Search by email"
       />
-      <FriendIconWrapper type="submit" disabled={isSubmitting}>
+      <OverlaySearchBtn type="submit" disabled={isSubmitting}>
         <FontAwesomeIcon icon="search" />
-      </FriendIconWrapper>
+      </OverlaySearchBtn>
       {errors.email && (
         <StyledFormError friendForm>
           <p>{errors.email}</p>
         </StyledFormError>
       )}
-    </AddFriendForm>
+    </OverlayForm>
   );
 };
 

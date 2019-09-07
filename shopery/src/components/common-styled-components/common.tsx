@@ -180,6 +180,72 @@ export const Overlay = styled.div<ThemeProps>`
   background-color: rgba(175, 175, 175, 0.6);
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 99;
   padding: 45% 0;
+`;
+
+export const OverlayForm = styled.form<ThemeProps>`
+  width: 100%;
+  height: auto;
+  padding: 10px 10px 0px 10px;
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+`;
+
+export const OverlayInput = styled.input<ThemeProps>`
+  width: 80%;
+  height: 25px;
+  padding: 5px 8px;
+  display: inline-block;
+  background: ${props => (props.theme as DefaultTheme).colors.tertiary};
+  border-radius: ${props =>
+    (props.theme as DefaultTheme).dashboardBorderRadius};
+
+  border: ${props => (props.styleError ? "1.2px solid #ee0000" : "none")};
+`;
+
+export const OverlaySearchBtn = styled.button<ThemeProps>`
+  width: 40px;
+  height: 25px;
+  float: right;
+  background: ${props => (props.theme as DefaultTheme).colors.primary};
+  color: ${props => (props.theme as DefaultTheme).colors.secondary};
+  border-radius: ${props =>
+    (props.theme as DefaultTheme).dashboardBorderRadius};
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+`;
+
+export const ResultContainer = styled.ul`
+  width: 100%;
+  height: auto;
+  list-style: none;
+  padding-bottom: 10px;
+`;
+
+export const ResultItem = styled.li`
+  width: 100%;
+  height: 35px;
+  padding-left: 10px;
+  margin-top: 5px;
+  line-height: 35px;
+`;
+
+export const ResultError = styled.p`
+  padding-top: 10px;
+  text-align: center;
+`;
+
+export const FloatedIconWrapper = styled.div<ThemeProps>`
+  width: 11px;
+  float: right;
+  margin-right: ${props => (props.friendResult ? "19px" : "5px")};
 `;

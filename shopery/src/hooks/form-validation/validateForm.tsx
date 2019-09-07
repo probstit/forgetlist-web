@@ -2,9 +2,15 @@ import { FormState, ErrorState } from "./interfaces";
 
 export default function validateForm(values: FormState) {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
-  const { firstName, lastName, email, password } = values;
+  const { firstName, lastName, email, password, name } = values;
 
   let errors: ErrorState = {};
+
+  if (values.hasOwnProperty("name")) {
+    if (!name) {
+      errors.name = "Name is required";
+    }
+  }
 
   if (values.hasOwnProperty("firstName")) {
     if (!firstName) {

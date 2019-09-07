@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 // Components
-import Result from "./result/Result";
+import SearchResult from "./search-result/SearchResult";
 import Form from "./form/Form";
 // Styled Components
-import { Overlay } from "../../common-styled-components/common";
 import {
-  Container,
-  ContainerHeader,
+  Overlay,
   FloatedIconWrapper
-} from "./add-friend-styles";
+} from "../../common-styled-components/common";
+import { Container, ContainerHeader } from "./add-friend-styles";
 // FA
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Interfaces
@@ -47,7 +46,7 @@ const AddFriend: React.FC<AddFriendProps> = ({ setShowAddFriend }) => {
           setResultError={setResultError}
           initialResult={initialResult}
         />
-        <Result user={result} resultError={resultError} />
+        <SearchResult user={result} resultError={resultError} />
       </Container>
     </Overlay>
   );

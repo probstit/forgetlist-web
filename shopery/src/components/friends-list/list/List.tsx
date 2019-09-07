@@ -1,59 +1,31 @@
-import React, { useCallback } from "react";
-import axios from "axios";
-import grabToken from "../../../util/grab-token";
+import React, { useContext } from "react";
 // Components
-import Avatar from "../../avatar/Avatar";
+import Friend from "./list-friend-item/Friend";
 // Styled Componnts
-import { StyledList, RemoveFriendBtn } from "./list-styles";
-// FA
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// Interface + fetch function
-import { IfriendsData } from "../FriendsList";
+import { StyledList } from "./list-styles";
+// Interface
+import { UserFriend } from "../../../reducers/friendsReducer";
+// Context
+import {
+  FriendsContext,
+  IFriendsContext
+} from "../../../contexts/friends-context/friendsContext";
 
-interface ListProps {
-  friendsData: IfriendsData[];
-  setFriendsData: React.Dispatch<React.SetStateAction<IfriendsData[]>>;
-}
-
-// sends delete request for removing a friend.
-const removeFriendDB = async (friendID: string) => {
-  const token = grabToken();
-  const url = `http://localhost:8000/api/v1.0/social/remove-friend/${friendID}`;
-  try {
-    await axios.delete(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-  } catch (err) {
-    console.log(err.response.data.payload.message);
-  }
-};
-
-const List: React.FC<ListProps> = ({ friendsData, setFriendsData }) => {
-  const removeFriend = useCallback(
-    (friendID: string) => {
-      setFriendsData(friendsData =>
-        friendsData.filter((friend: IfriendsData) => friend._id !== friendID)
-      );
-
-      removeFriendDB(friendID);
-    },
-    [setFriendsData]
-  );
+const List: React.FC = () => {
+  const { friends, removeFriend } = useContext<IFriendsContext>(FriendsContext);
 
   return (
     <StyledList>
-      {friendsData.map((friend: IfriendsData) => {
-        return (
-          <li key={friend._id}>
-            <Avatar user={friend} />
-            <RemoveFriendBtn onClick={() => removeFriend(friend._id)}>
-              <FontAwesomeIcon icon="user-times" />
-            </RemoveFriendBtn>
-          </li>
-        );
-      })}
+      {friends &&
+        friends.map((friend: UserFriend) => {
+          return (
+            <Friend
+              key={friend._id}
+              friend={friend}
+              removeFriend={removeFriend}
+            />
+          );
+        })}
     </StyledList>
   );
 };

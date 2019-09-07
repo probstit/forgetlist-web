@@ -5,18 +5,37 @@ export const SharedWithContainer = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
   margin-top: 5px;
-  padding: 7px 0;
+  padding: 5px 0;
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   border-radius: ${props =>
     (props.theme as DefaultTheme).dashboardBorderRadius};
 `;
 
-export const Title = styled.h6<ThemeProps>`
-  text-align: center;
-  font-size: 0.75em;
-  padding-bottom: 3px;
+export const Header = styled.div<ThemeProps>`
+  width: 100%;
+  height: auto;
+  padding: 0px 8px 3px;
   border-bottom: 1px solid
     ${props => (props.theme as DefaultTheme).colors.secondary};
+  text-align: center;
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+`;
+
+export const AddBtn = styled.div<ThemeProps>`
+  float: right;
+  margin-top: 3px;
+  font-size: 0.8em;
+  cursor: pointer;
+`;
+
+export const Title = styled.h6<ThemeProps>`
+  width: 76px;
+  font-size: 0.75em;
+  display: inline-block;
 `;
 
 export const Users = styled.ul<ThemeProps>`

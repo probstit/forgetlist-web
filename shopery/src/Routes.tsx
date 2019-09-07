@@ -7,29 +7,32 @@ import Register from "./components/register/Register";
 import ForgotPassword from "./components/password/Forgot-password";
 import ResetPassword from "./components/password/Reset-password";
 import Confirm from "./components/confirm/Confirm";
+import FriendsList from "./components/friends-list/FriendsList";
 import DashboardWContext from "./components/dashboard-w-context/DashboardWContext";
 import History from "./components/history/History";
 import NoMatch from "./components/no-match/NoMatch";
 // Contexts
 import AuthContextProvider from "./contexts/authContext";
-import FriendsList from "./components/friends-list/FriendsList";
+import FriendsContextProvider from "./contexts/friends-context/friendsContext";
 
 const Routes: React.FC = (): JSX.Element => (
   <AuthContextProvider>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={DashboardWContext} />
-        <Route path="/landing" component={LandingPage} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/users/forgot-password" component={ForgotPassword} />
-        <Route path="/users/reset-password" component={ResetPassword} />
-        <Route path="/users/confirm" component={Confirm} />
-        <Route path="/history" component={History} />
-        <Route path="/friends" component={FriendsList} />
-        <Route component={NoMatch} />
-      </Switch>
-    </BrowserRouter>
+    <FriendsContextProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={DashboardWContext} />
+          <Route path="/landing" component={LandingPage} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/users/forgot-password" component={ForgotPassword} />
+          <Route path="/users/reset-password" component={ResetPassword} />
+          <Route path="/users/confirm" component={Confirm} />
+          <Route path="/history" component={History} />
+          <Route path="/friends" component={FriendsList} />
+          <Route component={NoMatch} />
+        </Switch>
+      </BrowserRouter>
+    </FriendsContextProvider>
   </AuthContextProvider>
 );
 

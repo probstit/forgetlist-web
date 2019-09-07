@@ -27,9 +27,3 @@ export const ContainerHeader = styled.div<ThemeProps>`
     clear: both;
   }
 `;
-
-export const FloatedIconWrapper = styled.div<ThemeProps>`
-  width: 11px;
-  float: right;
-  margin-right: ${props => (props.friendResult ? "19px" : "5px")};
-`;

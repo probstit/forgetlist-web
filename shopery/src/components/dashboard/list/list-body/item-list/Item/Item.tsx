@@ -21,6 +21,12 @@ import {
   EditContext,
   ItemEditContext
 } from "../../../../../../contexts/editContext";
+// Utilities
+import {
+  deleteFromDB,
+  updateItemBoughtStatus,
+  updateItemShareStatus
+} from "./item-utils";
 
 interface ItemProp {
   item: ItemData;
@@ -28,55 +34,10 @@ interface ItemProp {
   historyItem: boolean;
 }
 
-const deleteFromDB = async (id: string) => {
-  let token = grabToken();
-  const url = `http://localhost:8000/api/v1.0/items/delete-item/${id}`;
-  try {
-    await axios.delete(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-  } catch (err) {
-    console.log(err); // For now
-  }
-};
-
-const updateItemBoughtStatus = async (url: string) => {
-  let token = grabToken();
-  axios.put(
-    url,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-};
-
-const updateItemShareStatus = async (url: string) => {
-  let token = grabToken();
-  try {
-    const response = await axios.put(
-      url,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    return response;
-  } catch (err) {
-    alert(err.response.data.payload.message);
-  }
-};
-
 const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
   const { showEdit, setItemData } = useContext<ItemEditContext>(EditContext);
+
   const [displaySharedWith, setDisplaySharedWith] = useState<boolean>(false);
   const [usersData, setUsersData] = useState<User[]>([]);
   const [sharedWith, setSharedWith] = useState<string[]>([]);
@@ -227,8 +188,8 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
         <SharedWith
           usersData={usersData}
           setUsersData={setUsersData}
-          itemID={item._id}
           hideFromUserData={hideFromUserData}
+          item={item}
         />
       )}
     </>
