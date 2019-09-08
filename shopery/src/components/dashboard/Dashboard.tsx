@@ -14,6 +14,7 @@ import Menu from "../menu/Menu";
 import { AuthContext, Auth } from "../../contexts/authContext";
 import { EditContext, ItemEditContext } from "../../contexts/editContext";
 import { MenuContext, Menu_Context } from "../../contexts/menuContext";
+import FriendsContextProvider from "../../contexts/friends-context/friendsContext";
 
 const Dashboard: React.FC = (): JSX.Element => {
   const { isLoggedIn } = useContext<Auth>(AuthContext);
@@ -28,8 +29,10 @@ const Dashboard: React.FC = (): JSX.Element => {
           <Menu visible={showMenu} toggleMenu={toggleMenu} />
           <AppHeader toggleMenu={toggleMenu} visible={showMenu} />
           <DashboardWrapper>
-            <List />
-            <SharedItems />
+            <FriendsContextProvider>
+              <List />
+              <SharedItems />
+            </FriendsContextProvider>
           </DashboardWrapper>
           <AppNav />
         </>
