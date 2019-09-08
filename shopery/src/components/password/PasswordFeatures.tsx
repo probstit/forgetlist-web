@@ -34,9 +34,10 @@ interface PwFeaturesConfig {
     response: any;
     isLoading: boolean;
     dbError: any;
+    backTo: string;
   };
 }
-
+// This components works with Forgot password and Reset password
 const PasswordFeatures: React.FC<PwFeaturesConfig> = ({
   options
 }): JSX.Element => {
@@ -47,7 +48,7 @@ const PasswordFeatures: React.FC<PwFeaturesConfig> = ({
         <Redirect to="/" />
       ) : (
         <>
-          <BackButton page="/login" />
+          <BackButton page={options.backTo} />
           <Logo />
           {options.response ? (
             <ResponseMessage>{options.response.data.message}</ResponseMessage>

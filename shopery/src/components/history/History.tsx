@@ -6,6 +6,7 @@ import grabToken from "../../util/grab-token";
 import AppHeader from "../app-header/AppHeader";
 import AppNav from "../app-nav/AppNav";
 import ItemList from "../dashboard/list/list-body/item-list/ItemList";
+import Menu from "../menu/Menu";
 // Styled Components
 import { Container, Wrapper } from "../common-styled-components/common";
 import { ListWrapper } from "../dashboard/list/list-styles";
@@ -21,6 +22,7 @@ import { HistoryListHeader } from "./history-styles";
 // Import Context
 import { AuthContext, Auth } from "../../contexts/authContext";
 import { Item } from "../../reducers/itemsReducer";
+import { MenuContext, Menu_Context } from "../../contexts/menuContext";
 
 const fetchHistoryItems = async (url: string): Promise<Item[]> => {
   const token = grabToken();
@@ -33,6 +35,7 @@ const fetchHistoryItems = async (url: string): Promise<Item[]> => {
 
 const History: React.FC = () => {
   const { isLoggedIn } = useContext<Auth>(AuthContext);
+  const { showMenu, toggleMenu } = useContext<Menu_Context>(MenuContext);
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
@@ -47,7 +50,8 @@ const History: React.FC = () => {
     <Container dashboard>
       {isLoggedIn ? (
         <>
-          <AppHeader />
+          <Menu visible={showMenu} toggleMenu={toggleMenu} />
+          <AppHeader toggleMenu={toggleMenu} visible={showMenu} />
           <Wrapper>
             <ListWrapper>
               <HistoryListHeader>

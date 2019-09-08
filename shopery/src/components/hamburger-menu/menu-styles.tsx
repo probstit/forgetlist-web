@@ -6,4 +6,5 @@ export const StyledMenu = styled.div<ThemeProps>`
   margin-top: 13px;
   cursor: pointer;
   font-size: 1.1em;
+  width: 16px;
 `;

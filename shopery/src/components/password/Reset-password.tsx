@@ -73,7 +73,8 @@ const ResetPassword: React.FC<RouteComponentProps> = ({
     errors,
     response,
     isLoading,
-    dbError
+    dbError,
+    backTo: "/login"
   };
 
   return <PasswordFeatures options={config} />;

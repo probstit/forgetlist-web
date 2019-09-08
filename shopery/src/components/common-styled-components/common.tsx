@@ -18,17 +18,19 @@ export const FormContainer = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
   padding: 1.5em;
+  margin-top: ${props => (props.changePass ? "25px" : "0")};
 
   h2 {
     color: ${props => (props.theme as DefaultTheme).colors.secondary};
     font-family: ${props => (props.theme as DefaultTheme).fontFamily};
     text-align: center;
     font-weight: 450;
+    font-size: ${props => (props.changePass ? "1em" : "default")};
   }
 
   hr {
     width: 5em;
-    margin: 0.2em auto 0 auto;
+    margin: ${props => (props.changePass ? "0.5em" : "0.2em")} auto 0 auto;
     border: 0.2px solid
       ${props => (props.theme as DefaultTheme).colors.secondary};
     background-color: ${props =>
@@ -40,7 +42,8 @@ export const StyledForm = styled.form<ThemeProps>`
   text-align: ${props => (props.listHeader ? "left" : "center")};
   font-size: 0.7em;
   padding: 0 ${props => (props.listHeader ? "0 0 0" : "1.5em 1.5em 1.5em")};
-  margin-top: ${props => (props.recover ? "9em" : "2em")};
+  margin-top: ${props =>
+    props.recover ? "9em" : props.changePass ? "40px" : "2em"};
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   & ::after {
@@ -60,6 +63,7 @@ export const StyledLabel = styled.label<ThemeProps>`
       : (props.theme as DefaultTheme).colors.secondary};
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   margin: 0.5em 0 0.2em 0;
+
 `;
 
 export const StyledInput = styled.input<ThemeProps>`
@@ -84,7 +88,9 @@ export const StyledButton = styled.button<ThemeProps>`
   border-radius: 20px;
   display: block;
   margin: ${props =>
-    props.formButton ? "1.5em auto 0 auto" : "0 auto 0.3em auto"};
+    props.formButton || props.changePass
+      ? "1.5em auto 0 auto"
+      : "0 auto 0.3em auto"};
   vertical-align: middle;
   font-weight: bold;
   font-weight: ${props => (props.reversed ? "450" : "600")};

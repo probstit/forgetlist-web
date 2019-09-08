@@ -8,4 +8,5 @@ export const AppNavContainer = styled.nav<ThemeProps>`
   width: 100%;
   height: 50px;
   background-color: ${props => (props.theme as DefaultTheme).colors.primary};
+  z-index: 3;
 `;

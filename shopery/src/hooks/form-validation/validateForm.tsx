@@ -2,7 +2,15 @@ import { FormState, ErrorState } from "./interfaces";
 
 export default function validateForm(values: FormState) {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
-  const { firstName, lastName, email, password, name } = values;
+  const {
+    firstName,
+    lastName,
+    email,
+    oldPassword,
+    password,
+    confirmPassword,
+    name
+  } = values;
 
   let errors: ErrorState = {};
 
@@ -32,11 +40,33 @@ export default function validateForm(values: FormState) {
     }
   }
 
+  if (values.hasOwnProperty("oldPassword")) {
+    if (!oldPassword || oldPassword.trim().length === 0) {
+      errors.oldPassword = "Password is required";
+    } else if (oldPassword.length < 6 || oldPassword.trim().length < 6) {
+      errors.oldPassword = "Password must be at least 6 characters";
+    }
+  }
+
   if (values.hasOwnProperty("password")) {
     if (!password || password.trim().length === 0) {
       errors.password = "Password is required";
     } else if (password.length < 6 || password.trim().length < 6) {
       errors.password = "Password must be at least 6 characters";
+    }
+  }
+
+  if (values.hasOwnProperty("confirmPassword")) {
+    if (!confirmPassword || confirmPassword.trim().length === 0) {
+      errors.confirmPassword = "Password is required";
+    } else if (
+      confirmPassword.length < 6 ||
+      confirmPassword.trim().length < 6
+    ) {
+      errors.confirmPassword = "Password must be at least 6 characters";
+    } else if (confirmPassword !== password) {
+      errors.confirmPassword =
+        "Confirm password should be the same as new password";
     }
   }
 

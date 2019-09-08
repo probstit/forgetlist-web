@@ -20,4 +20,6 @@ export default interface ThemeProps {
   friendForm?: boolean;
   friendResult?: boolean;
   historyList?: boolean;
+  visible?: boolean;
+  changePass?: boolean;
 }

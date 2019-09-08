@@ -59,7 +59,8 @@ const ForgotPassword: React.FC = (): JSX.Element => {
     errors,
     response,
     isLoading,
-    dbError
+    dbError,
+    backTo: "/login"
   };
 
   return <PasswordFeatures options={config} />;
