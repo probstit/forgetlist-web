@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import grabToken from "../../../../../../../../../util/grab-token";
+import { interceptResponse } from "../../../../../../../../../util/response-interceptor";
 import axios from "axios";
 // Components
 import Avatar from "../../../../../../../../avatar/Avatar";
@@ -13,6 +14,10 @@ import {
   ListContext,
   ItemListContext
 } from "../../../../../../../../../contexts/listContext";
+import {
+  AuthContext,
+  Auth
+} from "../../../../../../../../../contexts/authContext";
 // FA
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // Interface
@@ -26,22 +31,23 @@ export interface Props {
   item: Item;
 }
 
-const updateItemSharedWithInDB = async (
-  friendEmail: string,
-  itemID: string
-) => {
-  const token = grabToken();
-  const url = `http://localhost:8000/api/v1.0/items/share-with-user/${itemID}`;
-  await axios.put(
-    url,
-    { email: friendEmail },
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-};
-
 const Friend: React.FC<Props> = ({ friend, usersData, setUsersData, item }) => {
   const [alreadySharedWith, setAlreadySharedWith] = useState<boolean>(false);
   const { dispatch } = useContext<ItemListContext>(ListContext);
+  const { setLoggedIn } = useContext<Auth>(AuthContext);
+  const updateItemSharedWithInDB = async (
+    friendEmail: string,
+    itemID: string
+  ) => {
+    const token = grabToken();
+    const url = `http://localhost:8000/api/v1.0/items/share-with-user/${itemID}`;
+    if (setLoggedIn) interceptResponse(setLoggedIn);
+    await axios.put(
+      url,
+      { email: friendEmail },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+  };
 
   const addFriend = () => {
     let newSharedList;

@@ -27,7 +27,7 @@ import validateItemForm from "../../../../../hooks/item-form-validation/validate
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Sends item info to DB.
-const sendItem = async (item: Item): Promise<Item> => {
+const sendItem = async (item: Item): Promise<Item | void> => {
   let token = grabToken();
   const url = "http://localhost:8000/api/v1.0/items/add-item";
   const response = await axios.post(url, item, {
@@ -35,8 +35,7 @@ const sendItem = async (item: Item): Promise<Item> => {
       Authorization: `Bearer ${token}`
     }
   });
-
-  return response.data.addedItem;
+  if (response) return response.data.addedItem;
 };
 
 const initialState: Item = {

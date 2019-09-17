@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// Context
-
 import { User } from "../../../../../../hooks/get-user/interfaces";
 // FA
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import grabToken from "../../../util/grab-token";
 // Components
@@ -9,6 +9,10 @@ import { ListBodyWrapper } from "../list/list-body/list-body-styles";
 import { ListWrapper } from "../list/list-styles";
 // Interface
 import { Item } from "../../../reducers/itemsReducer";
+// Utils
+import { interceptResponse } from "../../../util/response-interceptor";
+// Context
+import { AuthContext, Auth } from "../../../contexts/authContext";
 
 export interface UserSharedItem {
   userID: string;
@@ -17,22 +21,25 @@ export interface UserSharedItem {
 
 const SharedItems: React.FC = () => {
   const [userSharedItems, setUserSharedItems] = useState<UserSharedItem[]>([]);
+  const { setLoggedIn } = useContext<Auth>(AuthContext);
 
   useEffect(() => {
     const fetchSharedItems = async () => {
       const token = grabToken();
       const url = "http://localhost:8000/api/v1.0/items/shared-by-others";
-
+      if (setLoggedIn) interceptResponse(setLoggedIn);
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      setUserSharedItems(response.data.items);
+      if (response) {
+        setUserSharedItems(response.data.items);
+      }
     };
 
     fetchSharedItems();
-  }, []);
+  }, [setLoggedIn]);
 
   return (
     <>

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import grabToken from "../../../../../../util/grab-token";
+import { interceptResponse } from "../../../../../../util/response-interceptor";
 // Components
 import SharedWith from "../shared-with/SharedWith";
 // Styled Components
@@ -17,6 +18,7 @@ import {
   ListContext,
   ItemListContext
 } from "../../../../../../contexts/listContext";
+import { AuthContext, Auth } from "../../../../../../contexts/authContext";
 import {
   EditContext,
   ItemEditContext
@@ -37,7 +39,7 @@ interface ItemProp {
 const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
   const { showEdit, setItemData } = useContext<ItemEditContext>(EditContext);
-
+  const { setLoggedIn } = useContext<Auth>(AuthContext);
   const [displaySharedWith, setDisplaySharedWith] = useState<boolean>(false);
   const [usersData, setUsersData] = useState<User[]>([]);
   const [sharedWith, setSharedWith] = useState<string[]>([]);
@@ -50,9 +52,10 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
 
   const hideFromUserData = () => {
     if (usersData.length === 1) {
-      if (dispatch) {
+      if (dispatch && setLoggedIn) {
         updateItemShareStatus(
-          `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`
+          `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`,
+          setLoggedIn
         );
         if (dispatch) dispatch({ type: "HIDE_ITEM", item: { _id: item._id } });
       }
@@ -70,10 +73,11 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
         }
       });
     }
-
-    updateItemBoughtStatus(
-      `http://localhost:8000/api/v1.0/items/mark-bought/${item._id}`
-    );
+    if (setLoggedIn)
+      updateItemBoughtStatus(
+        `http://localhost:8000/api/v1.0/items/mark-bought/${item._id}`,
+        setLoggedIn
+      );
   };
 
   // Deletes an item from item state also updates the DB.
@@ -86,22 +90,25 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
         }
       });
 
-      deleteFromDB(item._id);
+      if (setLoggedIn) deleteFromDB(item._id, setLoggedIn);
     }
   };
   // Updates an item shared status in the state also in the DB.
   const shareItem = () => {
-    if (item.isShared) {
+    if (item.isShared && setLoggedIn) {
       updateItemShareStatus(
-        `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`
+        `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`,
+        setLoggedIn
       );
       if (dispatch) dispatch({ type: "HIDE_ITEM", item: { _id: item._id } });
     } else {
-      updateItemShareStatus(
-        `http://localhost:8000/api/v1.0/items/share-with-all/${item._id}`
-      ).then(response => {
-        if (response) setSharedWith(response.data.sharedWith);
-      });
+      if (setLoggedIn)
+        updateItemShareStatus(
+          `http://localhost:8000/api/v1.0/items/share-with-all/${item._id}`,
+          setLoggedIn
+        ).then(response => {
+          if (response) setSharedWith(response.data.sharedWith);
+        });
 
       if (dispatch)
         dispatch({
@@ -120,6 +127,7 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
     const findUsers = async () => {
       try {
         const token = grabToken();
+        if (setLoggedIn) interceptResponse(setLoggedIn);
         const url = "http://localhost:8000/api/v1.0/users/shared-with";
         const response = await axios.get(url, {
           params: {
@@ -132,12 +140,12 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
 
         setUsersData(response.data.users);
       } catch (err) {
-        console.log(err.response.data.payload.message);
+        if (err.response) console.log(err.response.data.payload.message);
       }
     };
 
     if (sharedWith && sharedWith.length > 0) findUsers();
-  }, [sharedWith]);
+  }, [sharedWith, setLoggedIn]);
   // Update shared with tab if the user toggles the 'lock' option
   useEffect(() => {
     if (item.sharedWith && item.isShared && item.sharedWith.length > 0)

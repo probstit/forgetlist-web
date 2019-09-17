@@ -23,28 +23,35 @@ import { HistoryListHeader } from "./history-styles";
 import { AuthContext, Auth } from "../../contexts/authContext";
 import { Item } from "../../reducers/itemsReducer";
 import { MenuContext, Menu_Context } from "../../contexts/menuContext";
+import { interceptResponse, auth } from "../../util/response-interceptor";
 
-const fetchHistoryItems = async (url: string): Promise<Item[]> => {
+const fetchHistoryItems = async (
+  url: string,
+  setLoggedIn: auth
+): Promise<Item[] | void> => {
   const token = grabToken();
+  interceptResponse(setLoggedIn);
   const response = await axios.get(url, {
     headers: { Authorization: `Bearer ${token}` }
   });
-  const historyItems = response.data.items;
-  return historyItems;
+
+  if (response) return response.data.items;
 };
 
 const History: React.FC = () => {
-  const { isLoggedIn } = useContext<Auth>(AuthContext);
+  const { isLoggedIn, setLoggedIn } = useContext<Auth>(AuthContext);
   const { showMenu, toggleMenu } = useContext<Menu_Context>(MenuContext);
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    fetchHistoryItems("http://localhost:8000/api/v1.0/items/get-history").then(
-      historyItems => {
-        setItems(historyItems);
-      }
-    );
-  }, []);
+    if (setLoggedIn)
+      fetchHistoryItems(
+        "http://localhost:8000/api/v1.0/items/get-history",
+        setLoggedIn
+      ).then(historyItems => {
+        if (historyItems) setItems(historyItems);
+      });
+  }, [setLoggedIn]);
 
   return (
     <Container dashboard>

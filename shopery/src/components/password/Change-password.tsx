@@ -58,7 +58,7 @@ const ChangePassword: React.FC = () => {
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
-      setError(err.response.data.payload.message);
+      if (err.response) setError(err.response.data.payload.message);
     }
   };
 

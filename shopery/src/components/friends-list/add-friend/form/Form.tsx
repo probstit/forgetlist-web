@@ -47,7 +47,9 @@ const Form: React.FC<FormProps> = ({
 
       setResult(res.data.user);
     } catch (err) {
-      setResultError(err.response.data.payload.message);
+      if (err.response) {
+        setResultError(err.response.data.payload.message);
+      }
       setResult(initialResult);
     }
   };

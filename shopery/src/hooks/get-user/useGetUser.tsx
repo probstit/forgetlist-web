@@ -1,7 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import axios from "axios";
 
 import { User } from "./interfaces";
+import { AuthContext, Auth } from "../../contexts/authContext";
+import { interceptResponse } from "../../util/response-interceptor";
 
 const useGetUser = () => {
   const [user, setUser] = useState<User>({
@@ -11,10 +13,12 @@ const useGetUser = () => {
     _id: ""
   });
   const [error, setError] = useState<string>("");
+  const { setLoggedIn } = useContext<Auth>(AuthContext);
 
   const fetchUser = useCallback(async () => {
     let token = localStorage.getItem("token") as string;
     const url = "http://localhost:8000/api/v1.0/users/me";
+    if (setLoggedIn) interceptResponse(setLoggedIn);
     if (token) token = JSON.parse(token);
     try {
       const res = await axios.get(url, {
@@ -25,9 +29,9 @@ const useGetUser = () => {
 
       setUser(res.data.user);
     } catch (err) {
-      setError(err.response.data.payload.message);
+      setError(err);
     }
-  }, []);
+  }, [setLoggedIn]);
 
   useEffect(() => {
     fetchUser();
