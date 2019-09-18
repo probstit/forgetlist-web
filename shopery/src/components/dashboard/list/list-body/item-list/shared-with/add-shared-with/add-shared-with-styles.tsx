@@ -13,7 +13,7 @@ export const FormContainer = styled.div<ThemeProps>`
   color: ${props => (props.theme as DefaultTheme).colors.primary};
 `;
 
-export const FromHeader = styled.div<ThemeProps>`
+export const FormHeader = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
   border-bottom: 1px solid

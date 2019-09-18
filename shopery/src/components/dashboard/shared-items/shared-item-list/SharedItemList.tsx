@@ -19,7 +19,12 @@ const SharedItemList: React.FC<SharedItemListProps> = ({ items }) => {
   };
 
   useEffect(() => {
-    setSharedItems(items);
+    let subscribed = true;
+    if (subscribed) setSharedItems(items);
+
+    return () => {
+      subscribed = false;
+    };
   }, [items]);
 
   return (

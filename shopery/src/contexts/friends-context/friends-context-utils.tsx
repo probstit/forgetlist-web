@@ -1,14 +1,13 @@
 import axios from "axios";
 import grabToken from "../../util/grab-token";
-import { interceptResponse, auth } from "../../util/response-interceptor";
+
 export interface IfriendsID {
   _id: string;
 }
 
-export async function getFriendIDs(url: string, setLoggedIn: auth) {
+export async function getFriendIDs(url: string) {
   const token = grabToken();
   try {
-    interceptResponse(setLoggedIn);
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -20,15 +19,11 @@ export async function getFriendIDs(url: string, setLoggedIn: auth) {
   }
 }
 
-export const getFriendsData = async (
-  friendsID: IfriendsID[],
-  setLoggedIn: auth
-) => {
+export const getFriendsData = async (friendsID: IfriendsID[]) => {
   const friends = await Promise.all(
     friendsID.map(async id => {
       const result = await getFriendIDs(
-        `http://localhost:8000/api/v1.0/users/user/${id}`,
-        setLoggedIn
+        `http://localhost:8000/api/v1.0/users/user/${id}`
       );
       return result;
     })
@@ -38,14 +33,10 @@ export const getFriendsData = async (
 };
 
 // sends delete request for removing a friend.
-export const removeFriendFromDB = async (
-  friendID: string,
-  setLoggedIn: auth
-) => {
+export const removeFriendFromDB = async (friendID: string) => {
   const token = grabToken();
   const url = `http://localhost:8000/api/v1.0/social/remove-friend/${friendID}`;
   try {
-    interceptResponse(setLoggedIn);
     await axios.delete(url, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -57,10 +48,10 @@ export const removeFriendFromDB = async (
 };
 
 // sends add request for adding a friend.
-export const addFriendInDB = async (email: string, setLoggedIn: auth) => {
+export const addFriendInDB = async (email: string) => {
   const token = grabToken();
   const url = "http://localhost:8000/api/v1.0/social/add-friend";
-  interceptResponse(setLoggedIn);
+
   await axios.post(
     url,
     { email },

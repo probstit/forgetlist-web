@@ -38,6 +38,7 @@ const SharedWithUser: React.FC<SharedWithUserProps> = ({
     setUsersData(usersData =>
       usersData.filter(_user => _user._id !== user._id)
     );
+
     hideFromUserData();
     updateItemSharedWithList(itemID, user.email);
   };

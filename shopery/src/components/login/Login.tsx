@@ -56,7 +56,9 @@ const Login: React.FC<RouteComponentProps> = ({ history }): JSX.Element => {
       }
       history.push("/");
     } catch (err) {
-      setDBerror(err.response.data.payload.message);
+      if (err.response) {
+        setDBerror(err.response.data.payload.message);
+      }
       setIsLoading(false);
       if (setLoggedIn) {
         setLoggedIn(false);

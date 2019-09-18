@@ -52,10 +52,11 @@ const ChangePassword: React.FC = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      setMessage(response.data.message);
-      setError("");
-      setIsLoading(false);
+      if (response) {
+        setMessage(response.data.message);
+        setError("");
+        setIsLoading(false);
+      }
     } catch (err) {
       setIsLoading(false);
       if (err.response) setError(err.response.data.payload.message);

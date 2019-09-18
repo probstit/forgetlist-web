@@ -49,6 +49,7 @@ export const itemsReducer = (state: Item[], action: any) => {
 
     case "SHARE_ITEM":
       const itemsCopy_shareOne = state.slice(0);
+
       itemsCopy_shareOne.forEach(item => {
         if (item._id === action.item._id) {
           item.isShared = true;

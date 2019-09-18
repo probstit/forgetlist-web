@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Overlay } from "../../../../../../common-styled-components/common";
 import {
   FormContainer,
-  FromHeader,
+  FormHeader,
   CloseBtn,
   Title
 } from "./add-shared-with-styles";
@@ -35,12 +35,12 @@ const AddSharedWith: React.FC<Props> = ({
   return (
     <Overlay>
       <FormContainer>
-        <FromHeader>
+        <FormHeader>
           <CloseBtn onClick={toggleAddSharedWith}>
             <FontAwesomeIcon icon="times" />
           </CloseBtn>
           <Title>Search Friends</Title>
-        </FromHeader>
+        </FormHeader>
         <Form setResult={setResult} setResultError={setResultError} />
         <SearchResult
           result={result}

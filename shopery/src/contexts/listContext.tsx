@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useReducer,
   useState,
-  useContext,
   Dispatch,
   SetStateAction,
   MouseEventHandler
@@ -13,11 +12,8 @@ import axios from "axios";
 import { itemsReducer, Item } from "../reducers/itemsReducer";
 // Util
 import grabToken from "../util/grab-token";
-import { interceptResponse } from "../util/response-interceptor";
 // Fetch friends
 import { getFriendIDs } from "../contexts/friends-context/friends-context-utils";
-// Context
-import { AuthContext, Auth } from "../contexts/authContext";
 
 export interface Action {
   type: string;
@@ -45,12 +41,10 @@ const ListContextProvider: React.FC = props => {
   const [items, dispatch] = useReducer(itemsReducer, []);
   const [isShared, setIsShared] = useState<boolean>();
   const [userFriends, setUserFriends] = useState<string[]>([]);
-  const { setLoggedIn } = useContext<Auth>(AuthContext);
 
   // Updates items share status in the DB.
   const updateShareStatus = async (url: string) => {
     let token = grabToken();
-    if (setLoggedIn) interceptResponse(setLoggedIn);
     const response = await axios.put(
       url,
       {},
@@ -70,7 +64,9 @@ const ListContextProvider: React.FC = props => {
       if (dispatch) dispatch({ type: "HIDE_LIST" });
     } else {
       updateShareStatus("http://localhost:8000/api/v1.0/items/share-list").then(
-        response => setUserFriends(response.data.userFriends)
+        response => {
+          if (response) setUserFriends(response.data.userFriends);
+        }
       );
       if (dispatch)
         dispatch({ type: "SHARE_LIST", item: { sharedWith: userFriends } });
@@ -80,45 +76,59 @@ const ListContextProvider: React.FC = props => {
   };
 
   useEffect(() => {
+    let subscribed = true;
     // For setting the initial list state.
     const fetchItems = async (): Promise<Item[] | void> => {
       const url = "http://localhost:8000/api/v1.0/items/get-items";
       const token = grabToken();
-      if (setLoggedIn) interceptResponse(setLoggedIn);
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      if (response) return response.data.items;
+
+      return response ? response.data.items : null;
     };
 
     fetchItems()
       .then(items => {
-        dispatch({ type: "SET_INITIAL", items });
+        if (subscribed) dispatch({ type: "SET_INITIAL", items });
       })
       .catch(err => console.log(err)); //FOR NOW
-  }, [setLoggedIn]);
+
+    return () => {
+      subscribed = false;
+    };
+  }, []);
 
   useEffect(() => {
     let shared = false;
+    let subscribed = true;
     items.forEach(item => {
       if (item.isShared) {
         shared = true;
       }
     });
-    setIsShared(shared);
+    if (subscribed) setIsShared(shared);
+
+    return () => {
+      subscribed = false;
+    };
   }, [items]);
 
   useEffect(() => {
-    if (setLoggedIn)
-      getFriendIDs(
-        "http://localhost:8000/api/v1.0/social/friends",
-        setLoggedIn
-      ).then(response => {
-        if (response) setUserFriends(response.friendList.friendIDs);
-      });
-  }, [setLoggedIn]);
+    let subscribed = true;
+    getFriendIDs("http://localhost:8000/api/v1.0/social/friends").then(
+      response => {
+        if (response && subscribed)
+          setUserFriends(response.friendList.friendIDs);
+      }
+    );
+
+    return () => {
+      subscribed = false;
+    };
+  }, []);
 
   return (
     <ListContext.Provider

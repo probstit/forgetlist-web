@@ -15,8 +15,14 @@ const SharedItem: React.FC<SharedItemProps> = ({ item, buySharedItem }) => {
   const markAsBought = async () => {
     const token = grabToken();
     const url = `http://localhost:8000/api/v1.0/items/mark-bought/${item._id}`;
-    await axios.put(url, {}, { headers: { Authorization: `Bearer ${token}` } });
-    buySharedItem(item._id);
+    const response = await axios.put(
+      url,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (response) {
+      if (response.status === 200) buySharedItem(item._id);
+    }
   };
 
   return (

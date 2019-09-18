@@ -23,14 +23,9 @@ import { HistoryListHeader } from "./history-styles";
 import { AuthContext, Auth } from "../../contexts/authContext";
 import { Item } from "../../reducers/itemsReducer";
 import { MenuContext, Menu_Context } from "../../contexts/menuContext";
-import { interceptResponse, auth } from "../../util/response-interceptor";
 
-const fetchHistoryItems = async (
-  url: string,
-  setLoggedIn: auth
-): Promise<Item[] | void> => {
+const fetchHistoryItems = async (url: string): Promise<Item[] | void> => {
   const token = grabToken();
-  interceptResponse(setLoggedIn);
   const response = await axios.get(url, {
     headers: { Authorization: `Bearer ${token}` }
   });
@@ -46,8 +41,7 @@ const History: React.FC = () => {
   useEffect(() => {
     if (setLoggedIn)
       fetchHistoryItems(
-        "http://localhost:8000/api/v1.0/items/get-history",
-        setLoggedIn
+        "http://localhost:8000/api/v1.0/items/get-history"
       ).then(historyItems => {
         if (historyItems) setItems(historyItems);
       });

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import grabToken from "../../../../../../util/grab-token";
-import { interceptResponse } from "../../../../../../util/response-interceptor";
 // Components
 import SharedWith from "../shared-with/SharedWith";
 // Styled Components
@@ -54,8 +53,7 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
     if (usersData.length === 1) {
       if (dispatch && setLoggedIn) {
         updateItemShareStatus(
-          `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`,
-          setLoggedIn
+          `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`
         );
         if (dispatch) dispatch({ type: "HIDE_ITEM", item: { _id: item._id } });
       }
@@ -75,8 +73,7 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
     }
     if (setLoggedIn)
       updateItemBoughtStatus(
-        `http://localhost:8000/api/v1.0/items/mark-bought/${item._id}`,
-        setLoggedIn
+        `http://localhost:8000/api/v1.0/items/mark-bought/${item._id}`
       );
   };
 
@@ -90,22 +87,20 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
         }
       });
 
-      if (setLoggedIn) deleteFromDB(item._id, setLoggedIn);
+      if (setLoggedIn) deleteFromDB(item._id);
     }
   };
   // Updates an item shared status in the state also in the DB.
   const shareItem = () => {
     if (item.isShared && setLoggedIn) {
       updateItemShareStatus(
-        `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`,
-        setLoggedIn
+        `http://localhost:8000/api/v1.0/items/hide-item/${item._id}`
       );
       if (dispatch) dispatch({ type: "HIDE_ITEM", item: { _id: item._id } });
     } else {
       if (setLoggedIn)
         updateItemShareStatus(
-          `http://localhost:8000/api/v1.0/items/share-with-all/${item._id}`,
-          setLoggedIn
+          `http://localhost:8000/api/v1.0/items/share-with-all/${item._id}`
         ).then(response => {
           if (response) setSharedWith(response.data.sharedWith);
         });
@@ -127,7 +122,7 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
     const findUsers = async () => {
       try {
         const token = grabToken();
-        if (setLoggedIn) interceptResponse(setLoggedIn);
+
         const url = "http://localhost:8000/api/v1.0/users/shared-with";
         const response = await axios.get(url, {
           params: {

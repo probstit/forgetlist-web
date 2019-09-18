@@ -2,7 +2,7 @@ import axios from "axios";
 
 export type auth = React.Dispatch<React.SetStateAction<boolean>>;
 
-export function interceptResponse(setLoggedIn: auth) {
+const interceptResponse = (setLoggedIn: auth) => {
   axios.interceptors.response.use(
     response => response,
     error => {
@@ -13,4 +13,6 @@ export function interceptResponse(setLoggedIn: auth) {
       }
     }
   );
-}
+};
+
+export default interceptResponse;

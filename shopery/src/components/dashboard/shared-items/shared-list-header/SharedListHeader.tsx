@@ -23,6 +23,7 @@ const SharedListHeader: React.FC<SharedListHeaderProps> = ({
   const [itemOwner, setItemOwner] = useState<User>(initialState);
 
   useEffect(() => {
+    let subscribed = true;
     const findItemOwner = async () => {
       const token = grabToken();
       const url = `http://localhost:8000/api/v1.0/users/user/${sharedUserID}`;
@@ -31,11 +32,13 @@ const SharedListHeader: React.FC<SharedListHeaderProps> = ({
           Authorization: `Bearer ${token}`
         }
       });
-
-      setItemOwner(response.data);
+      if (response && subscribed) setItemOwner(response.data);
     };
 
     findItemOwner();
+    return () => {
+      subscribed = false;
+    };
   }, [sharedUserID]);
 
   return (

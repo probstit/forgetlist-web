@@ -1,14 +1,11 @@
 import grabToken from "../../../../../../util/grab-token";
-import {
-  interceptResponse,
-  auth
-} from "../../../../../../util/response-interceptor";
+
 import axios from "axios";
 
-export const deleteFromDB = async (id: string, setLoggedIn: auth) => {
+export const deleteFromDB = async (id: string) => {
   let token = grabToken();
   const url = `http://localhost:8000/api/v1.0/items/delete-item/${id}`;
-  interceptResponse(setLoggedIn);
+
   try {
     await axios.delete(url, {
       headers: {
@@ -20,12 +17,9 @@ export const deleteFromDB = async (id: string, setLoggedIn: auth) => {
   }
 };
 
-export const updateItemBoughtStatus = async (
-  url: string,
-  setLoggedIn: auth
-) => {
+export const updateItemBoughtStatus = async (url: string) => {
   let token = grabToken();
-  interceptResponse(setLoggedIn);
+
   axios.put(
     url,
     {},
@@ -37,9 +31,9 @@ export const updateItemBoughtStatus = async (
   );
 };
 
-export const updateItemShareStatus = async (url: string, setLoggedIn: auth) => {
+export const updateItemShareStatus = async (url: string) => {
   let token = grabToken();
-  interceptResponse(setLoggedIn);
+
   try {
     const response = await axios.put(
       url,
