@@ -25,7 +25,7 @@ export const Description = styled.section<ThemeProps>`
     font-family: ${props => (props.theme as DefaultTheme).fontFamily};
 
     @media ${device.tablet} {
-      font-size: 1.2em;
+      font-size: 0.9em;
     }
 
     @media ${device.laptop} {
@@ -41,19 +41,7 @@ export const Description = styled.section<ThemeProps>`
 export const ButtonsContainer = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
-  margin-top: 4em;
-
-  @media ${device.mobileL} {
-    margin: 9em auto 0 auto;
-  }
-
-  @media ${device.tablet} {
-    width: 75%;
-  }
-
-  @media ${device.laptopL} {
-    margin: 11em auto 0 auto;
-  }
+  margin: 7em auto 0 auto;
 
   p {
     color: ${props => (props.theme as DefaultTheme).colors.secondary};
@@ -63,7 +51,7 @@ export const ButtonsContainer = styled.div<ThemeProps>`
     font-size: 0.85em;
 
     @media ${device.tablet} {
-      font-size: 0.9em;
+      font-size: 0.65em;
     }
   }
 `;

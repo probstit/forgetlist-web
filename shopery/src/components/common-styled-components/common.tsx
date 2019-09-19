@@ -18,7 +18,7 @@ export const FormContainer = styled.div<ThemeProps>`
   width: 100%;
   height: auto;
   padding: 1.5em;
-  margin-top: ${props => (props.changePass ? "25px" : "0")};
+  margin-top: ${props => (props.changePass ? "25px" : "40px")};
 
   h2 {
     color: ${props => (props.theme as DefaultTheme).colors.secondary};
@@ -46,10 +46,19 @@ export const StyledForm = styled.form<ThemeProps>`
     props.recover ? "9em" : props.changePass ? "40px" : "2em"};
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
+
   & ::after {
     content: "";
     clear: both;
     display: table;
+  }
+
+  @media ${device.tablet} {
+    margin: ${props => (props.recover ? "9em" : "2em")} auto 0 auto;
+  }
+
+  @media ${device.laptop} {
+    width: 85%;
   }
 `;
 
@@ -112,8 +121,9 @@ export const StyledButton = styled.button<ThemeProps>`
 
   @media ${device.tablet} {
     width: 15em;
-    height: 30px;
-    font-size: 1em;
+    height: 25px;
+    font-size: ${props =>
+      props.formButton || props.changePass ? "1.2em" : "0.8em"};
   }
 `;
 
@@ -174,13 +184,12 @@ export const ErrorsContainer = styled.div<ThemeProps>`
 
 export const Wrapper = styled.section<ThemeProps>`
   padding: 50px 10px;
-  overflow-y: scroll;
   height: auto;
   width: 100%;
 `;
 
 export const Overlay = styled.div<ThemeProps>`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: rgba(175, 175, 175, 0.6);
@@ -188,6 +197,18 @@ export const Overlay = styled.div<ThemeProps>`
   height: 100%;
   z-index: 99;
   padding: 45% 0;
+
+  @media ${device.mobileL} {
+    padding: 30% 0;
+  }
+
+  @media ${device.customXL} {
+    padding-top: 20%;
+  }
+
+  @media ${device.tablet} {
+    padding-top: 100px;
+  }
 `;
 
 export const OverlayForm = styled.form<ThemeProps>`

@@ -1,6 +1,4 @@
 import styled, { DefaultTheme } from "styled-components";
-
-import { device } from "../../breakpoints/breakpoints";
 import ThemeProps from "../../theme/theme-props.interface";
 
 export const StyledLogo = styled.div<ThemeProps>`
@@ -16,9 +14,5 @@ export const StyledLogo = styled.div<ThemeProps>`
     font-size: 1.5em;
     color: ${props => (props.theme as DefaultTheme).colors.secondary};
     font-family: ${props => (props.theme as DefaultTheme).logoFont};
-
-    @media ${device.tablet} {
-      font-size: 2.5em;
-    }
   }
 `;

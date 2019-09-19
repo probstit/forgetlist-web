@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from "react";
 // Import styled components
-import { IconWrapper } from "./icon-styles";
+import { IconWrapper, Text, Wrap } from "./icon-styles";
 // Import FA Icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -9,13 +9,17 @@ import ThemeProps from "../../theme/theme-props.interface";
 interface FAIcon extends ThemeProps {
   icon: IconProp;
   onClick?: MouseEventHandler;
+  text?: string;
 }
 
 const Icon: React.SFC<FAIcon> = (props): JSX.Element => {
   if (props.footer) {
     return (
       <IconWrapper footer onClick={props.onClick}>
-        <FontAwesomeIcon icon={props.icon} />
+        <Wrap>
+          <FontAwesomeIcon icon={props.icon} />
+        </Wrap>
+        <Text>{props.text}</Text>
       </IconWrapper>
     );
   } else if (props.liOption) {

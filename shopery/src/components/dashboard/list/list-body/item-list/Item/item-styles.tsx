@@ -1,6 +1,6 @@
 import styled, { DefaultTheme } from "styled-components";
-
 import ThemeProps from "../../../../../../theme/theme-props.interface";
+import { device } from "../../../../../../breakpoints/breakpoints";
 
 export const StyledItem = styled.li<ThemeProps>`
   width: 100%;
@@ -34,8 +34,7 @@ export const ItemDetails = styled.div<ThemeProps>`
   font-size: 0.9em;
   font-weight: 600;
   padding-left: 2px;
-  float: left;
-
+  float: ${props => (props.historyList ? "none" : "left")};
   &:hover p {
     text-decoration: ${props => (props.historyList ? "none" : "line-through")};
   }
@@ -50,4 +49,12 @@ export const ItemOptions = styled.div`
   width: 45%;
   height: auto;
   font-size: 0.9em;
+
+  @media ${device.mobileL} {
+    width: 150px;
+  }
+
+  @media ${device.tablet} {
+    width: 160px;
+  }
 `;

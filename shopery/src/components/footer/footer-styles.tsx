@@ -15,11 +15,6 @@ export const StyledFooter = styled.footer<ThemeProps>`
   color: ${props => (props.theme as DefaultTheme).colors.secondary};
 
   @media ${device.tablet} {
-    font-size: 0.9em;
-    bottom: 15px;
-  }
-
-  @media ${device.laptopL} {
-    bottom: 25px;
+    bottom: 1px;
   }
 `;

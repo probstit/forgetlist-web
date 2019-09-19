@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import ThemeProps from "../../../../theme/theme-props.interface";
 
 export const ListBodyWrapper = styled.section<ThemeProps>`
@@ -30,11 +29,10 @@ export const NameWrapper = styled.p<ThemeProps>`
 `;
 
 export const QtyWrapper = styled.p<ThemeProps>`
-  display: inline-block;
-  width: ${props => (props.historyList ? "23%" : "20%")};
-
-  text-align: ${props =>
-    props.itemQty || props.historyList ? "center" : "left"};
+  float: right;
+  width: 25px;
+  margin-right: ${props => (props.historyList ? "2px" : "0")};
+  text-align: ${props => (props.historyList ? "center" : "right")};
 `;
 
 export const NoItems = styled.p<ThemeProps>`

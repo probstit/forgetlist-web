@@ -46,13 +46,7 @@ const initialState: Item = {
   _id: ""
 };
 
-interface AddItemFormProps {
-  setShowAdd: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const AddItemForm: React.FC<AddItemFormProps> = ({
-  setShowAdd
-}): JSX.Element => {
+const AddItemForm: React.FC = (): JSX.Element => {
   const { dispatch } = useContext<ItemListContext>(ListContext);
 
   const dispatchItemData = async () => {
@@ -131,6 +125,9 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
           onChange={handleChange}
         />
       </InputWrapper>
+      <AddButton disabled={isSubmitting} type="submit">
+        Add
+      </AddButton>
       {checkForError && (
         <ErrorsContainer>
           {errors.name && (
@@ -141,9 +138,6 @@ const AddItemForm: React.FC<AddItemFormProps> = ({
           )}
         </ErrorsContainer>
       )}
-      <AddButton disabled={isSubmitting} type="submit">
-        Add
-      </AddButton>
     </StyledForm>
   );
 };

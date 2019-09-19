@@ -1,6 +1,7 @@
 import styled, { DefaultTheme } from "styled-components";
 import ThemeProps from "../../theme/theme-props.interface";
 import { Link } from "react-router-dom";
+import { device } from "../../breakpoints/breakpoints";
 
 export const MenuContainer = styled.div<ThemeProps>`
   position: absolute;
@@ -13,6 +14,11 @@ export const MenuContainer = styled.div<ThemeProps>`
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   z-index: 5;
   transition: left 0.4s ease-in-out;
+
+  @media ${device.tablet} {
+    width: 175px;
+    position: fixed;
+  }
 `;
 
 export const Content = styled.section<ThemeProps>`
@@ -24,6 +30,10 @@ export const Options = styled.section<ThemeProps>`
   width: 160px;
   height: 300px;
   text-align: center;
+
+  @media ${device.tablet} {
+    width: 130px;
+  }
 `;
 
 export const Option = styled.div<ThemeProps>`
@@ -31,6 +41,10 @@ export const Option = styled.div<ThemeProps>`
   text-align: left;
   cursor: pointer;
   font-size: 0.9em;
+
+  @media ${device.tablet} {
+    font-size: 0.7em;
+  }
 
   p {
     display: inline-block;

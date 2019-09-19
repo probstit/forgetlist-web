@@ -119,6 +119,7 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
   };
   // Fetch user info for sharedWith tab
   useEffect(() => {
+    let subscribed = true;
     const findUsers = async () => {
       try {
         const token = grabToken();
@@ -132,14 +133,17 @@ const Item: React.FC<ItemProp> = ({ item, displayOptions, historyItem }) => {
             Authorization: `Bearer ${token}`
           }
         });
-
-        setUsersData(response.data.users);
+        if (subscribed) setUsersData(response.data.users);
       } catch (err) {
         if (err.response) console.log(err.response.data.payload.message);
       }
     };
 
     if (sharedWith && sharedWith.length > 0) findUsers();
+
+    return () => {
+      subscribed = false;
+    };
   }, [sharedWith, setLoggedIn]);
   // Update shared with tab if the user toggles the 'lock' option
   useEffect(() => {

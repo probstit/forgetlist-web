@@ -1,5 +1,5 @@
 import styled, { DefaultTheme } from "styled-components";
-
+import { device } from "../../../breakpoints/breakpoints";
 import ThemeProps from "../../../theme/theme-props.interface";
 
 export const EditForm = styled.form<ThemeProps>`
@@ -10,6 +10,19 @@ export const EditForm = styled.form<ThemeProps>`
   border-radius: ${props =>
     (props.theme as DefaultTheme).dashboardBorderRadius};
   margin: 0 auto;
+
+  @media ${device.customXL} {
+    width: 75%;
+  }
+
+  @media ${device.tablet} {
+    width: 400px;
+    margin: 0 auto;
+  }
+
+  @media ${device.laptop} {
+    width: 500px;
+  }
 `;
 
 export const EditHeader = styled.div<ThemeProps>`
@@ -65,7 +78,6 @@ export const EditInput = styled.input<ThemeProps>`
   background-color: ${props => (props.theme as DefaultTheme).colors.tertiary};
   border-radius: ${props =>
     (props.theme as DefaultTheme).dashboardBorderRadius};
-
   margin-left: ${props => (props.setShare ? "3px" : "0")};
   cursor: ${props => (props.setShare ? "pointer" : "normal")};
 `;
@@ -85,5 +97,9 @@ export const EditButton = styled.button<ThemeProps>`
   &:hover {
     opacity: 0.7;
     cursor: pointer;
+  }
+
+  @media ${device.mobileL} {
+    width: 50%;
   }
 `;

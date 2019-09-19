@@ -14,7 +14,6 @@ export const useFormValidation = (
   useEffect(() => {
     if (isSubmitting) {
       const noErrors = Object.keys(errors).length === 0;
-
       if (noErrors) {
         callback();
         setSubmitting(false);

@@ -24,7 +24,7 @@ const ListHeader: React.FC<ListHeaderProps> = ({ user }): JSX.Element => {
     <StyledListHeader>
       <Avatar user={user} />
       <ListOptions toggleShowAdd={toggleShowAdd} />
-      {showAdd && <AddItemForm setShowAdd={setShowAdd} />}
+      {showAdd && <AddItemForm />}
     </StyledListHeader>
   );
 };

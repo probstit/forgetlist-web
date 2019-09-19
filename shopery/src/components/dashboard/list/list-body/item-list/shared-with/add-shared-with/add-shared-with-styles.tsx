@@ -1,4 +1,5 @@
 import styled, { DefaultTheme } from "styled-components";
+import { device } from "../../../../../../../breakpoints/breakpoints";
 import ThemeProps from "../../../../../../../theme/theme-props.interface";
 
 export const FormContainer = styled.div<ThemeProps>`
@@ -11,6 +12,19 @@ export const FormContainer = styled.div<ThemeProps>`
   margin: 0 auto;
   font-family: ${props => (props.theme as DefaultTheme).fontFamily};
   color: ${props => (props.theme as DefaultTheme).colors.primary};
+  
+  @media ${device.customXL} {
+    width: 75%;
+  }
+
+  @media ${device.tablet} {
+    width: 400px;
+    margin: 0 auto;
+  }
+
+  @media ${device.laptop} {
+    width: 500px;
+  }
 `;
 
 export const FormHeader = styled.div<ThemeProps>`
