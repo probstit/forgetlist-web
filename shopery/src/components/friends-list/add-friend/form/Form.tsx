@@ -35,6 +35,7 @@ const Form: React.FC<FormProps> = ({
     const { email } = values;
     const token = grabToken();
     const url = "http://localhost:8000/api/v1.0/users/search";
+
     try {
       const res = await axios.get(url, {
         headers: {
@@ -44,7 +45,7 @@ const Form: React.FC<FormProps> = ({
           email
         }
       });
-
+      if (res === undefined) setResultError("No results!");
       setResult(res.data.user);
     } catch (err) {
       if (err.response) {
